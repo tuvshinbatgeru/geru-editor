@@ -1,13 +1,14 @@
 import ReactDOM from "react-dom/client"
 import Provider from "./Provider"
-import Router from "./Router"
 import Container from "./Container"
+import DesignEditor from "~/views/DesignEditor"
+
 import "./styles/styles.css"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <Provider>
     <Container>
-      <Router />
+      <DesignEditor />
     </Container>
   </Provider>
 )

@@ -142,15 +142,39 @@ export default function () {
   }
 
   const makeDownloadTemplate = async () => {
-    if (editor) {
-      if (editorType === "GRAPHIC") {
-        return parseGraphicJSON()
-      } else if (editorType === "PRESENTATION") {
-        return parsePresentationJSON()
-      } else {
-        return parseVideoJSON()
-      }
-    }
+    const template = editor.scene.exportToJSON()
+
+    // debugger
+    template.layers = template.layers.filter((layer) => layer.id != 'background')
+
+    // console.log(template)
+
+  //   for (var key in template) {
+  //     if (template.hasOwnProperty(key)) {
+  //         //console.log(key + " -> " + p[key]);
+  //         if(key == "layers") {
+  //             template.layers = 
+  //         }
+  //     }
+  // }
+
+
+    const image = (await editor.renderer.render(template)) as string
+
+    const a = document.createElement("a")
+    a.href = image
+    a.download = "image.png"
+    a.click()
+
+    // if (editor) {
+    //   if (editorType === "GRAPHIC") {
+    //     return parseGraphicJSON()
+    //   } else if (editorType === "PRESENTATION") {
+    //     return parsePresentationJSON()
+    //   } else {
+    //     return parseVideoJSON()
+    //   }
+    // }
   }
 
   const loadGraphicTemplate = async (payload: IDesign) => {

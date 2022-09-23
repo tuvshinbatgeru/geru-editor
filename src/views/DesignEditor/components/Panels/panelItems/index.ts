@@ -2,7 +2,6 @@ import TextProperties from "./TextProperties"
 import Text from "./Text"
 import Customize from "./Customize"
 import FontSelector from "./FontSelector"
-import Pixabay from "./Pixabay"
 import Templates from "./Templates"
 import Uploads from "./Uploads"
 import Images from "./Images"
@@ -19,7 +18,6 @@ export default {
   Text: Text,
   Customize: Customize,
   FontSelector: FontSelector,
-  Pixabay: Pixabay,
   Templates: Templates,
   Uploads: Uploads,
   Images: Images,

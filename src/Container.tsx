@@ -40,9 +40,9 @@ function Container({ children }: { children: React.ReactNode }) {
   }, [])
 
   useEffect(() => {
-    dispatch(getFonts())
-    dispatch(getUploads())
-    dispatch(getPixabayResources())
+    // dispatch(getFonts())
+    // dispatch(getUploads())
+    // dispatch(getPixabayResources())
     loadFonts()
     setTimeout(() => {
       setLoaded(true)
