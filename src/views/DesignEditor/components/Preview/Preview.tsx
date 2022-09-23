@@ -42,7 +42,7 @@ export default function ({ isOpen, setIsOpen }: ComponentProps) {
       }}
     >
       <ModalBody
-        $style={{
+        style={{
           display: "flex",
           flexDirection: "column",
           marginTop: 0,
@@ -50,24 +50,19 @@ export default function ({ isOpen, setIsOpen }: ComponentProps) {
           marginRight: 0,
           marginBottom: 0,
           height: "100%",
-          position: "relative",
+          position: "relative"
         }}
       >
         <Block
-          $style={{
+          style={{
             position: "absolute",
             flex: 1,
             height: "100%",
             width: "100%",
-            display: "flex",
+            display: "flex"
           }}
         >
-          {
-            {
-              GRAPHIC: <Graphic />,
-              NONE: <></>,
-            }[editorType]
-          }
+          <Graphic />
         </Block>
       </ModalBody>
     </Modal>
