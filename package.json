@@ -1,15 +1,12 @@
 {
   "name": "geru-editor",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./dist/index.js",
-  "workspaces": [
-    "src"
-  ],
   "scripts": {
     "dev": "vite",
     "build": "pnpm run clean && pnpm run compile",
     "clean": "rimraf -rf ./dist",
-    "compile": "tsc",
+    "compile": "tsc && tsc-alias",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -47,6 +44,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@vitejs/plugin-react": "^2.0.0",
+    "tsc-alias": "^1.5.0",
     "typescript": "^4.6.3",
     "vite": "^3.0.0",
     "vite-tsconfig-paths": "^3.5.0"
