@@ -1,4 +1,5 @@
-import { Button, SIZE } from "baseui/button"
+import {  SIZE } from "baseui/button"
+import { Button} from 'gestalt'
 import { textComponents } from "~/constants/editor"
 import { useStyletron } from "styletron-react"
 import { useEditor } from "@layerhub-io/react"
@@ -96,6 +97,12 @@ export default function () {
           >
             Add text
           </Button>
+          <Button
+            accessibilityLabel='Save'
+            color="red"
+            text="Save"
+            size="lg"
+        />
 
           <Block
             $style={{

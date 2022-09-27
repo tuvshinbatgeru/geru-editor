@@ -70,7 +70,7 @@ function Container({ children }: { children: React.ReactNode }) {
       ref={containerRef}
       style={{
         flex: 1,
-        display: "flex",
+        display: "flex", // full screen
         height: "100vh",
         width: "100vw",
       }}

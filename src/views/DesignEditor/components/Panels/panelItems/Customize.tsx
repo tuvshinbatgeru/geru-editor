@@ -41,7 +41,7 @@ export default function () {
   }
 
   return (
-    <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+    <Block $style={{ flex: 1, display: "flex", flexDirection: "column" , background: "red"}}>
       <Block
         $style={{
           display: "flex",
@@ -51,7 +51,7 @@ export default function () {
           padding: "1.5rem",
         }}
       >
-        <Block>Customize</Block>
+        <Block color={"white"}>Customize</Block>
 
         <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
           <AngleDoubleLeft size={18} />

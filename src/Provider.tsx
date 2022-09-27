@@ -10,6 +10,7 @@ import { DesignEditorProvider } from "./contexts/DesignEditor"
 import { I18nextProvider } from "react-i18next"
 import { TimerProvider } from "@layerhub-io/use-timer"
 import i18next from "i18next"
+import 'gestalt/dist/gestalt.css';
 import "./translations"
 
 const engine = new Styletron()
