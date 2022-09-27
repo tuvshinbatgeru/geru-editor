@@ -6,13 +6,13 @@ import { editorFonts } from "./constants/fonts"
 import { getFonts } from "./store/slices/fonts/actions"
 import { getPixabayResources } from "./store/slices/resources/actions"
 import { getUploads } from "./store/slices/uploads/actions"
-import { useAppDispatch } from "./store/store"
+// import { useAppDispatch } from "./store/store"
 
 function Container({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { isMobile, setIsMobile } = useAppContext()
   const [loaded, setLoaded] = useState(false)
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
   const updateMediaQuery = (value: number) => {
     if (!isMobile && value >= 800) {
       setIsMobile(false)
