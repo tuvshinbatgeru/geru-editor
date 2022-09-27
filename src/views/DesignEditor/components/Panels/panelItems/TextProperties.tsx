@@ -11,7 +11,7 @@ import { ChevronRight } from "baseui/icon"
 import useAppContext from "~/hooks/useAppContext"
 import { useActiveObject, useEditor } from "@layerhub-io/react"
 import { useSelector } from "react-redux"
-import { selectFonts } from "~/store/slices/fonts/selectors"
+// import { selectFonts } from "~/store/slices/fonts/selectors"
 import { getTextOptions } from "~/utils/object-options"
 import { fontStyleLabels } from "~/constants/fonts"
 import { Select } from "baseui/select"
@@ -20,7 +20,8 @@ import { TextOptions } from "~/interfaces/editor"
 import { defaultTextOptions } from "~/constants/contants"
 
 export default function () {
-  const fonts = useSelector(selectFonts)
+  // const fonts = useSelector(selectFonts)
+  const fonts = []
   const [state, setState] = React.useState<TextOptions>(defaultTextOptions)
   const { setActiveSubMenu } = useAppContext()
   const activeObject = useActiveObject() as any

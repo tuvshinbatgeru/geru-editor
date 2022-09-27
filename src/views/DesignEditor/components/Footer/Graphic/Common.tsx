@@ -45,11 +45,7 @@ export default function () {
         alignItems: "center",
       }}
     >
-      <div>
-        <Button kind={KIND.tertiary} size={SIZE.compact}>
-          <Icons.Layers size={20} />
-        </Button>
-      </div>
+      <div />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
         <Button kind={KIND.tertiary} size={SIZE.compact}>
           <Icons.Expand size={16} />
@@ -111,7 +107,7 @@ export default function () {
         />
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
-        <Button kind={KIND.tertiary} size={SIZE.compact}>
+        {/* <Button kind={KIND.tertiary} size={SIZE.compact}>
           <Icons.Refresh size={16} />
         </Button>
         <Button kind={KIND.tertiary} size={SIZE.compact}>
@@ -122,7 +118,7 @@ export default function () {
         </Button>
         <Button kind={KIND.tertiary} size={SIZE.compact}>
           <Icons.TimePast size={16} />
-        </Button>
+        </Button> */}
       </div>
     </Block>
   )

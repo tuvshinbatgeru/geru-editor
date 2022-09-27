@@ -16,6 +16,8 @@ export default function () {
   const setIsSidebarOpen = useSetIsSidebarOpen()
   const { setCurrentScene, currentScene } = useDesignEditorContext()
 
+  // const currentScene = editor.scene.exportToJSON()
+
   const loadTemplate = React.useCallback(
     async (template: any) => {
       if (editor) {
@@ -29,6 +31,7 @@ export default function () {
             })
           }
         })
+
         const filteredFonts = fonts.filter((f) => !!f.url)
         if (filteredFonts.length > 0) {
           await loadFonts(filteredFonts)
