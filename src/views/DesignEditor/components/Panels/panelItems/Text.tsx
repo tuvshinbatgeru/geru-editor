@@ -67,7 +67,7 @@ export default function () {
   }
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-      <Block
+      {/*<Block
         $style={{
           display: "flex",
           alignItems: "center",
@@ -81,10 +81,10 @@ export default function () {
         <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
           <AngleDoubleLeft size={18} />
         </Block>
-      </Block>
+      </Block>*/}
       <Scrollable>
         <Block padding={"0 1.5rem"}>
-          <Button
+          {/*<Button
             onClick={addObject}
             size={SIZE.compact}
             overrides={{
@@ -102,7 +102,7 @@ export default function () {
             color="red"
             text="Save"
             size="lg"
-        />
+        />*/}
 
           <Block
             $style={{

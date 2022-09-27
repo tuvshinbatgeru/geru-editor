@@ -8,12 +8,10 @@ import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
 import useEditorType from "~/hooks/useEditorType"
 import Scrollable from "~/components/Scrollable"
 import { Block } from "baseui/block"
-import { Text, Box, Flex, Heading } from 'gestalt';
 
 const Container = styled("div", (props) => ({
   width: "80px",
-//  backgroundColor: props.$theme.colors.primary100,
-  backgroundColor: "orange",
+  backgroundColor: props.$theme.colors.primary100,
   display: "flex",
 }))
 
@@ -55,10 +53,7 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
       $style={{
         width: "80px",
         height: "80px",
-        //paddingLeft: "20px",
-        //paddingRight: "20px",
-        //backgroundColor: name === activePanel ? theme.colors.white : theme.colors.primary100,
-        backgroundColor: "white",
+        backgroundColor: name === activePanel ? "white" : theme.colors.primary100,
         display: "flex",
         alignItems: "center",
         flexDirection: "column",
@@ -71,17 +66,13 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
         gap: "0.1rem",
         ":hover": {
           cursor: "pointer",
-          backgroundColor: "red",
+          backgroundColor: theme.colors.white,
           transition: "all 1s",
         },
       }}
     >
-     {/*<Box>*/}
-        
-        <div><Icon size={24} color="white" /></div>
-        {label}
-        
-      {/*</Box>*/}
+      <Icon size={24} />
+      <div>{label}</div>
     </Block>
   )
 }

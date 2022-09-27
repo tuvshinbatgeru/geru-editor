@@ -4,6 +4,7 @@ import BringToFront from "~/components/Icons/BringToFront"
 import Delete from "~/components/Icons/Delete"
 import Duplicate from "~/components/Icons/Duplicate"
 import Elements from "~/components/Icons/Elements"
+import Templates from "~/components/Icons/Templates"
 import Locked from "~/components/Icons/Locked"
 import Paste from "~/components/Icons/Paste"
 import SendToBack from "~/components/Icons/SendToBack"
@@ -154,6 +155,17 @@ function ContextMenu() {
             label="Save as component"
           >
             <Elements size={24} />
+          </ContextMenuItem>
+          <ContextMenuItem
+            onClick={() => {
+            //  handleAsComponentHandler()
+            //  editor.cancelContextMenu()
+            alert("removing ... ")
+            }}
+            icon="Templates"
+            label="Background remove"
+          >
+            <Templates size={24} />
           </ContextMenuItem>
           <div style={{ margin: "0.5rem 0" }} />
           <ContextMenuItem

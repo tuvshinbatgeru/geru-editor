@@ -125,6 +125,8 @@ export default function () {
     [editor, scenes, currentScene]
   )
 
+  return null
+
   return (
     <Block
       $style={{

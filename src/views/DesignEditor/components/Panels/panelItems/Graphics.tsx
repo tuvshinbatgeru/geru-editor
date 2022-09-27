@@ -46,7 +46,7 @@ export default function () {
 
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-      <Block
+      {/*<Block
         $style={{
           display: "flex",
           alignItems: "center",
@@ -60,9 +60,9 @@ export default function () {
         <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
           <AngleDoubleLeft size={18} />
         </Block>
-      </Block>
+      </Block>*/}
 
-      <Block padding={"0 1.5rem"}>
+      {/*<Block padding={"0 1.5rem"}>
         <Button
           onClick={handleInputFileRefClick}
           size={SIZE.compact}
@@ -76,7 +76,7 @@ export default function () {
         >
           Computer
         </Button>
-      </Block>
+      </Block>*/}
       <Scrollable>
         <input onChange={handleFileInput} type="file" id="file" ref={inputFileRef} style={{ display: "none" }} />
         <Block>

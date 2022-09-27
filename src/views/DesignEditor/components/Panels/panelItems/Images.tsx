@@ -26,7 +26,7 @@ export default function () {
 
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-      <Block
+      {/*<Block
         $style={{
           display: "flex",
           alignItems: "center",
@@ -40,7 +40,7 @@ export default function () {
         <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
           <AngleDoubleLeft size={18} />
         </Block>
-      </Block>
+      </Block>*/}
       <Scrollable>
         <Block padding={"0 1.5rem"}>
           <div style={{ display: "grid", gap: "8px", gridTemplateColumns: "1fr 1fr" }}>

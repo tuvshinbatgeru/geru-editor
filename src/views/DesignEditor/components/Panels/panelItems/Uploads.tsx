@@ -2,11 +2,12 @@ import React from "react"
 import { Block } from "baseui/block"
 import AngleDoubleLeft from "~/components/Icons/AngleDoubleLeft"
 import Scrollable from "~/components/Scrollable"
-import { Button, SIZE } from "baseui/button"
+import {  SIZE } from "baseui/button"
 import DropZone from "~/components/Dropzone"
 import { useEditor } from "@layerhub-io/react"
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
 import { nanoid } from "nanoid"
+import { Button } from "gestalt"
 
 export default function () {
   const inputFileRef = React.useRef<HTMLInputElement>(null)
@@ -42,35 +43,28 @@ export default function () {
   return (
     <DropZone handleDropFiles={handleDropFiles}>
       <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <Block
+        {/*<Block
           $style={{
             display: "flex",
             alignItems: "center",
             fontWeight: 500,
             justifyContent: "space-between",
-            padding: "1.5rem",
+            padding: "1rem",
           }}
         >
-          <Block>Uploads</Block>
-
-          <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
-            <AngleDoubleLeft size={18} />
-          </Block>
-        </Block>
+            <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
+                <AngleDoubleLeft size={18} />
+            </Block>
+        </Block>*/}
         <Scrollable>
           <Block padding={"0 1.5rem"}>
             <Button
               onClick={handleInputFileRefClick}
-              size={SIZE.compact}
-              overrides={{
-                Root: {
-                  style: {
-                    width: "100%",
-                  },
-                },
-              }}
+              color="red"
+              text="UPLOAD FILES"
+              fullWidth
             >
-              Computer
+              
             </Button>
             <input onChange={handleFileInput} type="file" id="file" ref={inputFileRef} style={{ display: "none" }} />
 

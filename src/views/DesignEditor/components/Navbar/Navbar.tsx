@@ -288,17 +288,9 @@ export default function () {
         <div style={{ color: "#ffffff" }}>
           <Logo size={36} />
         </div>
-        <DesignTitle />
+        {/* <DesignTitle /> */}
         <Block $style={{ display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "flex-end" }}>
-          <input
-            multiple={false}
-            onChange={handleFileInput}
-            type="file"
-            id="file"
-            ref={inputFileRef}
-            style={{ display: "none" }}
-          />
-          <Button
+          {/* <Button
             size="compact"
             onClick={handleInputFileRefClick}
             kind={KIND.tertiary}
@@ -311,7 +303,7 @@ export default function () {
             }}
           >
             Import
-          </Button>
+          </Button> */}
 
           <Button
             size="compact"
@@ -327,7 +319,7 @@ export default function () {
           >
             Export
           </Button>
-          <Button
+          {/* <Button
             size="compact"
             onClick={() => setDisplayPreview(true)}
             kind={KIND.tertiary}
@@ -340,7 +332,7 @@ export default function () {
             }}
           >
             <Play size={24} />
-          </Button>
+          </Button> */}
         </Block>
       </Container>
     </ThemeProvider>

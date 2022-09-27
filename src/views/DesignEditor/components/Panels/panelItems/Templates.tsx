@@ -16,6 +16,8 @@ export default function () {
   const setIsSidebarOpen = useSetIsSidebarOpen()
   const { setCurrentScene, currentScene } = useDesignEditorContext()
 
+  // const currentScene = editor.scene.exportToJSON()
+
   const loadTemplate = React.useCallback(
     async (template: any) => {
       if (editor) {
@@ -29,6 +31,7 @@ export default function () {
             })
           }
         })
+
         const filteredFonts = fonts.filter((f) => !!f.url)
         if (filteredFonts.length > 0) {
           await loadFonts(filteredFonts)
@@ -42,7 +45,7 @@ export default function () {
 
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-      <Block
+      {/*<Block
         $style={{
           display: "flex",
           alignItems: "center",
@@ -56,7 +59,7 @@ export default function () {
         <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
           <AngleDoubleLeft size={18} />
         </Block>
-      </Block>
+      </Block>*/}
       <Scrollable>
         <div style={{ padding: "0 1.5rem" }}>
           <div style={{ display: "grid", gap: "0.5rem", gridTemplateColumns: "1fr 1fr" }}>
