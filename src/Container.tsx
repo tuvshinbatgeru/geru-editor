@@ -3,9 +3,6 @@ import ResizeObserver from "resize-observer-polyfill"
 import useAppContext from "~/hooks/useAppContext"
 import Loading from "./components/Loading"
 import { editorFonts } from "./constants/fonts"
-import { getFonts } from "./store/slices/fonts/actions"
-import { getPixabayResources } from "./store/slices/resources/actions"
-import { getUploads } from "./store/slices/uploads/actions"
 // import { useAppDispatch } from "./store/store"
 
 function Container({ children }: { children: React.ReactNode }) {
