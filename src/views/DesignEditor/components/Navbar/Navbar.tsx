@@ -13,10 +13,11 @@ import { loadTemplateFonts } from "~/utils/fonts"
 import { loadVideoEditorAssets } from "~/utils/video"
 import DesignTitle from "./DesignTitle"
 import { IDesign } from "~/interfaces/DesignEditor"
+import { colors } from 'geru-components/dist/utils'
 
 const Container = styled<"div", {}, Theme>("div", ({ $theme }) => ({
   height: "64px",
-  background: $theme.colors.black,
+  background: colors.colorBlack,
   display: "grid",
   padding: "0 1.25rem",
   gridTemplateColumns: "240px 1fr 240px",
