@@ -47,7 +47,7 @@ export default function () {
           alignItems: "center",
         }}
       >
-        <Block onClick={() => setActiveSubMenu("CanvasFill")}>
+        {/* <Block onClick={() => setActiveSubMenu("CanvasFill")}>
           <Block
             $style={{
               height: "24px",
@@ -60,7 +60,7 @@ export default function () {
               border: "1px solid #dedede",
             }}
           ></Block>
-        </Block>
+        </Block> */}
       </Block>
     </Block>
   )

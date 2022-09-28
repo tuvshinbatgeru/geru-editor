@@ -128,39 +128,6 @@ function CommonLayers() {
               Send to back
             </Button>
           </Block>
-
-          <Block
-            $style={{
-              display: "flex",
-              fontSize: "12px",
-              alignItems: "center",
-              gap: "0.5rem",
-              fontWeight: 500,
-              fontFamily: "system-ui,",
-              padding: "0.5rem 0.5rem",
-              cursor: "pointer",
-              ":hover": {
-                background: "rgb(244,245,246)",
-              },
-            }}
-          >
-            <Checkbox
-              overrides={{
-                Checkmark: {
-                  style: {
-                    height: "16px",
-                    width: "16px",
-                  },
-                },
-              }}
-              checked={checked}
-              onChange={() => {
-                editor.objects.update({ clipToFrame: !checked })
-                setChecked(!checked)
-              }}
-            />
-            <Block>Clip to frame</Block>
-          </Block>
         </Block>
       )}
       returnFocus
