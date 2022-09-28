@@ -13,6 +13,9 @@ import TextFill from "./TextFill"
 import PathFill from "./PathFill"
 import CanvasFill from "./CanvasFill"
 import TextEffects from "./TextEffects"
+import Stickers from "./Stickers"
+import Mydesign from "./Mydesign"
+import nft from "./nft"
 export default {
   StaticText: TextProperties,
   Text: Text,
@@ -29,4 +32,7 @@ export default {
   PathFill: PathFill,
   CanvasFill: CanvasFill,
   TextEffects: TextEffects,
+  Stickers: Stickers,
+  Mydesign: Mydesign,
+  nft: nft,
 }
