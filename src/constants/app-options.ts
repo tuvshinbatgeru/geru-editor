@@ -1,5 +1,4 @@
 export const BASE_ITEMS = [
-<<<<<<< HEAD
     {
         id: "templates",
         name: "Templates",
@@ -42,32 +41,6 @@ export const BASE_ITEMS = [
     //    name: "Graphics",
     //    icon: "Icon_Nft",
     //  }
-=======
-  {
-    id: "templates",
-    name: "Templates",
-  },
-  {
-    id: "customize",
-    name: "Customize",
-  },
-  {
-    id: "images",
-    name: "Images",
-  },
-  {
-    id: "uploads",
-    name: "Uploads",
-  },
-  {
-    id: "text",
-    name: "Text",
-  },
-  {
-    id: "graphics",
-    name: "Graphics",
-  }
->>>>>>> ca8c6eb7f741db14284047e169eb194712f677e3
 ]
 
 export const VIDEO_PANEL_ITEMS = [
