@@ -11,11 +11,10 @@ export default function () {
       {displayPlayback && null}
 
       <ContextMenu />
+      
       <Canvas
         config={{
           background: "#f1f2f6",
-          guidelines: true,
-          shortcuts: true,
           controlsPosition: {
             rotation: "BOTTOM",
           },

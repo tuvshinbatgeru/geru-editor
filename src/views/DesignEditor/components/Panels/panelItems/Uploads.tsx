@@ -63,9 +63,8 @@ export default function () {
               color="red"
               text="UPLOAD FILES"
               fullWidth
-            >
+            />
               
-            </Button>
             <input onChange={handleFileInput} type="file" id="file" ref={inputFileRef} style={{ display: "none" }} />
 
             <div
