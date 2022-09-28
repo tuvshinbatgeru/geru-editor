@@ -4,7 +4,7 @@
     "useDefineForClassFields": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
+    "allowJs": true,
     "inlineSourceMap": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
