@@ -1,5 +1,4 @@
 import {  SIZE } from "baseui/button"
-import { Button} from 'gestalt'
 import { textComponents } from "~/constants/editor"
 import { useStyletron } from "styletron-react"
 import { useEditor } from "@layerhub-io/react"
@@ -8,6 +7,7 @@ import { loadFonts } from "~/utils/fonts"
 import { IStaticText } from "@layerhub-io/types"
 import { nanoid } from "nanoid"
 import { Block } from "baseui/block"
+import { Button } from "gestalt"
 import AngleDoubleLeft from "~/components/Icons/AngleDoubleLeft"
 import Scrollable from "~/components/Scrollable"
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
@@ -67,42 +67,14 @@ export default function () {
   }
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-      {/*<Block
-        $style={{
-          display: "flex",
-          alignItems: "center",
-          fontWeight: 500,
-          justifyContent: "space-between",
-          padding: "1.5rem",
-        }}
-      >
-        <Block>Text</Block>
-
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
-      </Block>*/}
       <Scrollable>
         <Block padding={"0 1.5rem"}>
-          {/*<Button
-            onClick={addObject}
-            size={SIZE.compact}
-            overrides={{
-              Root: {
-                style: {
-                  width: "100%",
-                },
-              },
-            }}
-          >
-            Add text
-          </Button>
           <Button
-            accessibilityLabel='Save'
+            onClick={addObject}
+            text="Add text"
             color="red"
-            text="Save"
-            size="lg"
-        />*/}
+            iconEnd="add"
+          />
 
           <Block
             $style={{
