@@ -1,4 +1,5 @@
 import {  SIZE } from "baseui/button"
+import React from "react"
 import { textComponents } from "~/constants/editor"
 import { useStyletron } from "styletron-react"
 import { useEditor } from "@layerhub-io/react"
@@ -7,15 +8,21 @@ import { loadFonts } from "~/utils/fonts"
 import { IStaticText } from "@layerhub-io/types"
 import { nanoid } from "nanoid"
 import { Block } from "baseui/block"
-import { Button } from "gestalt"
+
 import AngleDoubleLeft from "~/components/Icons/AngleDoubleLeft"
 import Scrollable from "~/components/Scrollable"
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
-
+import { SAMPLE_FONTS } from "~/constants/editor"
+import { Button } from "gestalt"
+import { groupBy } from "lodash"
+import {TapArea, Box} from "gestalt"
+import useAppContext from "~/hooks/useAppContext"
 export default function () {
   const editor = useEditor()
   const setIsSidebarOpen = useSetIsSidebarOpen()
-
+  const [css] = useStyletron()
+  const [commonFonts, setCommonFonts] = React.useState<any[]>([])
+  const { setActiveSubMenu } = useAppContext()
   const addObject = async () => {
     if (editor) {
       const font: FontItem = {
@@ -39,6 +46,7 @@ export default function () {
       editor.objects.add<IStaticText>(options)
     }
   }
+
   const addComponent = async (component: any) => {
     if (editor) {
       const fontItemsList: FontItem[] = []
@@ -65,6 +73,43 @@ export default function () {
       editor.objects.add(component)
     }
   }
+  React.useEffect(() => {
+    const grouped = groupBy(SAMPLE_FONTS, "family")
+    const standardFonts = Object.keys(grouped).map((key) => {
+      const familyFonts = grouped[key]
+      const standardFont = familyFonts.find((familyFont) => familyFont.postscript_name.includes("-Regular"))
+      if (standardFont) {
+        return standardFont
+      }
+      return familyFonts[familyFonts.length - 1]
+    })
+    setCommonFonts(standardFonts)
+  }, [])
+
+  const AddNewFonts = async (font) => {
+    console.log("font",font)
+    if (editor) {
+      const new_font: FontItem = {
+        name: font.full_name,
+        url: font.url,
+      }
+      await loadFonts([new_font])
+      const options = {
+        id: nanoid(),
+        type: "StaticText",
+        width: 420,
+        text: "Add some text",
+        fontSize: 92,
+        //fontFamily: font.family,
+        textAlign: "center",
+        fontStyle: "normal",
+        fontURL: font.url,
+        fill: "#333333",
+        metadata: {},
+      }
+      editor.objects.add<IStaticText>(options)
+    }
+  }
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
       <Scrollable>
@@ -76,7 +121,7 @@ export default function () {
             iconEnd="add"
           />
 
-          <Block
+          {/*<Block
             $style={{
               paddingTop: "0.5rem",
               display: "grid",
@@ -87,8 +132,46 @@ export default function () {
             {[...textComponents].map((tc) => (
               <TextComponentItem onClick={addComponent} key={tc.id} component={tc} />
             ))}
-          </Block>
+          </Block>*/}
+           
         </Block>
+        <div style={{
+            display: 'grid',
+            gap: '0.5rem',
+           
+          }}>
+            {commonFonts.map(font => (
+              <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
+                <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
+                  <div
+                    style={{
+                        display: 'flex',
+                        paddingLeft: '2rem',
+                        paddingTop: '1rem',
+                        paddingBottom: '1rem',
+                        fontSize: '50px',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: "white",
+                        cursor: 'pointer',
+                        fontFamily: font.name
+                    }}
+                  >
+                     <img 
+                        src={font.preview} 
+                        className={css({
+                            //width: "100%",
+                            //height: "100%",
+                            objectFit: "contain",
+                            pointerEvents: "none",
+                            verticalAlign: "middle",
+                        })}/>
+                     
+                  </div>
+                </Box>
+              </TapArea>
+            ))}
+          </div>
       </Scrollable>
     </Block>
   )
