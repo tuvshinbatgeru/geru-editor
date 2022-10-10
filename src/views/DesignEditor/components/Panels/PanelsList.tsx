@@ -1,5 +1,5 @@
 import { useStyletron } from "baseui"
-import { BASE_ITEMS, VIDEO_PANEL_ITEMS } from "~/constants/app-options"
+import { BASE_ITEMS } from "~/constants/app-options"
 import useAppContext from "~/hooks/useAppContext"
 import { styled } from "baseui"
 import Icons from "~/components/Icons"

@@ -4,14 +4,14 @@ import { Theme } from "baseui/theme"
 import { Button, KIND } from "baseui/button"
 import Logo from "~/components/Icons/Logo"
 import useDesignEditorContext from "~/hooks/useDesignEditorContext"
-import Play from "~/components/Icons/Play"
+// import Play from "~/components/Icons/Play"
 import { Block } from "baseui/block"
 import { useEditor } from "@layerhub-io/react"
 import useEditorType from "~/hooks/useEditorType"
 import { IScene } from "@layerhub-io/types"
-import { loadTemplateFonts } from "~/utils/fonts"
-import { loadVideoEditorAssets } from "~/utils/video"
-import DesignTitle from "./DesignTitle"
+// import { loadTemplateFonts } from "~/utils/fonts"
+// import { loadVideoEditorAssets } from "~/utils/video"
+// import DesignTitle from "./DesignTitle"
 import { IDesign } from "~/interfaces/DesignEditor"
 import { colors } from 'geru-components/dist/utils'
 
@@ -190,11 +190,11 @@ export default function () {
         layers: scn.layers,
         metadata: {},
       }
-      const loadedScene = await loadVideoEditorAssets(scene)
-      await loadTemplateFonts(loadedScene)
+      // const loadedScene = await loadVideoEditorAssets(scene)
+      // await loadTemplateFonts(loadedScene)
 
-      const preview = (await editor.renderer.render(loadedScene)) as string
-      scenes.push({ ...loadedScene, preview })
+      // const preview = (await editor.renderer.render(loadedScene)) as string
+      // scenes.push({ ...loadedScene, preview })
     }
 
     return { scenes, design }
@@ -212,11 +212,11 @@ export default function () {
         layers: scn.layers,
         metadata: {},
       }
-      const loadedScene = await loadVideoEditorAssets(scene)
+      // const loadedScene = await loadVideoEditorAssets(scene)
 
-      const preview = (await editor.renderer.render(loadedScene)) as string
-      await loadTemplateFonts(loadedScene)
-      scenes.push({ ...loadedScene, preview })
+      // const preview = (await editor.renderer.render(loadedScene)) as string
+      // await loadTemplateFonts(loadedScene)
+      // scenes.push({ ...loadedScene, preview })
     }
     return { scenes, design }
   }
@@ -234,25 +234,18 @@ export default function () {
         metadata: {},
         duration: scn.duration,
       }
-      const loadedScene = await loadVideoEditorAssets(design)
+      // const loadedScene = await loadVideoEditorAssets(design)
 
-      const preview = (await editor.renderer.render(loadedScene)) as string
-      await loadTemplateFonts(loadedScene)
-      scenes.push({ ...loadedScene, preview })
+      // const preview = (await editor.renderer.render(loadedScene)) as string
+      // await loadTemplateFonts(loadedScene)
+      // scenes.push({ ...loadedScene, preview })
     }
     return { scenes, design }
   }
 
   const handleImportTemplate = React.useCallback(
     async (data: any) => {
-      let template
-      if (data.type === "GRAPHIC") {
-        template = await loadGraphicTemplate(data)
-      } else if (data.type === "PRESENTATION") {
-        template = await loadPresentationTemplate(data)
-      } else if (data.type === "VIDEO") {
-        template = await loadVideoTemplate(data)
-      }
+      let template = await loadGraphicTemplate(data)
       //   @ts-ignore
       setScenes(template.scenes)
       //   @ts-ignore
