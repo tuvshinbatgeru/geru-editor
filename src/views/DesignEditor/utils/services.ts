@@ -1,5 +1,6 @@
 import { request } from '../../../services/api'
 
+// STICKER'S APIS
 export async function fetchStickers() {
 	return await request().get('/api/sticker/all')
 }
@@ -24,4 +25,17 @@ export async function checkLicencedStickers(params) {
 
 export async function backgroundRemove(params) {
 	return await request().post('/api/customization/background-remove', params)
+}
+
+
+// TEMPLATE"S APIS
+export async function deleteTemplate(id) {
+	return await request().delete('/api/template/' + id)
+}
+export async function fetchTemplates() {
+	return await request().get('/api/template')
+}
+
+export async function saveTemplate(params) {
+	return await request().post('/api/template', params)
 }
