@@ -25,13 +25,16 @@ export default function () {
   const [commonFonts, setCommonFonts] = React.useState<any[]>([])
   const [css] = useStyletron()
   const editor = useEditor()
+  
   const addObject = async () => {
     if (editor) {
       const font: FontItem = {
         name: "OpenSans-Regular",
         url: "https://fonts.gstatic.com/s/opensans/v27/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0C4nY1M2xLER.ttf",
       }
+
       await loadFonts([font])
+      
       const options = {
         id: nanoid(),
         type: "StaticText",
@@ -48,6 +51,7 @@ export default function () {
       editor.objects.add<IStaticText>(options)
     }
   }
+  
   React.useEffect(() => {
     const grouped = groupBy(SAMPLE_FONTS, "family")
     const standardFonts = Object.keys(grouped).map((key) => {
@@ -61,87 +65,12 @@ export default function () {
     setCommonFonts(standardFonts)
   }, [])
 
-  const handleFontFamilyChange = async (x: any) => {
-    if (editor) {
-      const font = {
-        name: x.postscript_name,
-        url: x.url,
-      }
-      await loadFonts([font])
-      // @ts-ignore
-      editor.objects.update<IStaticText>({
-        fontFamily: x.postscript_name,
-        fontURL: font.url,
-      })
-    }
-  }
-
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-      {/*<Block
-        $style={{
-          display: "flex",
-          alignItems: "center",
-          fontWeight: 500,
-          justifyContent: "space-between",
-          padding: "1.5rem",
-        }}
-      >
-        <Block $style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <ArrowBackOutline size={24} />
-          <Block>Choose font</Block>
-        </Block>
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
-      </Block>*/}
-{/*
-      <Block $style={{ padding: "0 1.5rem 1rem" }}>
-        <Input
-          overrides={{
-            Root: {
-              style: {
-                paddingLeft: "8px",
-              },
-            },
-          }}
-          clearable
-          onChange={(e) => setQuery((e.target as any).value)}
-          placeholder="Search font"
-          size={SIZE.compact}
-          startEnhancer={<Search size={16} />}
-        />
-      </Block>*/}
-
       <Scrollable>
-        {/*<div style={{ padding: "0 1.5rem", display: "grid", gap: "0.2rem" }}>
-          {commonFonts.map((font, index) => {
-            return (
-              <div
-                key={index}
-                onClick={() => handleFontFamilyChange(font)}
-                className={css({
-                    color: "white",
-                  height: "40px",
-                  display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  ":hover": {
-                    backgroundColor: "rgb(245,246,247)",
-                  },
-                })}
-                id={font.id}
-              >
-                <img src={font.preview} />
-              </div>
-            )
-          })}
-        </div>*/}
         <div style={{
             display: 'grid',
             gap: '0.5rem',
-           
           }}>
             {commonFonts.map(font => (
               <TapArea key={font.name} tapStyle="compress" onTap={() => addObject(font)}>
@@ -163,8 +92,6 @@ export default function () {
                      <img 
                         src={font.preview} 
                         className={css({
-                            //width: "100%",
-                            //height: "100%",
                             objectFit: "contain",
                             pointerEvents: "none",
                             verticalAlign: "middle",

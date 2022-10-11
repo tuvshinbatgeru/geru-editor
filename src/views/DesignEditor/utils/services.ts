@@ -25,3 +25,15 @@ export async function checkLicencedStickers(params) {
 export async function backgroundRemove(params) {
 	return await request().post('/api/customization/background-remove', params)
 }
+
+export async function fetchUserUploads(user_id, params) {
+	return await request().get(`/api/user/${user_id}/file`, {
+		params
+	})
+}
+
+export async function fileUpload(user_id, file) {
+	return await request().post(`/api/user/${user_id}/file`, {
+		file
+	})
+}

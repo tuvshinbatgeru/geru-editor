@@ -814,6 +814,10 @@ baseui@^12.0.0:
     react-window "^1.8.5"
     resize-observer-polyfill "^1.5.1"
 
+batch-processor@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/batch-processor/-/batch-processor-1.0.0.tgz#75c95c32b748e0850d10c2b168f6bdbe9891ace8"
+
 bidi-js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bidi-js/-/bidi-js-1.0.2.tgz#1a497a762c2ddea377429d2649c9ce0f8a91527f"
@@ -974,6 +978,13 @@ copy-anything@^2.0.1:
   resolved "https://registry.npmjs.org/copy-anything/-/copy-anything-2.0.6.tgz"
   dependencies:
     is-what "^3.14.1"
+
+create-react-class@^15.6.2:
+  version "15.7.0"
+  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.7.0.tgz#7499d7ca2e69bb51d13faf59bd04f0c65a1d6c1e"
+  dependencies:
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
 
 credit-card-type@^8.0.0:
   version "8.3.0"
@@ -1327,6 +1338,10 @@ delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/delegates/-/delegates-1.0.0.tgz"
 
+desandro-matches-selector@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/desandro-matches-selector/-/desandro-matches-selector-2.0.2.tgz#717beed4dc13e7d8f3762f707a6d58a6774218e1"
+
 detect-gpu@^4.0.36:
   version "4.0.41"
   resolved "https://registry.npmjs.org/detect-gpu/-/detect-gpu-4.0.41.tgz"
@@ -1392,6 +1407,12 @@ draco3d@^1.4.1:
 electron-to-chromium@^1.4.202:
   version "1.4.225"
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.225.tgz"
+
+element-resize-detector@^1.1.9:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/element-resize-detector/-/element-resize-detector-1.2.4.tgz#3e6c5982dd77508b5fa7e6d5c02170e26325c9b1"
+  dependencies:
+    batch-processor "1.0.0"
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -1544,6 +1565,10 @@ esutils@^2.0.2:
   version "2.0.3"
   resolved "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz"
 
+ev-emitter@^1.0.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ev-emitter/-/ev-emitter-1.1.1.tgz#8f18b0ce5c76a5d18017f71c0a795c65b9138f2a"
+
 fabric@^5.2.1:
   version "5.2.4"
   resolved "https://registry.npmjs.org/fabric/-/fabric-5.2.4.tgz"
@@ -1590,6 +1615,12 @@ fill-range@^7.0.1:
   resolved "https://registry.npmjs.org/fill-range/-/fill-range-7.0.1.tgz"
   dependencies:
     to-regex-range "^5.0.1"
+
+fizzy-ui-utils@^2.0.0:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/fizzy-ui-utils/-/fizzy-ui-utils-2.0.7.tgz#7df45dcc4eb374a08b65d39bb9a4beedf7330505"
+  dependencies:
+    desandro-matches-selector "^2.0.0"
 
 focus-lock@^0.11.2:
   version "0.11.2"
@@ -1699,6 +1730,10 @@ gestalt@^73.2.1:
   dependencies:
     classnames "^2.2.6"
     gestalt-design-tokens ">0.0.0"
+
+get-size@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/get-size/-/get-size-2.0.3.tgz#54a1d0256b20ea7ac646516756202769941ad2ef"
 
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
@@ -1840,6 +1875,12 @@ ignore@^5.2.0:
 image-size@~0.5.0:
   version "0.5.5"
   resolved "https://registry.npmjs.org/image-size/-/image-size-0.5.5.tgz"
+
+imagesloaded@^4.0.0:
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/imagesloaded/-/imagesloaded-4.1.4.tgz#1376efcd162bb768c34c3727ac89cc04051f3cc7"
+  dependencies:
+    ev-emitter "^1.0.0"
 
 immutable@^4.0.0:
   version "4.1.0"
@@ -2050,7 +2091,7 @@ lodash@4.17.21, lodash@^4.17.11, lodash@^4.17.21, lodash@^4.17.4:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz"
   dependencies:
@@ -2086,6 +2127,13 @@ make-dir@^3.1.0:
   resolved "https://registry.npmjs.org/make-dir/-/make-dir-3.1.0.tgz"
   dependencies:
     semver "^6.0.0"
+
+masonry-layout@^4.2.0:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/masonry-layout/-/masonry-layout-4.2.2.tgz#d57b44af13e601bfcdc423f1dd8348b5524de348"
+  dependencies:
+    get-size "^2.0.2"
+    outlayer "^2.1.0"
 
 matchmediaquery@^0.3.0:
   version "0.3.1"
@@ -2269,6 +2317,14 @@ optionator@^0.8.1:
     type-check "~0.3.2"
     word-wrap "~1.2.3"
 
+outlayer@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/outlayer/-/outlayer-2.1.1.tgz#29863b6de10ea5dadfffcadfa0d728907387e9a2"
+  dependencies:
+    ev-emitter "^1.0.0"
+    fizzy-ui-utils "^2.0.0"
+    get-size "^2.0.2"
+
 parse-node-version@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/parse-node-version/-/parse-node-version-1.0.1.tgz"
@@ -2432,6 +2488,10 @@ react-clientside-effect@^1.2.6:
   dependencies:
     "@babel/runtime" "^7.12.13"
 
+react-cloudinary-upload-widget@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-cloudinary-upload-widget/-/react-cloudinary-upload-widget-1.6.0.tgz#2be52a17f74d7f03ca5f93e6f40c6623401e6214"
+
 react-colorful@^5.5.1:
   version "5.6.1"
   resolved "https://registry.npmjs.org/react-colorful/-/react-colorful-5.6.1.tgz"
@@ -2493,6 +2553,12 @@ react-icomoon@^2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/react-icomoon/-/react-icomoon-2.5.4.tgz#f7e8a22b31be20f61168cde8c61a66e79ba4d1e5"
 
+react-infinite-scroller@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/react-infinite-scroller/-/react-infinite-scroller-1.2.6.tgz#8b80233226dc753a597a0eb52621247f49b15f18"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-input-mask@^2.0.4:
   version "2.0.4"
   resolved "https://registry.npmjs.org/react-input-mask/-/react-input-mask-2.0.4.tgz"
@@ -2507,6 +2573,17 @@ react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.6:
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
+
+react-masonry-component@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/react-masonry-component/-/react-masonry-component-6.3.0.tgz#edd7593f9f0d4bfa29249ea1e4d2d07757eba65d"
+  dependencies:
+    create-react-class "^15.6.2"
+    element-resize-detector "^1.1.9"
+    imagesloaded "^4.0.0"
+    lodash "^4.17.4"
+    masonry-layout "^4.2.0"
+    prop-types "^15.5.8"
 
 react-merge-refs@^1.1.0:
   version "1.1.0"

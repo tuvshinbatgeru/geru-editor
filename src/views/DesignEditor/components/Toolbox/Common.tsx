@@ -51,6 +51,8 @@ export default function () {
 
   return (
     <Block $style={{ display: "flex", alignItems: "center" }}>
+      <CommonAlign />
+      
       {state.isGroup ? (
         <Button
           onClick={() => {
@@ -77,14 +79,14 @@ export default function () {
 
       {(state.isGroup || !state.isMultiple) && <CommonLayers />}
 
-      <CommonAlign />
-      <Opacity />
-      <LockUnlock />
-      <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Duplicate">
+      
+      {/* <Opacity /> */}
+      {/* <LockUnlock /> */}
+      {/* <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Duplicate">
         <Button onClick={() => editor.objects.clone()} size={SIZE.mini} kind={KIND.tertiary}>
           <DuplicateIcon size={22} />
         </Button>
-      </StatefulTooltip>
+      </StatefulTooltip> */}
       <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Delete">
         <Button onClick={() => editor.objects.remove()} size={SIZE.mini} kind={KIND.tertiary}>
           <DeleteIcon size={24} />
