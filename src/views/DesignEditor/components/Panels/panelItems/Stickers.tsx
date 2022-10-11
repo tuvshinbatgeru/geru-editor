@@ -39,7 +39,7 @@ export default function () {
     }
     const addObject = React.useCallback(
         (item) => {
-            console.log("item",item)
+            //console.log("item",item)
           if (editor) {
             const options = {
               type: "StaticImage",

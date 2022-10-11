@@ -100,7 +100,7 @@ export default function () {
         width: 420,
         text: "Add some text",
         fontSize: 92,
-        //fontFamily: font.family,
+        fontFamily: font.family,
         textAlign: "center",
         fontStyle: "normal",
         fontURL: font.url,
