@@ -7,9 +7,12 @@ import {fetchTemplates, deleteTemplate } from "../../../utils/services"
 import {HeaderText} from "geru-components"
 import Masonry from 'react-masonry-component'
 import useAppContext from "~/hooks/useAppContext"
+import useDesignEditorContext from "~/hooks/useDesignEditorContext"
 import { useEditor } from "@layerhub-io/react"
 import { toast } from 'react-toastify'
-export default function (props) {
+export default function () {
+
+    const { setCurrentScene, currentScene } = useDesignEditorContext()
     const [fetching, setFetching] = useState(false)
     const [templates, setTemplates] = useState([])
     const editor = useEditor()
@@ -33,38 +36,32 @@ export default function (props) {
     }
     
     const handleLoadTemplate = async template => {
-        const fonts = []
-        template.objects.forEach(object => {
-            if (object.type === 'StaticText' || object.type === 'DynamicText') {
-                fonts.push({
-                    name: object.metadata.fontFamily,
-                    url: object.metadata.fontURL,
-                    options: { style: 'normal', weight: 400 },
-                })
-            }
-    
-            if(object.type === 'Background') {
-                object.width = parseInt(width)
-                object.height = parseInt(height)
-            }
+        const fonts: any[] = []
+        template.editor_json.layers.forEach((object: any) => {
+        if (object.type === "StaticText" || object.type === "DynamicText") {
+            fonts.push({
+              name: object.fontFamily,
+              url: object.fontURL,
+              options: { style: "normal", weight: 400 },
+            })
+          }
         })
-        const filteredFonts = fonts.filter(f => !!f.url)
+
+        const filteredFonts = fonts.filter((f) => !!f.url)
         if (filteredFonts.length > 0) {
             await loadFonts(filteredFonts)
         }
     
-        let tempWidth = template.frame.width
-        let tempHeight = template.frame.height
+        let tempWidth = template.editor_json.frame.width
+        let tempHeight = template.editor_json.frame.height
        
-        template.frame.width = parseInt(width)
-        template.frame.height = parseInt(height)
+        template.editor_json.frame.width = parseInt(tempWidth)
+        template.editor_json.frame.height = parseInt(tempHeight)
     
         //setIsShowMobileModal(!isShowMobileModal)
+        setCurrentScene({ ...template.editor_json, id: currentScene?.id })
+
     
-        //editor.importFromJSON(template)
-    
-        template.frame.width = parseInt(tempWidth)
-        template.frame.height = parseInt(tempHeight)
       }
     
       const loadFonts = fonts => {
@@ -166,35 +163,36 @@ export default function (props) {
                             >
                             {
                                 templates.map((template, index) => (
-                                <Box column={6} key={index} padding={2}>
-                                    <TapArea onTap={() => handleLoadTemplate(template.editor_json)}>
-                                    <Card>
-                                        <Image
-                                            alt="Template"
-                                            color='transparent'
-                                            naturalHeight={236 * (template.editor_json.frame.height / template.editor_json.frame.width)}
-                                            naturalWidth={236}
-                                            src={template.preview_url}
-                                        />
-                                    </Card>
-                                    <div style={{ position: 'absolute', bottom: 6, display: 'flex', width: '100%', height: '40%' }}>
-                                        <Box display='flex' width='100%'>
-                                        <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
-                                            <Text color='light' align='center' size='md' weight='bold'>{template.name}</Text>
+                                    <Box column={6} key={index} padding={2}>
+                                        {/*<TapArea onTap={() => handleLoadTemplate(template.editor_json)}>*/}
+                                        <TapArea onTap={() => handleLoadTemplate(template)}>
+                                        <Card>
+                                            <Image
+                                                alt="Template"
+                                                color='transparent'
+                                                naturalHeight={236 * (template.editor_json.frame.height / template.editor_json.frame.width)}
+                                                naturalWidth={236}
+                                                src={template.preview_url}
+                                            />
+                                        </Card>
+                                        <div style={{ position: 'absolute', bottom: 6, display: 'flex', width: '100%', height: '40%' }}>
+                                            <Box display='flex' width='100%' >
+                                            <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
+                                                <Text color='light' align='center' size='200' weight='bold'>{template.name}</Text>
+                                            </div>
+                                            </Box>
                                         </div>
-                                        </Box>
-                                    </div>
-                                    </TapArea>
-                                    <div style={{ position: 'absolute', top: 2, right: 2 }}>
-                                    <IconButton 
-                                        accessibilityLabel='icon'
-                                        icon='clear'
-                                        size='lg'
-                                        iconcolor='white'
-                                        onClick={() => onDelete(template._id)}
-                                    />
-                                    </div>
-                                </Box>
+                                        </TapArea>
+                                        <div style={{ position: 'absolute', top: 2, right: 2 }}>
+                                        <IconButton 
+                                            accessibilityLabel='icon'
+                                            icon='clear'
+                                            size='lg'
+                                            iconcolor='white'
+                                            onClick={() => onDelete(template._id)}
+                                        />
+                                        </div>
+                                    </Box>
                                 ))
                             }
                             </Masonry>
