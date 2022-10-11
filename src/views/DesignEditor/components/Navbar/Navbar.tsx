@@ -31,7 +31,7 @@ export default function () {
     // @ts-ignore
     <Box width='100%' display="flex" justifyContent="end" alignItems="center" paddingX={6}>
           <TapArea tapStyle="compress" fullWidth={false}>
-              <Box color='dark' paddingY={2} paddingX={4} justifyContent='center' alignItems='center'  display='flex'>
+              <Box color='dark' paddingY={3} paddingX={4} justifyContent='center' alignItems='center'  display='flex'>
                 <Icon 
                     icon="download"
                     accessibilityLabel="save"
@@ -45,7 +45,7 @@ export default function () {
           </TapArea>
           <Box width={8} />
           <TapArea tapStyle="compress" fullWidth={false} onTap={makeDownloadTemplate}>
-              <Box color='primary' paddingY={2} paddingX={4} justifyContent='center' alignItems='center' display='flex'>
+              <Box color='primary' paddingY={3} paddingX={4} justifyContent='center' alignItems='center' display='flex'>
                   <Icon 
                       icon="check-circle"
                       accessibilityLabel="save"
