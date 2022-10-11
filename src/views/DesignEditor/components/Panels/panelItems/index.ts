@@ -16,6 +16,7 @@ import TextEffects from "./TextEffects"
 import Stickers from "./Stickers"
 import Mydesign from "./Mydesign"
 import nft from "./nft"
+
 export default {
   StaticText: TextProperties,
   Text: Text,

@@ -10,7 +10,7 @@ import Masonry from 'react-masonry-component'
 import { useEditor } from "@layerhub-io/react"
 import { nanoid } from "nanoid"
 import { useMediaQuery } from 'react-responsive'
-import { Box, Card, TapArea, Button } from 'gestalt'
+import { Box, Card, TapArea, Spinner } from 'gestalt'
 import { TransformImage } from 'geru-components'
 import { fetchUserUploads, fileUpload } from "~/views/DesignEditor/utils/services"
 
@@ -138,13 +138,6 @@ export default function () {
   return (
       <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <Scrollable>
-            {/* <Button
-              // onClick={handleInputFileRefClick}
-              color="red"
-              text="UPLOAD FILES"
-              fullWidth
-            /> */}
-
           <WidgetLoader />
           <Box paddingX={4} paddingY={4}>
             <Widget
@@ -252,6 +245,10 @@ export default function () {
                     ))
                   }
                 </Masonry>
+
+                {
+                  fetching && <Box color='light'><Spinner show={true} /></Box>
+                }
             </InfiniteScroll>
           </Box>
         </Scrollable>

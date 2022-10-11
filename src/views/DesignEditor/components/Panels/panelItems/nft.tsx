@@ -4,8 +4,8 @@ import Scrollable from "~/components/Scrollable"
 import { Button } from "gestalt"
 import { HeaderText} from "geru-components"
 import { Box} from "gestalt"
-import PhantomWallet from '../panelItems/web3/wallets/PhantomWallet'
-import MetamaskWallet from '../panelItems/web3/wallets/MetamaskWallet'
+import PhantomWallet from './web3/wallets/PhantomWallet'
+import MetamaskWallet from './web3/wallets/MetamaskWallet'
 export default function () {
     return (
         <>
