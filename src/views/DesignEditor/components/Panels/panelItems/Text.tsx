@@ -29,6 +29,7 @@ export default function () {
         name: "OpenSans-Regular",
         url: "https://fonts.gstatic.com/s/opensans/v27/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0C4nY1M2xLER.ttf",
       }
+
       await loadFonts([font])
       const options = {
         id: nanoid(),
@@ -87,20 +88,21 @@ export default function () {
   }, [])
 
   const AddNewFonts = async (font) => {
-    console.log("font",font)
     if (editor) {
       const new_font: FontItem = {
-        name: font.full_name,
+        name: font.postscript_name,
         url: font.url,
       }
+
       await loadFonts([new_font])
+
       const options = {
         id: nanoid(),
         type: "StaticText",
         width: 420,
-        text: "Add some text",
+        text: "Add Text",
         fontSize: 92,
-        fontFamily: font.family,
+        fontFamily: font.postscript_name,
         textAlign: "center",
         fontStyle: "normal",
         fontURL: font.url,
@@ -113,28 +115,6 @@ export default function () {
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
       <Scrollable>
-        <Block padding={"0 1.5rem"}>
-          <Button
-            onClick={addObject}
-            text="Add text"
-            color="red"
-            iconEnd="add"
-          />
-
-          {/*<Block
-            $style={{
-              paddingTop: "0.5rem",
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "8px",
-            }}
-          >
-            {[...textComponents].map((tc) => (
-              <TextComponentItem onClick={addComponent} key={tc.id} component={tc} />
-            ))}
-          </Block>*/}
-           
-        </Block>
         <div style={{
             display: 'grid',
             gap: '0.5rem',
@@ -152,7 +132,7 @@ export default function () {
                         fontSize: '50px',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        background: "white",
+                        background: "#f2f2f2",
                         cursor: 'pointer',
                         fontFamily: font.name
                     }}
@@ -160,8 +140,6 @@ export default function () {
                      <img 
                         src={font.preview} 
                         className={css({
-                            //width: "100%",
-                            //height: "100%",
                             objectFit: "contain",
                             pointerEvents: "none",
                             verticalAlign: "middle",
