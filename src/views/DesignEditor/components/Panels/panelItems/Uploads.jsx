@@ -247,7 +247,7 @@ export default function () {
                 </Masonry>
 
                 {
-                  fetching && <Box color='light'><Spinner show={true} /></Box>
+                  fetching && <Box><Spinner show={true} /></Box>
                 }
             </InfiniteScroll>
           </Box>

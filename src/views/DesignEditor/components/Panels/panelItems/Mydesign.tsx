@@ -108,96 +108,93 @@ export default function () {
         <>
             <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
                 <Scrollable>
-                    <Block padding={"0 1.5rem"}>
-                        <Box display='flex' alignItems='center' wrap paddingX={2} paddingY={2}>
-                        {
-                            templates.length == 0 && 
-                                <Box paddingX={4} paddingY={6}>
-                                        <Flex gap={12} direction='column'>
-                                        <HeaderText color='white' align='center'>Танд одоогоор урласан загвар алга байна...</HeaderText>
-                                        <Text color='light' align='center'>Та өөрийн загвараа хийж дуусгаад баруун дээр байрлах</Text>
-                                            {isTabletOrMobile ? 
-                                                <Box color='dark' padding={2} justifyContent='center' alignItems='center'  >
-                                                    <IconButton 
-                                                        icon="replace"
-                                                        accessibilityLabel="save"
-                                                        size="sm"
-                                                        bgColor='red'
-                                                    /> 
-                                                </Box>
-                                            :<Box color='dark' padding={2} justifyContent='center' alignItems='center'  display='flex'>
+                    <Box display='flex' alignItems='center' wrap paddingX={2} paddingY={2}>
+                    {
+                        templates.length == 0 && 
+                            <Box paddingX={4} paddingY={6}>
+                                    <Flex gap={12} direction='column'>
+                                    <HeaderText color='white' align='center'>Танд одоогоор урласан загвар алга байна...</HeaderText>
+                                    <Text color='light' align='center'>Та өөрийн загвараа хийж дуусгаад баруун дээр байрлах</Text>
+                                        {isTabletOrMobile ? 
+                                            <Box color='dark' padding={2} justifyContent='center' alignItems='center'  >
                                                 <IconButton 
-                                                    icon="download"
+                                                    icon="replace"
                                                     accessibilityLabel="save"
                                                     size="sm"
                                                     bgColor='red'
-                                                />
-                                                <Box width={5} />
-                                                <Text color='light' weight='bold' align='center' overflow='noWrap'>{"Save template"}</Text>
-                                            </Box>}
-                                            <Text color='light' align='center'>товчийг дарснаар загвараа хадгалах боломжтой.</Text>
-                                        </Flex>
-                                </Box>
-                        }
-                        {
-                            (fetching && templates.length == 0) && (
-                                [1, 2, 3, 4, 5, 6].map((index) => (
-                                <Column span={4} key={index}>
-                                    <Box  padding={2}>
-                                        <Box height={120} color='dark'></Box>
-                                    </Box>
-                                </Column>
-                                ))
-                            )
-                        }
-                        </Box>
-                        <Box paddingX={4}>
-                            <Masonry
-                                key={1}
-                                className={'my-gallery-class'} // default ''
-                                //elementType={'ul'} // default 'div'
-                                options={masonryOptions} // default {}
-                                disableImagesLoaded={false} // default false
-                                updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
-                                // /imagesLoadedOptions={imagesLoadedOptions} // default {}
-                            >
-                            {
-                                templates.map((template, index) => (
-                                    <Box column={6} key={index} padding={2}>
-                                        {/*<TapArea onTap={() => handleLoadTemplate(template.editor_json)}>*/}
-                                        <TapArea onTap={() => handleLoadTemplate(template)}>
-                                        <Card>
-                                            <Image
-                                                alt="Template"
-                                                color='transparent'
-                                                naturalHeight={236 * (template.editor_json.frame.height / template.editor_json.frame.width)}
-                                                naturalWidth={236}
-                                                src={template.preview_url}
-                                            />
-                                        </Card>
-                                        <div style={{ position: 'absolute', bottom: 6, display: 'flex', width: '100%', height: '40%' }}>
-                                            <Box display='flex' width='100%' >
-                                            <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
-                                                <Text color='light' align='center' size='200' weight='bold'>{template.name}</Text>
-                                            </div>
+                                                /> 
                                             </Box>
+                                        :<Box color='dark' padding={2} justifyContent='center' alignItems='center'  display='flex'>
+                                            <IconButton 
+                                                icon="download"
+                                                accessibilityLabel="save"
+                                                size="sm"
+                                                bgColor='red'
+                                            />
+                                            <Box width={5} />
+                                            <Text color='light' weight='bold' align='center' overflow='noWrap'>{"Save template"}</Text>
+                                        </Box>}
+                                        <Text color='light' align='center'>товчийг дарснаар загвараа хадгалах боломжтой.</Text>
+                                    </Flex>
+                            </Box>
+                    }
+                    {
+                        (fetching && templates.length == 0) && (
+                            [1, 2, 3, 4, 5, 6].map((index) => (
+                            <Column span={4} key={index}>
+                                <Box  padding={2}>
+                                    <Box height={120} color='dark'></Box>
+                                </Box>
+                            </Column>
+                            ))
+                        )
+                    }
+                    </Box>
+                    <Box paddingX={4}>
+                        <Masonry
+                            key={1}
+                            className={'my-gallery-class'} // default ''
+                            //elementType={'ul'} // default 'div'
+                            options={masonryOptions} // default {}
+                            disableImagesLoaded={false} // default false
+                            updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+                            // /imagesLoadedOptions={imagesLoadedOptions} // default {}
+                        >
+                        {
+                            templates.map((template, index) => (
+                                <Box column={6} key={index} padding={2}>
+                                    {/*<TapArea onTap={() => handleLoadTemplate(template.editor_json)}>*/}
+                                    <TapArea onTap={() => handleLoadTemplate(template)}>
+                                    <Card>
+                                        <Image
+                                            alt="Template"
+                                            color='transparent'
+                                            naturalHeight={236 * (template.editor_json.frame.height / template.editor_json.frame.width)}
+                                            naturalWidth={236}
+                                            src={template.preview_url}
+                                        />
+                                    </Card>
+                                    <div style={{ position: 'absolute', bottom: 6, display: 'flex', width: '100%', height: '40%' }}>
+                                        <Box display='flex' width='100%' >
+                                        <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
+                                            <Text color='light' align='center' size='200' weight='bold'>{template.name}</Text>
                                         </div>
-                                        </TapArea>
-                                        <div style={{ position: 'absolute', top: 2, right: 2 }}>
+                                        </Box>
+                                    </div>
+                                    </TapArea>
+                                    <div style={{ position: 'absolute', top: 2, right: 2 }}>
                                         <IconButton 
                                             accessibilityLabel='icon'
                                             icon='clear'
                                             size='lg'
-                                            iconcolor='white'
                                             onClick={() => onDelete(template._id)}
                                         />
-                                        </div>
-                                    </Box>
-                                ))
-                            }
-                            </Masonry>
-                        </Box>
-                    </Block>
+                                    </div>
+                                </Box>
+                            ))
+                        }
+                        </Masonry>
+                    </Box>
                 </Scrollable>
             </Block>
         </>
