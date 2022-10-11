@@ -17,8 +17,19 @@ function useAppContext() {
     setUploads,
     currentTemplate,
     setCurrentTemplate,
+    backgroundColor,
+    setBackgroundColor,
+    dimensions,
+    setDimensions,
+    fonts,
+    setFonts,
   } = useContext(AppContext)
+
   return {
+    backgroundColor,
+    setBackgroundColor,
+    dimensions,
+    setDimensions,
     isMobile,
     setIsMobile,
     activePanel,
@@ -33,6 +44,8 @@ function useAppContext() {
     setUploads,
     currentTemplate,
     setCurrentTemplate,
+    fonts,
+    setFonts,
   }
 }
 

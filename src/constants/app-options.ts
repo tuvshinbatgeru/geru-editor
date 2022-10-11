@@ -1,9 +1,9 @@
 export const BASE_ITEMS = [
     {
-        id: "templates",
-        name: "Templates",
-        icon: "Icon_Design",
-      },
+        id: "stickers",
+        name: "Stickers",
+        icon: "Icon_Sticker",
+    },
     {
         id: "uploads",
         name: "Uploads",
@@ -13,17 +13,6 @@ export const BASE_ITEMS = [
         id: "text",
         name: "Text",
         icon: "Icon_Text",
-    },
-    //  {
-    //    id: "uploads",
-    //    name: "Uploads",
-    //    icon: "Icon_Upload",
-    //  },
-
-    {
-        id: "stickers",
-        name: "Stickers",
-        icon: "Icon_Sticker",
     },
     {
         id: "mydesign",
@@ -46,4 +35,5 @@ export const BASE_ITEMS = [
 export enum PanelType {
   TEMPLATES = "Templates",
   BACKGROUND = "Background",
+  UPLOADS = "Uploads",
 }

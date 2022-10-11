@@ -1,23 +1,20 @@
 import { useState, useEffect } from 'react'
-import { Scrollbars } from 'react-custom-scrollbars'
 import { Block } from "baseui/block"
 import Scrollable from "~/components/Scrollable"
-import { Button,IconButton, Text,Box, Flex,TapArea,Image,Card ,Column} from "gestalt"
+import { IconButton, Text,Box, Flex,TapArea,Image,Card ,Column} from "gestalt"
 import { useMediaQuery } from 'react-responsive'
 import {fetchTemplates, deleteTemplate } from "../../../utils/services"
 import {HeaderText} from "geru-components"
 import Masonry from 'react-masonry-component'
-import { useContextMenuRequest, useEditor } from "@layerhub-io/react"
+import useAppContext from "~/hooks/useAppContext"
+import { useEditor } from "@layerhub-io/react"
 import { toast } from 'react-toastify'
-
 export default function (props) {
     const [fetching, setFetching] = useState(false)
     const [templates, setTemplates] = useState([])
-    const [value, setValue] = useState('')
     const editor = useEditor()
-    //const { width, height } = props.router.query
-    const width = 300
-    const height  = 300
+    const { dimensions, setDimensions } = useAppContext()
+    const { width, height } = dimensions
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
     useEffect(() => {
@@ -28,7 +25,6 @@ export default function (props) {
         setFetching(true)
         fetchTemplates()
         .then(res => {
-            console.log(res)
             if(res.data.code == 0) {
                 setTemplates(res.data.templates)
             }
@@ -115,47 +111,50 @@ export default function (props) {
         <>
             <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
                 <Scrollable>
-                    <Block display='flex' alignItems='center' wrap paddingX={2} paddingY={2}>
-                    {
-                        (fetching && templates.length == 0) && (
-                            [1, 2, 3, 4, 5, 6].map((index) => (
+                    <Block padding={"0 1.5rem"}>
+                        <Box display='flex' alignItems='center' wrap paddingX={2} paddingY={2}>
+                        {
+                            templates.length == 0 && 
+                                <Box paddingX={4} paddingY={6}>
+                                        <Flex gap={12} direction='column'>
+                                        <HeaderText color='white' align='center'>Танд одоогоор урласан загвар алга байна...</HeaderText>
+                                        <Text color='light' align='center'>Та өөрийн загвараа хийж дуусгаад баруун дээр байрлах</Text>
+                                            {isTabletOrMobile ? 
+                                                <Box color='dark' padding={2} justifyContent='center' alignItems='center'  >
+                                                    <IconButton 
+                                                        icon="replace"
+                                                        accessibilityLabel="save"
+                                                        size="sm"
+                                                        bgColor='red'
+                                                    /> 
+                                                </Box>
+                                            :<Box color='dark' padding={2} justifyContent='center' alignItems='center'  display='flex'>
+                                                <IconButton 
+                                                    icon="download"
+                                                    accessibilityLabel="save"
+                                                    size="sm"
+                                                    bgColor='red'
+                                                />
+                                                <Box width={5} />
+                                                <Text color='light' weight='bold' align='center' overflow='noWrap'>{"Save template"}</Text>
+                                            </Box>}
+                                            <Text color='light' align='center'>товчийг дарснаар загвараа хадгалах боломжтой.</Text>
+                                        </Flex>
+                                </Box>
+                        }
+                        {
+                            (fetching && templates.length == 0) && (
+                                [1, 2, 3, 4, 5, 6].map((index) => (
                                 <Column span={4} key={index}>
                                     <Box  padding={2}>
                                         <Box height={120} color='dark'></Box>
                                     </Box>
                                 </Column>
-                            
-                            ))
-                        )
-                    }
-                    {
-                        templates.length === 0 ?
-                            <Box paddingX={4} paddingY={6}>
-                                    <Flex gap={12} direction='column'>
-                                    <HeaderText color='white' align='center'>Танд одоогоор урласан загвар алга байна...</HeaderText>
-                                    <Text color='light' align='center'>Та өөрийн загвараа хийж дуусгаад баруун дээр байрлах</Text>
-                                        {isTabletOrMobile ? 
-                                            <Box color='dark' padding={2} justifyContent='center' alignItems='center'  >
-                                                <IconButton 
-                                                    icon="replace"
-                                                    accessibilityLabel="save"
-                                                    size="sm"
-                                                    bgColor='red'
-                                                /> 
-                                            </Box>
-                                        :<Box color='dark' padding={2} justifyContent='center' alignItems='center'  display='flex'>
-                                            <IconButton 
-                                                icon="download"
-                                                accessibilityLabel="save"
-                                                size="sm"
-                                                bgColor='red'
-                                            />
-                                            <Box width={5} />
-                                            <Text color='light' weight='bold' align='center' overflow='noWrap'>{"Save template"}</Text>
-                                        </Box>}
-                                        <Text color='light' align='center'>товчийг дарснаар загвараа хадгалах боломжтой.</Text>
-                                    </Flex>
-                            </Box>: <Box paddingX={4}>
+                                ))
+                            )
+                        }
+                        </Box>
+                        <Box paddingX={4}>
                             <Masonry
                                 key={1}
                                 className={'my-gallery-class'} // default ''
@@ -167,42 +166,39 @@ export default function (props) {
                             >
                             {
                                 templates.map((template, index) => (
-                                    <Box column={6} key={index} padding={2}>
-                                        <TapArea onTap={() => handleLoadTemplate(template.editor_json)}>
-                                        <Card>
-                                            <Image
-                                                alt="Template"
-                                                color='transparent'
-                                                naturalHeight={236 * (template.editor_json.frame.height / template.editor_json.frame.width)}
-                                                naturalWidth={236}
-                                                src={template.preview_url}
-                                            />
-                                        </Card>
-                                            <div style={{ position: 'absolute', bottom: 6, display: 'flex', width: '100%', height: '40%' }}>
-                                                <Box display='flex' width='100%'>
-                                                <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
-                                                    <Text color='light' align='center' size='200' weight='bold'>{template.name}</Text>
-                                                </div>
-                                                </Box>
-                                            </div>
-                                        </TapArea>
-                                        <div style={{ position: 'absolute', top: 2, right: 2 }}>
-                                            <IconButton 
-                                                accessibilityLabel='icon'
-                                                icon='clear'
-                                                size='lg'
-                                                iconcolor='white'
-                                                onClick={() => onDelete(template._id)}
-                                            />
+                                <Box column={6} key={index} padding={2}>
+                                    <TapArea onTap={() => handleLoadTemplate(template.editor_json)}>
+                                    <Card>
+                                        <Image
+                                            alt="Template"
+                                            color='transparent'
+                                            naturalHeight={236 * (template.editor_json.frame.height / template.editor_json.frame.width)}
+                                            naturalWidth={236}
+                                            src={template.preview_url}
+                                        />
+                                    </Card>
+                                    <div style={{ position: 'absolute', bottom: 6, display: 'flex', width: '100%', height: '40%' }}>
+                                        <Box display='flex' width='100%'>
+                                        <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
+                                            <Text color='light' align='center' size='md' weight='bold'>{template.name}</Text>
                                         </div>
-                                    </Box>
+                                        </Box>
+                                    </div>
+                                    </TapArea>
+                                    <div style={{ position: 'absolute', top: 2, right: 2 }}>
+                                    <IconButton 
+                                        accessibilityLabel='icon'
+                                        icon='clear'
+                                        size='lg'
+                                        iconcolor='white'
+                                        onClick={() => onDelete(template._id)}
+                                    />
+                                    </div>
+                                </Box>
                                 ))
                             }
                             </Masonry>
                         </Box>
-                    }
-
-                       
                     </Block>
                 </Scrollable>
             </Block>
