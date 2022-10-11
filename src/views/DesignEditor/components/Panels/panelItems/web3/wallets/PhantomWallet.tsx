@@ -7,11 +7,13 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { useEditor } from "@layerhub-io/react"
 import Masonry from 'react-masonry-component'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { PublicKey, Transaction} from "@solana/web3.js";
 
 const loading_nfts_text = 'Fetching NFTs...';
-const wallet_empty_text = 'No nfts to display'
+const wallet_empty_text = 'No nfts to display';
+
+
 const PhantomWallet = () => {
+    //(window as any).global = window;
     const editor = useEditor()
     const [nfts, setNFTs] = useState([])
     const [fetching, setFetching] = useState(false)
@@ -21,6 +23,17 @@ const PhantomWallet = () => {
     const [walletKey, setWalletKey] = useState<PhantomProvider | undefined>(
         undefined
     );
+    useEffect(() => {
+        const provider = getProvider();
+        if (provider) 
+            setProvider(provider);
+        else 
+            setProvider(undefined);
+    }, []);
+    //useEffect(() => {
+    //   getNfts()
+    //}, [walletKey])
+
     //const getNfts = async () => {
     //    setFetching(true)
     //    try {
@@ -66,7 +79,7 @@ const PhantomWallet = () => {
         if (solana) {
             try {
                 const response = await solana.connect();
-                //console.log("wallet account ", response.publicKey.toString());
+                console.log("wallet account ", response.publicKey.toString());
                 setWalletKey(response.publicKey.toString());
             } catch (err) {
             // { code: 4001, message: 'User rejected the request.' }
@@ -95,16 +108,6 @@ const PhantomWallet = () => {
     }
     
     //// detect phantom provider exists
-    //useEffect(() => {
-    //    const provider = getProvider();
-    //    if (provider) 
-    //        setProvider(provider);
-    //    else 
-    //        setProvider(undefined);
-    //}, []);
-    //useEffect(() => {
-    //   getNfts()
-    //}, [walletKey])
 
    
     return (

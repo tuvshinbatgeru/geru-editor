@@ -16,7 +16,6 @@ function GraphicEditor(props) {
     params = {}
   } = props
 
-  console.log(params)
 
   const {
     backgroundColor = "000",

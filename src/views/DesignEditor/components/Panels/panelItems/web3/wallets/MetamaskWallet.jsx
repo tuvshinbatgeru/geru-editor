@@ -43,22 +43,30 @@ const MetamaskWallet = (props) => {
                 .then(ethereum
                     .request({ method: 'eth_accounts' })
                     .then(accounts => {
-                        
-                        localStorage.setItem("meta_contract_address", JSON.stringify(accounts[0]));
-                        setWallet(accounts[0] || connect_wallet_error_text)
+                        if (accounts[0] === undefined ||accounts[0] === null ){
+                            setWallet(connect_wallet_error_text)
+                        }else{
+                            localStorage.setItem("meta_contract_address", JSON.stringify(accounts[0]));
+                            setConnected(true)
+                            setWallet(accounts[0])
+                        }
                     }));
         } catch (error) {
             console.error(error);
         }
     };
-
+    //const onLogout = () => {
+    //    try {
+    //        const ttt = localStorage.setItem("meta_contract_address", JSON.stringify(false));
+    //        setConnected(false)
+            
+    //    } catch (error) {
+    //      console.error(error);
+    //    }
+    //};
     useEffect(() => {
         if (utils.isAddress(wallet)) {
-            //alert(wallet)
             setWallet(wallet)
-            //props.loginWithWallet({
-            //    contract_address: wallet
-            //})
         }
     }, [wallet])
 
@@ -69,13 +77,13 @@ const MetamaskWallet = (props) => {
 
     useEffect(() => {
         const saved = localStorage.getItem("meta_contract_address");
-        console.log("saved",saved)
-        if (saved) {
+        if (saved === null || !saved ) {
+            setConnected(false)
+        }else{
             setConnected(true)
-        }else setConnected(false)
-        setWallet(saved || "" )
+            setWallet(saved)
+        }
     }, [])
-    
     return (
        <Box borderStyle="sm">
           <TapArea tapStyle="compress" onTap={onClickConnect} fullWidth={false}>
@@ -88,53 +96,50 @@ const MetamaskWallet = (props) => {
                     <Box width={20} />
                     <HeaderText size="xl" color='white'>MetaMask</HeaderText>
                 </Box>
-                <Box display='flex' paddingX={4} paddingY={2} color='blue' wrap borderStyle='shadow' alignItems='center'>
-                    {wallet&& (
-                        <Box>
-                            <Box padding={2}>
-                                <HeaderText size='md' color='white'>Connected </HeaderText>
-                                
-                            </Box>
-                            {/*<Box padding={2}>
-                                <HeaderText size='md' color='white'>{ connected ? wallet : "not connected"} </HeaderText>
-                            </Box>*/}
-                            
-                            <Box height={20}/>
-                            <Box>
-                            {/*<Button text='disconnect' color='red' onClick={ () => onClickConnect}></Button>*/}
-                            </Box>
-                            {
-                                Array.isArray(nfts) && nfts.length > 0 ? (
-                                <Masonry>
-                                    {
-                                    nfts.map((item, index) => (
-                                        <Box
-                                        key={index}
-                                        column={6}
-                                        padding={2}
-                                        >
-                                        <TapArea onTap={() => addImageToCanvas(item)}>
-                                            <Card>
-                                            <Image
-                                                alt={item.title}
-                                                naturalHeight={1000}
-                                                naturalWidth={1000}
-                                                color="#fff"
-                                                src={item.media[0].gateway}
-                                            />
-                                            </Card>
-                                        </TapArea>
+                <Box padding={4}>
+                    <Box paddingY={4}>
+                        {/*<Text size="sm" color='light'>{connected ? wallet : null}</Text>*/}
+                        {
+                                wallet && (
+                                    <Box>
+                                        <Box height={20}/>
+                                        <Box>
                                         </Box>
-                                    ))
-                                    }
-                                </Masonry>
-                                ) : <Text color='white'>{fetching ? loading_nfts_text : wallet_empty_text}</Text>
+                                        {
+                                            Array.isArray(nfts) && nfts.length > 0 ? (
+                                            <Masonry>
+                                                {
+                                                nfts.map((item, index) => (
+                                                    <Box
+                                                    key={index}
+                                                    column={6}
+                                                    padding={2}
+                                                    >
+                                                    <TapArea onTap={() => addImageToCanvas(item)}>
+                                                        <Card>
+                                                        <Image
+                                                            alt={item.title}
+                                                            naturalHeight={1000}
+                                                            naturalWidth={1000}
+                                                            color="#fff"
+                                                            src={item.media[0].gateway}
+                                                        />
+                                                        </Card>
+                                                    </TapArea>
+                                                    </Box>
+                                                ))
+                                                }
+                                            </Masonry>
+                                            ) : <HeaderText size="xl" color='red'>{fetching ? loading_nfts_text : wallet_empty_text}</HeaderText>
+                                        }
+                                    </Box>
+                                )
                             }
-                        </Box>
-                    )}
-                  <Scrollbars>
-                </Scrollbars>
-             </Box>
+                    </Box>
+                    <Box >
+                    
+                   </Box>
+                </Box>
           </TapArea>
        </Box>
     )

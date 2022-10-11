@@ -17,9 +17,9 @@ export default function () {
                     <Box padding={4}>
                         <MetamaskWallet/>
                     </Box>
-                    <Box padding={4}>
+                    {/*<Box padding={4}>
                         <PhantomWallet />
-                    </Box>
+                    </Box>*/}
                 </Scrollable>
             </Block>
         </>

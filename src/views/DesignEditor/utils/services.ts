@@ -1,5 +1,8 @@
 import { request } from '../../../services/api'
-
+import axios from 'axios'
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/urlan/'
+const CLOUDINARY_KEY = "359513655322777"
+const PRESET = 'tyt2eb9j'
 // STICKER'S APIS
 export async function fetchStickers() {
 	return await request().get('/api/sticker/all')
@@ -44,4 +47,23 @@ export async function deleteTemplate(id) {
 }
 export async function fetchTemplates() {
 	return await request().get('/api/template')
+}
+
+export async function saveTemplate(params) {
+	return await request().post('/api/template', params)
+}
+
+export function uploadTemporaryArtwork(file, public_id, callback) {
+	const formData = new FormData()
+	formData.append('upload_preset', PRESET)
+	formData.append('folder', '/geru-by-me/temporary')
+	formData.append('public_id', public_id)
+	formData.append('file', file)
+
+	axios
+        .post(`${CLOUDINARY_URL}image/upload`, formData)
+        .then(res => {
+            callback(null, res.data)
+        }) 
+        .catch(err => callback(err))
 }
