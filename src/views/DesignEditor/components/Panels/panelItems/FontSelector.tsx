@@ -11,9 +11,12 @@ import { SAMPLE_FONTS } from "~/constants/editor"
 import { groupBy } from "lodash"
 import Scrollable from "~/components/Scrollable"
 import { Block } from "baseui/block"
+import {TapArea, Box} from "gestalt"
 import AngleDoubleLeft from "~/components/Icons/AngleDoubleLeft"
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
-
+import { nanoid } from "nanoid"
+import { FontItem } from "~/interfaces/common"
+import { colors } from 'geru-components/dist/utils'
 export default function () {
   const [query, setQuery] = React.useState("")
   const { setActiveSubMenu } = useAppContext()
@@ -22,7 +25,29 @@ export default function () {
   const [commonFonts, setCommonFonts] = React.useState<any[]>([])
   const [css] = useStyletron()
   const editor = useEditor()
-
+  const addObject = async () => {
+    if (editor) {
+      const font: FontItem = {
+        name: "OpenSans-Regular",
+        url: "https://fonts.gstatic.com/s/opensans/v27/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0C4nY1M2xLER.ttf",
+      }
+      await loadFonts([font])
+      const options = {
+        id: nanoid(),
+        type: "StaticText",
+        width: 420,
+        text: "Add some text",
+        fontSize: 92,
+        fontFamily: font.name,
+        textAlign: "center",
+        fontStyle: "normal",
+        fontURL: font.url,
+        fill: "#333333",
+        metadata: {},
+      }
+      editor.objects.add<IStaticText>(options)
+    }
+  }
   React.useEffect(() => {
     const grouped = groupBy(SAMPLE_FONTS, "family")
     const standardFonts = Object.keys(grouped).map((key) => {
@@ -53,7 +78,7 @@ export default function () {
 
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-      <Block
+      {/*<Block
         $style={{
           display: "flex",
           alignItems: "center",
@@ -69,8 +94,8 @@ export default function () {
         <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
           <AngleDoubleLeft size={18} />
         </Block>
-      </Block>
-
+      </Block>*/}
+{/*
       <Block $style={{ padding: "0 1.5rem 1rem" }}>
         <Input
           overrides={{
@@ -86,16 +111,17 @@ export default function () {
           size={SIZE.compact}
           startEnhancer={<Search size={16} />}
         />
-      </Block>
+      </Block>*/}
 
       <Scrollable>
-        <div style={{ padding: "0 1.5rem", display: "grid", gap: "0.2rem" }}>
+        {/*<div style={{ padding: "0 1.5rem", display: "grid", gap: "0.2rem" }}>
           {commonFonts.map((font, index) => {
             return (
               <div
                 key={index}
                 onClick={() => handleFontFamilyChange(font)}
                 className={css({
+                    color: "white",
                   height: "40px",
                   display: "flex",
                   alignItems: "center",
@@ -111,7 +137,44 @@ export default function () {
               </div>
             )
           })}
-        </div>
+        </div>*/}
+        <div style={{
+            display: 'grid',
+            gap: '0.5rem',
+           
+          }}>
+            {commonFonts.map(font => (
+              <TapArea key={font.name} tapStyle="compress" onTap={() => addObject(font)}>
+                <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
+                  <div
+                    style={{
+                        display: 'flex',
+                        paddingLeft: '2rem',
+                        paddingTop: '1rem',
+                        paddingBottom: '1rem',
+                        fontSize: '50px',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: "white",
+                        cursor: 'pointer',
+                        fontFamily: font.name
+                    }}
+                  >
+                     <img 
+                        src={font.preview} 
+                        className={css({
+                            //width: "100%",
+                            //height: "100%",
+                            objectFit: "contain",
+                            pointerEvents: "none",
+                            verticalAlign: "middle",
+                        })}/>
+                     
+                  </div>
+                </Box>
+              </TapArea>
+            ))}
+          </div>
       </Scrollable>
     </Block>
   )
