@@ -8,6 +8,7 @@ import _isEmpty from 'lodash/isEmpty'
 import { toast } from 'react-toastify'
 export default function () {
 
+    //const { dimensions, setDimensions } = useAppContext()
     const editor = useEditor()
     const [is_saving, setIsSaving] = React.useState(false)
     const [templateName, setTemplateName] = React.useState("")
