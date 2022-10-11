@@ -73,7 +73,7 @@ export default function () {
             gap: '0.5rem',
           }}>
             {commonFonts.map(font => (
-              <TapArea key={font.name} tapStyle="compress" onTap={() => addObject(font)}>
+              <TapArea key={font.name} tapStyle="compress" onTap={() => addObject()}>
                 <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
                   <div
                     style={{

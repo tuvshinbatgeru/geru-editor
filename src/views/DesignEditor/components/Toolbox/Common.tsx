@@ -1,14 +1,11 @@
 import React from "react"
 import { Button, SIZE, KIND } from "baseui/button"
-import { Checkbox } from "baseui/checkbox"
 import { Block } from "baseui/block"
 import { StatefulTooltip, PLACEMENT } from "baseui/tooltip"
 import { useActiveObject, useEditor } from "@layerhub-io/react"
 import { StatefulPopover } from "baseui/popover"
+
 import DeleteIcon from "~/components/Icons/Delete"
-import UnlockedIcon from "~/components/Icons/Unlocked"
-import LockedIcon from "~/components/Icons/Locked"
-import DuplicateIcon from "~/components/Icons/Duplicate"
 import LayersIcon from "~/components/Icons/Layers"
 import AlignCenter from "~/components/Icons/AlignCenter"
 import AlignLeft from "~/components/Icons/AlignLeft"
@@ -18,7 +15,6 @@ import AlignMiddle from "~/components/Icons/AlignMiddle"
 import BringToFront from "~/components/Icons/BringToFront"
 import SendToBack from "~/components/Icons/SendToBack"
 import AlignBottom from "~/components/Icons/AlignBottom"
-import Opacity from "./Shared/Opacity"
 
 export default function () {
   const [state, setState] = React.useState({ isGroup: false, isMultiple: false })
@@ -190,50 +186,5 @@ function CommonAlign() {
         </StatefulTooltip>
       </Block>
     </StatefulPopover>
-  )
-}
-
-function LockUnlock() {
-  const [state, setState] = React.useState<{ locked: boolean }>({ locked: false })
-  const editor = useEditor()
-  const activeObject = useActiveObject()
-
-  React.useEffect(() => {
-    if (activeObject) {
-      // @ts-ignore
-      setState({ locked: !!activeObject.locked })
-    }
-  }, [activeObject])
-
-  return (
-    <>
-      {state.locked ? (
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Lock">
-          <Button
-            onClick={() => {
-              editor.objects.unlock()
-              setState({ locked: false })
-            }}
-            size={SIZE.mini}
-            kind={KIND.tertiary}
-          >
-            <UnlockedIcon size={24} />
-          </Button>
-        </StatefulTooltip>
-      ) : (
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Lock">
-          <Button
-            onClick={() => {
-              editor.objects.lock()
-              setState({ locked: true })
-            }}
-            size={SIZE.mini}
-            kind={KIND.tertiary}
-          >
-            <LockedIcon size={24} />
-          </Button>
-        </StatefulTooltip>
-      )}
-    </>
   )
 }

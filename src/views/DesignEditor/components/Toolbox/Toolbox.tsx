@@ -62,7 +62,7 @@ const Toolbox = () => {
   }, [editor, activeObject])
 
   // @ts-ignore
-  const Component = Items[state.toolbox]
+  const Component = Items[state.toolbox] ? Items[state.toolbox] : Items[DEFAULT_TOOLBOX]
 
   return <Container>{Component ? <Component /> : state.toolbox}</Container>
 }

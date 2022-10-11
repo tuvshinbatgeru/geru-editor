@@ -4,6 +4,7 @@ import { Block } from "baseui/block"
 import { Button, SIZE, KIND } from "baseui/button"
 import { PLACEMENT, StatefulPopover } from "baseui/popover"
 import { StatefulTooltip } from "baseui/tooltip"
+import { Button as GestaltButton } from 'gestalt'
 import FlipHorizontal from "~/components/Icons/FlipHorizontal"
 import FlipVertical from "~/components/Icons/FlipVertical"
 
@@ -61,9 +62,7 @@ export default function () {
     >
       <Block>
         <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Layers">
-          <Button size={SIZE.compact} kind={KIND.tertiary}>
-            Flip
-          </Button>
+          <GestaltButton text="Flip" />
         </StatefulTooltip>
       </Block>
     </StatefulPopover>

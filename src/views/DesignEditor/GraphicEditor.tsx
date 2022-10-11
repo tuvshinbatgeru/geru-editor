@@ -11,56 +11,62 @@ import { useEditor } from "@layerhub-io/react"
 
 import { fetchFonts } from '~/views/DesignEditor/utils/services'
 
-function GraphicEditor() {
-  const { backgroundColor, setBackgroundColor, dimensions, setDimensions, fonts, setFonts } = useAppContext()
+function GraphicEditor(props) {
+  const {
+    params = {}
+  } = props
+
+  console.log(params)
+
+  const {
+    backgroundColor = "000",
+    dimensions = {
+      width: 2000,
+      height: 2000,
+    },
+    fonts = []
+  } = params
+
+  const { setBackgroundColor, setDimensions, setFonts } = useAppContext()
   const editor = useEditor()
 
   React.useEffect(() => {
-    editor && editor.frame.setBackgroundColor(`#${backgroundColor}`)
-  }, [backgroundColor])
+    // editor && editor.frame.setBackgroundColor(`#${backgroundColor}`)
+  }, [backgroundColor, editor])
 
   React.useEffect(() => {
-    editor && editor.frame.resize({
-      width: parseInt(dimensions.width),
-      height: parseInt(dimensions.height)
-    })
-  }, [dimensions])
+    // if(editor)
+    // console.log(editor.frame)
+    // editor && editor.frame.resize({
+    //   width: parseInt(dimensions.width),
+    //   height: parseInt(dimensions.height)
+    // })
+  }, [dimensions, editor])
 
-  React.useEffect(() => {
-    fetchFonts()
-    .then(res => {
-      if(res.data.code == 0) {
-            setFonts(res.data.font.map((font) => {
-              return {
-                id: font._id,
-                name: font.name,
-                family: font.name,
-                full_name: font.name,
-                postscript_name: font.name,
-                preview: "https://ik.imagekit.io/scenify/fonts/previews/9idoq0LRDb67USctK3Z5iDnt.png",
-                style: font.name,
-                url: font.url,
-                category: "handwriting",
-              }
-            }))
-      }
-    })
-  }, [])
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setBackgroundColor("000")
-      setDimensions({
-        width: 4000,
-        height: 2000,
-      })
-    }, 500)
-  }, [])
+  // React.useEffect(() => {
+  //   fetchFonts()
+  //   .then(res => {
+  //     if(res.data.code == 0) {
+  //           setFonts(res.data.font.map((font) => {
+  //             return {
+  //               id: font._id,
+  //               name: font.name,
+  //               family: font.name,
+  //               full_name: font.name,
+  //               postscript_name: font.name,
+  //               preview: "https://ik.imagekit.io/scenify/fonts/previews/9idoq0LRDb67USctK3Z5iDnt.png",
+  //               style: font.name,
+  //               url: font.url,
+  //               category: "handwriting",
+  //             }
+  //           }))
+  //     }
+  //   })
+  // }, [])
 
   return (
     <>
       <EditorContainer>
-        {/* <Navbar /> */}
         <div style={{ display: "flex", flex: 1 }}>
           <Panels />
           <div style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative" }}>

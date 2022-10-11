@@ -2,21 +2,17 @@ import React from "react"
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Block } from "baseui/block"
 import { useEffect, useState } from 'react'
-import Scrollable from "~/components/Scrollable"
-import { Button,Text,Box, TapArea, Column, Mask, Image, Card ,Flex, Icon} from "gestalt"
+import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
+import { Text,Box, TapArea, Column, Mask, Card } from "gestalt"
 import { HeaderText, TransformImage } from "geru-components"
 import { useMediaQuery } from 'react-responsive'
-import { useContextMenuRequest, useEditor } from "@layerhub-io/react"
+import { useEditor } from "@layerhub-io/react"
 import { colors } from 'geru-components/dist/utils'
-import useAppContext from "~/hooks/useAppContext"
 import {fetchPacks} from "../../../utils/services"
 import { currencyFormat } from '../../../utils/helper'
 
 export default function () {
     const editor = useEditor()
-    const { setActiveSubMenu, setIsMobile, isMobile } = useAppContext()
-    const [search, setSearch] = useState('')
-
     const [fetching, setFetching] = useState(false)
     const [objects, setObjects] = useState([])
 
@@ -74,28 +70,7 @@ export default function () {
             <Block $style={{ flex: 1, display: "flex", flexDirection: "column" , backgroundColor: colors.colorBlack}}>
                 <Scrollbars>
                         <Box paddingX={4}>
-                            {
-                                fetching && (
-                                    <>
-                                        <Box paddingX={4}>
-                                            <Flex gap={12} direction='column'>
-                                                <Box>
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                    <Box color='dark' height={50} marginBottom={2} />
-                                                </Box>
-                                            </Flex>
-                                        </Box>
-                                    </>
-                            )
-                           }
+                          { fetching && <ListLoadingPlaceholder /> }
                            {objects.map((obj, index) => (
                             <Pack 
                                 key={index}
