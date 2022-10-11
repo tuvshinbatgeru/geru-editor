@@ -1,5 +1,4 @@
 import React from "react"
-import { useStyletron } from "styletron-react"
 import { useEditor } from "@layerhub-io/react"
 import { FontItem } from "~/interfaces/common"
 import { loadFonts } from "~/utils/fonts"
@@ -9,25 +8,23 @@ import { Block } from "baseui/block"
 
 import Scrollable from "~/components/Scrollable"
 import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
-import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
 
-import { TapArea, Box, Flex } from "gestalt"
+import { TapArea, Box } from "gestalt"
 import useAppContext from "~/hooks/useAppContext"
 
 export default function () {
   const editor = useEditor()
-  const setIsSidebarOpen = useSetIsSidebarOpen()
-  const [css] = useStyletron()
   const [fetching, setFetching] = React.useState(false)
   const [commonFonts, setCommonFonts] = React.useState<any[]>([])
-  const { setActiveSubMenu, fonts } = useAppContext()
+  const { fonts } = useAppContext()
 
   React.useEffect(() => {
-    setFetching(true)
     fetchFonts()
   }, [fonts])
 
   const fetchFonts = async () => {
+    if(fonts.length == 0) return
+    setFetching(true)
     await loadFonts(fonts)
     setCommonFonts(fonts)
     setFetching(false)
@@ -52,7 +49,7 @@ export default function () {
         textAlign: "center",
         fontStyle: "normal",
         fontURL: font.url,
-        fill: "#333333",
+        fill: "#000",
         metadata: {},
       }
       editor.objects.add<IStaticText>(options)
@@ -73,7 +70,6 @@ export default function () {
               <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
                 <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
                   <Box padding={2} borderStyle='sm'>
-
                      <div style={{
                         display: 'flex',
                         paddingLeft: '1rem',

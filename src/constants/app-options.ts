@@ -23,7 +23,7 @@ export const BASE_ITEMS = [
         id: "nft",
         name: "nft",
         icon: "Icon_Nft",
-    },
+    }
     //  ,
     //  {
     //    id: "graphics",

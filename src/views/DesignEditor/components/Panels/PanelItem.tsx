@@ -14,7 +14,7 @@ const Container = styled('div', props => ({
     borderRight: "2px solid #d7d8e3",
     display: "flex",
     transition: "ease width 0.1s",
-    overflow: "hidden",
+    overflow: "hidden"
 }))
 
 const MobileContainer = styled('div', props => ({
@@ -22,9 +22,11 @@ const MobileContainer = styled('div', props => ({
     height: '100%',
     boxShadow: '1px 0px 1px rgba(0, 0, 0, 0.15)',
 }))
+
 interface State {
     panel: string
 }
+
 function PanelsList() {
     const [state, setState] = React.useState<State>({ panel: "Text" })
     const isSidebarOpen = useIsSidebarOpen()
@@ -45,11 +47,6 @@ function PanelsList() {
 
     // @ts-ignore
     const Component = panelItems[state.panel]
-
-    //const Component =
-    //    ( activeSubMenu) || (activeSubMenu === "orange") 
-    //    ? panelItems[activeSubMenu]
-    //    : panelItems[activePanel]
 
     if(isTabletOrMobile) {
         return <MobileContainer>{Component && <Component />}</MobileContainer>

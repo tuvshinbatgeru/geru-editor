@@ -7,7 +7,7 @@ import Navbar from "../Navbar"
 
 export default function () {
   const [state, setState] = React.useState({ fill: "#000000" })
-  const { setActiveSubMenu } = useAppContext()
+  
   const editor = useEditor()
   const activeObject = useActiveObject() as any
 
