@@ -8,36 +8,29 @@ import { nanoid } from "nanoid"
 import { Block } from "baseui/block"
 
 import Scrollable from "~/components/Scrollable"
+import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
 
-import {TapArea, Box} from "gestalt"
+import { TapArea, Box, Flex } from "gestalt"
 import useAppContext from "~/hooks/useAppContext"
 
 export default function () {
   const editor = useEditor()
   const setIsSidebarOpen = useSetIsSidebarOpen()
   const [css] = useStyletron()
+  const [fetching, setFetching] = React.useState(false)
   const [commonFonts, setCommonFonts] = React.useState<any[]>([])
   const { setActiveSubMenu, fonts } = useAppContext()
 
   React.useEffect(() => {
-    // const grouped = groupBy(fonts, "family")
-    // const standardFonts = Object.keys(grouped).map((key) => {
-    //   const familyFonts = grouped[key]
-    //   const standardFont = familyFonts//.find((familyFont) => familyFont.postscript_name.includes("-Regular"))
-
-    //   if (standardFont) {
-    //     return standardFont
-    //   }
-    //   return familyFonts[familyFonts.length - 1]
-    // })
-    // load
+    setFetching(true)
     fetchFonts()
   }, [fonts])
 
   const fetchFonts = async () => {
     await loadFonts(fonts)
     setCommonFonts(fonts)
+    setFetching(false)
   } 
 
   const AddNewFonts = async (font) => {
@@ -74,6 +67,8 @@ export default function () {
             gap: '0.5rem',
            
           }}>
+            { fetching && <ListLoadingPlaceholder /> }
+
             {commonFonts.map(font => (
               <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
                 <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >

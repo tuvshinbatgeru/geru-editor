@@ -3,6 +3,7 @@ import { Block } from "baseui/block"
 import Common from "./Common"
 import useAppContext from "~/hooks/useAppContext"
 import { useActiveObject, useEditor } from "@layerhub-io/react"
+import Navbar from "../Navbar"
 
 export default function () {
   const [state, setState] = React.useState({ fill: "#000000" })
@@ -31,37 +32,6 @@ export default function () {
   }, [editor, activeObject])
 
   return (
-    <Block
-      $style={{
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        padding: "0 12px",
-        justifyContent: "space-between",
-      }}
-    >
-      <Block
-        $style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
-        {/* <Block onClick={() => setActiveSubMenu("CanvasFill")}>
-          <Block
-            $style={{
-              height: "24px",
-              width: "24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              backgroundColor: state.fill,
-              border: "1px solid #dedede",
-            }}
-          ></Block>
-        </Block> */}
-      </Block>
-    </Block>
+    <Navbar />
   )
 }
