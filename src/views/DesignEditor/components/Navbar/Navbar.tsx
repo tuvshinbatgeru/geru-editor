@@ -2,36 +2,23 @@ import React from "react"
 import { useEditor } from "@layerhub-io/react"
 import { Box, TapArea, Icon, Text, Spinner, FixedZIndex ,Modal, Layer , TextField} from 'gestalt'
 import { HeaderText } from 'geru-components'
+import useAppContext from "~/hooks/useAppContext"
 import { resizeImage } from '~/views/DesignEditor/utils/helper'
 import {uploadTemporaryArtwork, saveTemplate} from "../../utils/services"
 import _isEmpty from 'lodash/isEmpty'
 import { toast } from 'react-toastify'
 export default function () {
-
-    //const { dimensions, setDimensions } = useAppContext()
+    const { setIsSaving } = useAppContext()
     const editor = useEditor()
-    const [is_saving, setIsSaving] = React.useState(false)
     const [templateName, setTemplateName] = React.useState("")
 
     const [fetching, setFetching] = React.useState(false)
     const [public_id, setPublicId] = React.useState(`test${Math.floor(Math.random() * 100)}`)
     const [templateModal, setTemplateModal] = React.useState(false)
-    const [options, setOptions] = React.useState({})
     const zIndex = new FixedZIndex(99)
 
     const makeDownloadTemplate = async () => {
-        const template = editor.scene.exportToJSON()
-        template.layers = template.layers.filter((layer) => layer.id != 'background')
-
-        const image = (await editor.renderer.render(template)) as string
-
-        const resized = (await resizeImage(image, 1000, 1000)) as string
-
-        const a = document.createElement("a")
-        a.href = resized
-        
-        a.download = "image.png"
-        a.click()
+        setIsSaving(true)
     }
 
     const onSaveTemplate = async () => {
@@ -79,7 +66,7 @@ export default function () {
     }
     return (
         // @ts-ignore
-        <Box width='100%' display="flex" justifyContent="end" alignItems="center" paddingX={6}>
+        <Box display="flex" justifyContent="end" alignItems="center" paddingX={6}>
             <TapArea tapStyle="compress" fullWidth={false} onTap={() => setTemplateModal(!templateModal)}>
                 <Box color='dark' paddingY={2} paddingX={4} justifyContent='center' alignItems='center'  display='flex'>
                     <Icon 
@@ -107,32 +94,6 @@ export default function () {
             </TapArea>
             
             {
-                is_saving && (
-                <Box position="absolute" left top height="100%" width="100%"
-                    zIndex={zIndex}
-                    display='flex'
-                    alignItems="center"
-                    direction='column'
-                    justifyContent="center"
-                    dangerouslySetInlineStyle={{
-                        __style: {
-                            backgroundColor:'rgba(0,0,30,0.4)',
-                            backdropFilter: 'blur(10px)',
-                            opacity: 1
-                        }
-                    }}
-                >
-                    <HeaderText color='white'>
-                        Creating your work of art hold on a bit ...
-                    </HeaderText>
-                    <Box height={12} />
-                    <Box color='light' rounding='circle' padding={1}> 
-                        <Spinner accessibilityLabel='loading' show={true} />
-                    </Box>
-                </Box>
-                )
-            }
-            {
                 templateModal && (
                     <Layer zIndex={zIndex}>
                         <Modal
@@ -147,6 +108,7 @@ export default function () {
                                     placeholder='template name'
                                     onChange={({value}) => setTemplateName(value)}
                                 />
+
                                 <Box direction='row' display='flex' paddingY={4}>
                                     <TapArea onTap={() => setTemplateModal(!templateModal)}>
                                         <Box color='dark' padding={4}>

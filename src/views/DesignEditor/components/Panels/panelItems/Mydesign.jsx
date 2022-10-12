@@ -34,10 +34,11 @@ export default function () {
         })
         .then(() => setFetching(false))
     }
-    
+
     const handleLoadTemplate = async template => {
-        const fonts: any[] = []
-        template.editor_json.layers.forEach((object: any) => {
+        let fonts = []
+
+        template.editor_json.layers.forEach((object) => {
         if (object.type === "StaticText" || object.type === "DynamicText") {
             fonts.push({
               name: object.fontFamily,
@@ -83,10 +84,6 @@ export default function () {
                  })
                 .catch(err => reject(err))
             })
-      }
-    
-      const masonryOptions = {
-        transitionDuration: 0
       }
     
       const onDelete = (id) => {
@@ -152,10 +149,9 @@ export default function () {
                     </Box>
                     <Box paddingX={4}>
                         <Masonry
-                            key={1}
+                            transitionDuration={400}
                             className={'my-gallery-class'} // default ''
                             //elementType={'ul'} // default 'div'
-                            options={masonryOptions} // default {}
                             disableImagesLoaded={false} // default false
                             updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
                             // /imagesLoadedOptions={imagesLoadedOptions} // default {}

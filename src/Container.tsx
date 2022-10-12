@@ -72,7 +72,7 @@ function Container({ children }: { children: React.ReactNode }) {
         width: "100vw",
       }}
     >
-      {loaded ? <>{children} </> : <Loading />}
+      {loaded ? <>{children} </> : null}
     </div>
   )
 }

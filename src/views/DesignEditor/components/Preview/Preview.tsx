@@ -1,70 +1,63 @@
 import React from "react"
-import { Modal, ModalBody, SIZE, ROLE } from "baseui/modal"
-import useEditorType from "~/hooks/useEditorType"
-import { Block } from "baseui/block"
-// import Video from "./Video"
-//import Presentation from "./Presentation"
-import Graphic from "./Graphic"
+import { Box, Spinner, FixedZIndex } from 'gestalt'
+import { HeaderText } from 'geru-components'
+import useAppContext from "~/hooks/useAppContext"
+import { useEditor } from "@layerhub-io/react"
+import { resizeImage } from '~/views/DesignEditor/utils/helper'
 
-interface ComponentProps {
-  isOpen: boolean
-  setIsOpen: (v: boolean) => void
-}
-export default function ({ isOpen, setIsOpen }: ComponentProps) {
-  const editorType = useEditorType()
+const Preview = (props) => {
+  const { onSuccessCallback = () => {} } = props
+  const editor = useEditor()
+  const { isSaving, setIsSaving } = useAppContext()
+  if(!isSaving) return null
+
+  const makePreview = React.useCallback(async () => {
+    if (isSaving) {
+        const template = editor.scene.exportToJSON()
+        template.layers = template.layers.filter((layer) => layer.id != 'background')
+
+        const image = (await editor.renderer.render(template)) as string
+        const resized = (await resizeImage(image, 1400, 1400)) as string
+
+        onSuccessCallback({
+            image: resized,
+            json: template,
+        })
+
+        setIsSaving(false)
+    }
+  }, [isSaving])
+
+  React.useEffect(() => {
+    makePreview()
+  }, [isSaving])
+
+  const zIndex = new FixedZIndex(99)
+
   return (
-    <Modal
-      onClose={() => setIsOpen(false)}
-      closeable
-      isOpen={isOpen}
-      animate
-      autoFocus
-      size={SIZE.full}
-      role={ROLE.dialog}
-      overrides={{
-        Root: {
-          style: {
-            zIndex: 5,
-          },
-        },
-        Dialog: {
-          style: {
-            marginTop: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-            borderTopRightRadius: 0,
-            borderTopLeftRadius: 0,
-            borderBottomLeftRadius: 0,
-            borderBottomRightRadius: 0,
-          },
-        },
-      }}
-    >
-      <ModalBody
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          marginTop: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          marginBottom: 0,
-          height: "100%",
-          position: "relative"
-        }}
-      >
-        <Block
-          style={{
-            position: "absolute",
-            flex: 1,
-            height: "100%",
-            width: "100%",
-            display: "flex"
+      <Box position="absolute" left top height="100%" width="100%"
+          zIndex={zIndex}
+          display='flex'
+          alignItems="center"
+          direction='column'
+          justifyContent="center"
+          dangerouslySetInlineStyle={{
+              __style: {
+                  backgroundColor:'rgba(0,0,30,0.4)',
+                  backdropFilter: 'blur(10px)',
+                  opacity: 1
+              }
           }}
-        >
-          <Graphic />
-        </Block>
-      </ModalBody>
-    </Modal>
+      >
+          <HeaderText color='white'>
+              Creating your work of art hold on a bit ...
+          </HeaderText>
+          <Box height={12} />
+          <Box color='light' rounding='circle' padding={1}> 
+              <Spinner accessibilityLabel='loading' show={true} />
+          </Box>
+      </Box>
   )
 }
+
+export default Preview

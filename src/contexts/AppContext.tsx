@@ -9,6 +9,8 @@ interface IAppContext {
     setBackgroundColor: (color: any) => void;
     fonts: any[];
     setFonts: (fonts: any[]) => void;
+    isSaving: boolean | undefined;
+    setIsSaving: (isSaving: boolean) => void; 
     isMobile: boolean | undefined;
     setIsMobile: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     backgroundRemove: boolean | undefined;
@@ -31,6 +33,8 @@ export const AppContext = createContext<IAppContext>({
     backgroundColor: 'fff',
     setBackgroundColor: () => {},
     dimensions: { width: 1000, height: 1000 },
+    isSaving: false,
+    setIsSaving: () => {},
     setDimensions: () => {},
     fonts: [],
     setFonts: () => {},
@@ -64,6 +68,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [backgroundColor, setBackgroundColor] = useState("fff");
     const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 })
     const [fonts, setFonts] = useState([])
+    const [isSaving, setIsSaving] = useState(false)
 
     const context = {
         isMobile,
@@ -74,6 +79,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setDimensions,
         fonts,
         setFonts,
+        isSaving,
+        setIsSaving,
         templates,
         setTemplates,
         activePanel,
