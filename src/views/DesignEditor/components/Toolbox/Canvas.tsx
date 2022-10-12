@@ -31,7 +31,9 @@ export default function () {
     }
   }, [editor, activeObject])
 
-  return (
-    <Navbar />
-  )
+  return null
+
+  // return (
+  //   <Navbar />
+  // )
 }

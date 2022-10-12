@@ -66,7 +66,7 @@ export default function () {
     }
     return (
         // @ts-ignore
-        <Box width='100%' display="flex" justifyContent="end" alignItems="center" paddingX={6}>
+        <Box display="flex" justifyContent="end" alignItems="center" paddingX={6}>
             <TapArea tapStyle="compress" fullWidth={false} onTap={() => setTemplateModal(!templateModal)}>
                 <Box color='dark' paddingY={2} paddingX={4} justifyContent='center' alignItems='center'  display='flex'>
                     <Icon 

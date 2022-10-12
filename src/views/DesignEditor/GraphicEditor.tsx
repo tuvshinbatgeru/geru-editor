@@ -1,10 +1,10 @@
 import React from 'react'
-import Navbar from "./components/Navbar"
 import Panels from "./components/Panels"
 import Canvas from "./components/Canvas"
 import Footer from "./components/Footer"
 import Toolbox from "./components/Toolbox"
 import Preview from './components/Preview'
+import TemplateLoader from './components/TemplateLoader'
 import EditorContainer from "./components/EditorContainer"
 
 import useAppContext from "~/hooks/useAppContext"
@@ -18,9 +18,10 @@ function GraphicEditor(props) {
   } = props
 
   const { backgroundColor, setBackgroundColor, dimensions, setDimensions, setFonts } = useAppContext()
-  const { onSuccessCallback = () => {} } = params
-  const editor = useEditor()
+  const { onSuccessCallback = () => {}, template = {}} = params
 
+  const editor = useEditor()
+  
   React.useEffect(() => {
     setDimensions(params.dimensions || { width: 4000, height: 2000 })
     setBackgroundColor(params.backgroundColor || "#000")
@@ -59,6 +60,8 @@ function GraphicEditor(props) {
   return (
     <>
       <EditorContainer>
+        <TemplateLoader template={template} />
+
         <Preview onSuccessCallback={onSuccessCallback} />
         <div style={{ display: "flex", flex: 1 }}>
           <Panels />

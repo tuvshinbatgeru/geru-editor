@@ -4,7 +4,9 @@ import getSelectionType from "~/utils/get-selection-type"
 import { styled } from "baseui"
 import Items from "./Items"
 import useAppContext from "~/hooks/useAppContext"
+import Navbar from '~/views/DesignEditor/components/Navbar'
 import { ILayer } from "@layerhub-io/types"
+import { Box } from 'gestalt'
 
 const DEFAULT_TOOLBOX = "Canvas"
 
@@ -64,7 +66,14 @@ const Toolbox = () => {
   // @ts-ignore
   const Component = Items[state.toolbox] ? Items[state.toolbox] : Items[DEFAULT_TOOLBOX]
 
-  return <Container>{Component ? <Component /> : state.toolbox}</Container>
+  return (
+    <Container>
+      <Box flex='grow' display="flex" alignItems="center" height={50}>
+        <Component />
+      </Box>
+      <Navbar />
+    </Container>
+  )
 }
 
 export default Toolbox

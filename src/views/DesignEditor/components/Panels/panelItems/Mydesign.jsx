@@ -34,7 +34,7 @@ export default function () {
         })
         .then(() => setFetching(false))
     }
-    
+
     const handleLoadTemplate = async template => {
         let fonts = []
 
