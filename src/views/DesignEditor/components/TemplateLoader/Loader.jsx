@@ -1,12 +1,13 @@
 import React from 'react'
 import _cloneDeep from 'lodash/cloneDeep'
+import _isEmpty from 'lodash/isEmpty'
 import useDesignEditorContext from "~/hooks/useDesignEditorContext"
 
 const Loader = (props) => {
     const { setCurrentScene, currentScene } = useDesignEditorContext()
 
     React.useEffect(() => {
-        handleLoadTemplate(props.template)
+        if(!_isEmpty(props.template)) handleLoadTemplate(props.template)
     }, [])
 
     const handleLoadTemplate = async (temp) => {
