@@ -1,14 +1,11 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import ResizeObserver from "resize-observer-polyfill"
 import useAppContext from "~/hooks/useAppContext"
-import Loading from "./components/Loading"
-import { editorFonts } from "./constants/fonts"
 // import { useAppDispatch } from "./store/store"
 
 function Container({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { isMobile, setIsMobile } = useAppContext()
-  const [loaded, setLoaded] = useState(false)
   // const dispatch = useAppDispatch()
   const updateMediaQuery = (value: number) => {
     if (!isMobile && value >= 800) {
@@ -19,6 +16,7 @@ function Container({ children }: { children: React.ReactNode }) {
       setIsMobile(false)
     }
   }
+
   useEffect(() => {
     const containerElement = containerRef.current!
     const containerWidth = containerElement.clientWidth
@@ -36,32 +34,6 @@ function Container({ children }: { children: React.ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    // dispatch(getFonts())
-    // dispatch(getUploads())
-    // dispatch(getPixabayResources())
-    loadFonts()
-    setTimeout(() => {
-      setLoaded(true)
-    }, 1000)
-  }, [])
-
-  const loadFonts = () => {
-    const promisesList = editorFonts.map((font) => {
-      // @ts-ignore
-      return new FontFace(font.name, `url(${font.url})`, font.options).load().catch((err) => err)
-    })
-    Promise.all(promisesList)
-      .then((res) => {
-        res.forEach((uniqueFont) => {
-          if (uniqueFont && uniqueFont.family) {
-            document.fonts.add(uniqueFont)
-          }
-        })
-      })
-      .catch((err) => console.log({ err }))
-  }
-
   return (
     <div
       ref={containerRef}
@@ -72,7 +44,7 @@ function Container({ children }: { children: React.ReactNode }) {
         width: "100vw",
       }}
     >
-      {loaded ? <>{children} </> : null}
+      {children}
     </div>
   )
 }

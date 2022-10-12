@@ -17,7 +17,7 @@ const Preview = (props) => {
         template.layers = template.layers.filter((layer) => layer.id != 'background')
 
         const image = (await editor.renderer.render(template)) as string
-        const resized = (await resizeImage(image, 1400, 1400)) as string
+        const resized = await resizeImage(image, 1400, 1400)
 
         onSuccessCallback({
             image: resized,
