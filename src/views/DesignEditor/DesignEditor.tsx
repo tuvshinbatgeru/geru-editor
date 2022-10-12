@@ -7,7 +7,6 @@ function DesignEditor(props) {
 
   return (
     <>
-      {displayPreview && <Preview isOpen={displayPreview} setIsOpen={setDisplayPreview} />}
       <GraphicEditor {...props} />
     </>
   )

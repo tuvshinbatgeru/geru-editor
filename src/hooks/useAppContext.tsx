@@ -23,6 +23,8 @@ function useAppContext() {
     setDimensions,
     fonts,
     setFonts,
+    isSaving,
+    setIsSaving
   } = useContext(AppContext)
 
   return {
@@ -46,6 +48,8 @@ function useAppContext() {
     setCurrentTemplate,
     fonts,
     setFonts,
+    isSaving,
+    setIsSaving
   }
 }
 

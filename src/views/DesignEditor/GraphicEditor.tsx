@@ -4,6 +4,7 @@ import Panels from "./components/Panels"
 import Canvas from "./components/Canvas"
 import Footer from "./components/Footer"
 import Toolbox from "./components/Toolbox"
+import Preview from './components/Preview'
 import EditorContainer from "./components/EditorContainer"
 
 import useAppContext from "~/hooks/useAppContext"
@@ -17,6 +18,7 @@ function GraphicEditor(props) {
   } = props
 
   const { backgroundColor, setBackgroundColor, dimensions, setDimensions, setFonts } = useAppContext()
+  const { onSuccessCallback = () => {} } = params
   const editor = useEditor()
 
   React.useEffect(() => {
@@ -57,6 +59,7 @@ function GraphicEditor(props) {
   return (
     <>
       <EditorContainer>
+        <Preview onSuccessCallback={onSuccessCallback} />
         <div style={{ display: "flex", flex: 1 }}>
           <Panels />
           <div style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative" }}>
