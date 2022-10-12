@@ -1,5 +1,7 @@
 import { useContextMenuRequest, useEditor } from "@layerhub-io/react"
 import { useStyletron } from "baseui"
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import BringToFront from "~/components/Icons/BringToFront"
 import Delete from "~/components/Icons/Delete"
 import Duplicate from "~/components/Icons/Duplicate"
@@ -9,9 +11,15 @@ import Locked from "~/components/Icons/Locked"
 import Paste from "~/components/Icons/Paste"
 import SendToBack from "~/components/Icons/SendToBack"
 import Unlocked from "~/components/Icons/Unlocked"
+import useAppContext from "~/hooks/useAppContext"
+import { backgroundRemovedImageUpload, fileUpload } from "../../utils/services"
+import { getBase64 } from "../../utils/helper"
 
 function ContextMenu() {
+  const { backgroundRemove , setBackgroundRemove} = useAppContext()
+//  console.log("1",backgroundRemove);
   const contextMenuRequest = useContextMenuRequest()
+//  const [isBackgroundRemove, setIsBackgroundRemove] = useState(false)
   const editor = useEditor()
   const handleAsComponentHandler = async () => {
     if (editor) {
@@ -19,6 +27,29 @@ function ContextMenu() {
       if (component) {
         console.log({ component })
       }
+    }
+  }
+
+  const backgroundRemove1 = async () => {
+   
+    if (editor) {
+        const component: any = await editor.scene.exportAsComponent()
+        if (component) {
+            setBackgroundRemove(true)
+            //console.log( component.src)
+            let imageSrc = component.src
+            let user_id = "5fdc722f79be6300207c731b"
+            getBase64(imageSrc, user_id)
+            .then(async function (rs) {
+                let result = await rs
+                console.log("result",result)
+                setBackgroundRemove(false)
+            }).catch((err)=>{
+                console.log(err)
+                setBackgroundRemove(false)
+            })
+            
+        }
     }
   }
   if (!contextMenuRequest || !contextMenuRequest.target) {
@@ -78,6 +109,7 @@ function ContextMenu() {
       </>
     )
   }
+  console.log("2",backgroundRemove);
   return (
     <>
       {!contextMenuRequest.target.locked ? (
@@ -158,9 +190,8 @@ function ContextMenu() {
           </ContextMenuItem>
           <ContextMenuItem
             onClick={() => {
-            //  handleAsComponentHandler()
-            //  editor.cancelContextMenu()
-            alert("removing ... ")
+                backgroundRemove1()
+                editor.cancelContextMenu()
             }}
             icon="Templates"
             label="Background remove"

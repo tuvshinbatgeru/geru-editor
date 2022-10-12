@@ -10,13 +10,15 @@ import Masonry from 'react-masonry-component'
 import { useEditor } from "@layerhub-io/react"
 import { nanoid } from "nanoid"
 import { useMediaQuery } from 'react-responsive'
-import { Box, Card, TapArea, Spinner } from 'gestalt'
+import { Box, Card, TapArea, Spinner ,Text} from 'gestalt'
 import { TransformImage } from 'geru-components'
 import { fetchUserUploads, fileUpload } from "~/views/DesignEditor/utils/services"
+import useAppContext from "~/hooks/useAppContext"
 
 const Image = (props) => {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
   const { photo, addImageToCanvas = () => {} } = props
+
 
   return (
     <Box 
@@ -42,10 +44,12 @@ const Image = (props) => {
 }
 
 export default function () {
+    
+
+  const { backgroundRemove , setBackgroundRemove} = useAppContext()
   const [uploads, setUploads] = React.useState([])
   const editor = useEditor()
   const setIsSidebarOpen = useSetIsSidebarOpen()
-
   const [page, setPage] = useState(1)
   const [pages, setPages] = useState(1)
   const [fetching, setFetching] = useState(false)
@@ -63,7 +67,7 @@ export default function () {
     } else {
       setPage(1)
     }
-  }, [user_id])
+  }, [user_id,backgroundRemove])
 
   const getPhotos = () => {
     if(!user_id) return
@@ -91,7 +95,6 @@ export default function () {
   const onLoadMore = () => {
     let nextPage = page + 1
     if(fetching || pages < nextPage) return
-
     setFetching(true)
     setPage(nextPage)
   }
@@ -134,10 +137,12 @@ export default function () {
   const failureCallBack = () => {
 
   }
-
   return (
       <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <Scrollable>
+        { <Box>
+                    <Text color="light"> {backgroundRemove}</Text>
+                </Box>}
           <WidgetLoader />
           <Box paddingX={4} paddingY={4}>
             <Widget
@@ -245,7 +250,7 @@ export default function () {
                     ))
                   }
                 </Masonry>
-
+               
                 {
                   fetching && <Box><Spinner show={true} /></Box>
                 }

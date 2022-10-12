@@ -5,6 +5,8 @@ function useAppContext() {
   const {
     isMobile,
     setIsMobile,
+    backgroundRemove,
+    setBackgroundRemove,
     activePanel,
     setActivePanel,
     templates,
@@ -28,6 +30,8 @@ function useAppContext() {
   return {
     backgroundColor,
     setBackgroundColor,
+    backgroundRemove,
+    setBackgroundRemove,
     dimensions,
     setDimensions,
     isMobile,

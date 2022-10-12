@@ -11,6 +11,8 @@ interface IAppContext {
     setFonts: (fonts: any[]) => void;
     isMobile: boolean | undefined;
     setIsMobile: React.Dispatch<React.SetStateAction<boolean | undefined>>;
+    backgroundRemove: boolean | undefined;
+    setBackgroundRemove: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     templates: Template[];
     setTemplates: (templates: Template[]) => void;
     uploads: any[];
@@ -34,6 +36,8 @@ export const AppContext = createContext<IAppContext>({
     setFonts: () => {},
     isMobile: false,
     setIsMobile: () => {},
+    backgroundRemove: false,
+    setBackgroundRemove: () => {},
     templates: [],
     setTemplates: () => {},
     uploads: [],
@@ -50,6 +54,7 @@ export const AppContext = createContext<IAppContext>({
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
     const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
+    const [backgroundRemove, setBackgroundRemove] = useState(false);
     const [templates, setTemplates] = useState<Template[]>([]);
     const [uploads, setUploads] = useState<any[]>([]);
     const [shapes, setShapes] = useState<Template[]>([]);
@@ -63,6 +68,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const context = {
         isMobile,
         setIsMobile,
+        backgroundRemove,
+        setBackgroundRemove,
         dimensions,
         setDimensions,
         fonts,

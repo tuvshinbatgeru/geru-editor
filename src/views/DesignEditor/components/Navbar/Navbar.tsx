@@ -145,7 +145,6 @@ export default function () {
                                 <TextField
                                     id="template input"
                                     placeholder='template name'
-                                    required
                                     onChange={({value}) => setTemplateName(value)}
                                 />
                                 <Box direction='row' display='flex' paddingY={4}>

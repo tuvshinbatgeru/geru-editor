@@ -67,3 +67,17 @@ export function uploadTemporaryArtwork(file, public_id, callback) {
         }) 
         .catch(err => callback(err))
 }
+
+export function backgroundRemovedImageUpload(file, callback) {
+    const formData = new FormData()
+	formData.append('upload_preset', PRESET)
+	formData.append('folder', '/geru-by-me/backgroundremove')
+	formData.append('file', file)
+    axios
+	.post(`${CLOUDINARY_URL}image/upload`, formData)
+	.then(res => {
+		callback(null, res.data)
+	}) 
+	.catch(err => callback(err))
+}
+
