@@ -61,8 +61,7 @@ export default function () {
     
         //setIsShowMobileModal(!isShowMobileModal)
         setCurrentScene({ ...template.editor_json, id: currentScene?.id })
-
-    
+        setIsShowMobileModal(false)
       }
     
       const loadFonts = fonts => {
@@ -103,7 +102,7 @@ export default function () {
     
     return (
         <>
-            <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+            <Box height="100%" width="100%" display="flex">
                 <Scrollable>
                     <Box display='flex' alignItems='center' wrap paddingX={2} paddingY={2}>
                     {
@@ -192,7 +191,7 @@ export default function () {
                         </Masonry>
                     </Box>
                 </Scrollable>
-            </Block>
+            </Box>
         </>
     )
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Block } from "baseui/block"
 import Scrollable from "~/components/Scrollable"
-import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
+import useAppContext from "~/hooks/useAppContext"
 
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 import InfiniteScroll from 'react-infinite-scroller'
@@ -44,7 +44,7 @@ const Image = (props) => {
 export default function () {
   const [uploads, setUploads] = React.useState([])
   const editor = useEditor()
-  const setIsSidebarOpen = useSetIsSidebarOpen()
+  const { setIsShowMobileModal } = useAppContext()
 
   const [page, setPage] = useState(1)
   const [pages, setPages] = useState(1)
@@ -113,6 +113,7 @@ export default function () {
     }
 
     editor.objects.add(options)
+    setIsShowMobileModal(false)
   }
 
   const successCallBack = (res) => {
@@ -136,10 +137,9 @@ export default function () {
   }
 
   return (
-      <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <Scrollable>
+      <Box height="100%" width="100%" display="flex" direction="column">
           <WidgetLoader />
-          <Box paddingX={4} paddingY={4}>
+          <Box paddingX={2} paddingY={3}>
             <Widget
               //sources={['local', 'dropbox', 'facebook']} // set the sources available for uploading -> by default
               sources={['local']}
@@ -220,7 +220,7 @@ export default function () {
               // the Public ID unique, and just use the normalized file name -> default = true
             />
           </Box>
-
+        <Scrollable>
           <Box paddingX={2}>
             <InfiniteScroll
                 // loader={getLoaderElement()}
@@ -252,6 +252,6 @@ export default function () {
             </InfiniteScroll>
           </Box>
         </Scrollable>
-      </Block>
+      </Box>
   )
 }

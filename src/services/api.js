@@ -1,11 +1,10 @@
 import axios from "axios"
 import Cookies from 'js-cookie'
 
-export const BASE_URL = 'https://geru-rest-api.herokuapp.com'
-
 export function request(headerOptions) {
     let token = Cookies.get('token')
     let referral = Cookies.get('referral')
+    const BASE_URL = Cookies.get('BASE_URL') ? Cookies.get('BASE_URL') : 'https://geru-rest-api.herokuapp.com'
 
     let query = {
         // timeout: TIMEOUT,

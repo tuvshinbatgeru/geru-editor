@@ -10,11 +10,13 @@ import { useEditor } from "@layerhub-io/react"
 import { colors } from 'geru-components/dist/utils'
 import {fetchPacks} from "../../../utils/services"
 import { currencyFormat } from '../../../utils/helper'
+import useAppContext from '~/hooks/useAppContext'
 
 export default function () {
     const editor = useEditor()
     const [fetching, setFetching] = useState(false)
     const [objects, setObjects] = useState([])
+    const { setIsShowMobileModal } = useAppContext()
 
     useEffect(() => {
         getStickers()
@@ -31,6 +33,7 @@ export default function () {
         .catch(err => console.log(err))
         .then(() => setFetching(false))
     }
+
     const addObject = React.useCallback(
         (item) => {
           if (editor) {
@@ -40,6 +43,7 @@ export default function () {
             }
 
             editor.objects.add(options)
+            setIsShowMobileModal(false)
           }
         },
         [editor]
@@ -52,6 +56,7 @@ export default function () {
             <Box height='100%'>
               <Scrollbars>
                 <Box paddingX={6} paddingY={4}>
+                  { fetching && <ListLoadingPlaceholder /> }
                   {objects.map((obj, index) => (
                     <Pack 
                       key={index}

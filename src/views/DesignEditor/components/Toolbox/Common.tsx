@@ -75,14 +75,6 @@ export default function () {
 
       {(state.isGroup || !state.isMultiple) && <CommonLayers />}
 
-      
-      {/* <Opacity /> */}
-      {/* <LockUnlock /> */}
-      {/* <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Duplicate">
-        <Button onClick={() => editor.objects.clone()} size={SIZE.mini} kind={KIND.tertiary}>
-          <DuplicateIcon size={22} />
-        </Button>
-      </StatefulTooltip> */}
       <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Delete">
         <Button onClick={() => editor.objects.remove()} size={SIZE.mini} kind={KIND.tertiary}>
           <DeleteIcon size={24} />

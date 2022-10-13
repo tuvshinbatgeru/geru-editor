@@ -9,7 +9,7 @@ import MetamaskWallet from './web3/wallets/MetamaskWallet'
 export default function () {
     return (
         <>
-            <Block $style={{ flex: 1, display: "flex", flexDirection: "column"}}>
+            <Box height="100%" width="100%" display="flex">
                 <Scrollable>
                     {/*<Box padding={6} display='flex' justifyContent='center' height='100%' alignItems='center'>
                         <HeaderText color="white" align='center'>NFT WALLET CONNECTION COMING SOON...</HeaderText>
@@ -21,7 +21,7 @@ export default function () {
                         <PhantomWallet />
                     </Box>*/}
                 </Scrollable>
-            </Block>
+            </Box>
         </>
     )
 }

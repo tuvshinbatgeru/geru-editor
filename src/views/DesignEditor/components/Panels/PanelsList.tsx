@@ -1,17 +1,16 @@
 import { useStyletron } from "baseui"
 import { BASE_ITEMS } from "~/constants/app-options"
-import useAppContext from "~/hooks/useAppContext"
-import { styled } from "baseui"
-import Icons from "~/components/Icons"
-import { useTranslation } from "react-i18next"
+
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
-import useEditorType from "~/hooks/useEditorType"
+import useAppContext from "~/hooks/useAppContext"
 import Scrollable from "~/components/Scrollable"
-import { Block } from "baseui/block"
-import { Box, Flex ,Text} from "gestalt"
+import PanelItem from './PanelItem'
+
+import { styled } from "baseui"
+import { useTranslation } from "react-i18next"
+import { Box, IconButton, Text, Modal, TapArea, FixedZIndex } from "gestalt"
 import { useMediaQuery } from 'react-responsive'
-import {Icon, Colors} from "geru-components"
-import { TapArea } from "gestalt"
+import { Icon } from "geru-components"
 import { colors } from 'geru-components/dist/utils'
 
 const Container = styled("div", (props) => ({
@@ -21,9 +20,68 @@ const Container = styled("div", (props) => ({
 }))
 
 function PanelsList() {
-  const { activePanel } = useAppContext()
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+  const { activePanel, isShowMobileModal, setIsShowMobileModal } = useAppContext()
   const { t } = useTranslation("editor")
   const PANEL_ITEMS = BASE_ITEMS
+
+  const ZINDEX = new FixedZIndex(1)
+  
+  if(isTabletOrMobile) {
+    return (
+      <Box display='flex' zIndex={ZINDEX}>
+        <Box bottom position='fixed' overflow='hidden' paddingX={2} paddingY={3}>
+          <IconButton 
+            size="lg"
+            icon='add'
+            bgColor="red"
+            accessibilityLabel='Model button'
+            onClick={() => setIsShowMobileModal(!isShowMobileModal)}
+          />
+        </Box>
+
+        {
+          isShowMobileModal && (
+            <Modal
+              accessibilityModalLabel='Modal'
+              onDismiss={() => setIsShowMobileModal(!isShowMobileModal)}
+              // align='center'
+            >
+                <Box position='fixed' display='flex' direction='column' bottom height="80%" width='100%' left>
+                  <div style={{ position: 'absolute', top: -50, left: 0, right: 0 }}>
+                    <Box display="flex" justifyContent='center'>
+                      <IconButton
+                        accessibilityLabel="close"
+                        icon="cancel"
+                        size='md'
+                        bgColor="transparentDarkGray"
+                        onClick={() => setIsShowMobileModal(false)}
+                      />
+                    </Box>
+                  </div>
+                  <Box flex="grow">
+                    <PanelItem />
+                  </Box>
+                  <Box direction='row' display='flex' justifyContent='center'>
+                    {
+                      PANEL_ITEMS.map(panelListItem => (
+                        <PanelListItem
+                          label={t(`panels.panelsList.${panelListItem.id}`)}
+                          name={panelListItem.name}
+                          key={panelListItem.name}
+                          icon={panelListItem.icon}
+                          activePanel={activePanel}
+                        />
+                      ))
+                    }
+                  </Box>
+                </Box>
+            </Modal>
+          )
+        }
+      </Box>
+    )
+  }
   
   return (
     <Container>
@@ -59,7 +117,9 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
           }}
         >
             <div style={{
-                backgroundColor: selected ? '#fff' : colors.colorBlack
+                backgroundColor: selected ? '#fff' : colors.colorBlack,
+                display: 'flex',
+                justifyContent: 'center'
             }}>
                 <Box 
                     display='flex'

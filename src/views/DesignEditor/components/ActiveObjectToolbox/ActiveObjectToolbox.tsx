@@ -2,29 +2,35 @@ import React from "react"
 import { useActiveObject, useEditor } from "@layerhub-io/react"
 import getSelectionType from "~/utils/get-selection-type"
 import { styled } from "baseui"
-import Items from "./Items"
+import Items from "../Toolbox/Items"
 import useAppContext from "~/hooks/useAppContext"
 import Navbar from '~/views/DesignEditor/components/Navbar'
-import { ILayer } from "@layerhub-io/types"
-import { Box } from 'gestalt'
+import { Box, ScrollBoundaryContainer } from 'gestalt'
+import { useMediaQuery } from 'react-responsive'
 
 const DEFAULT_TOOLBOX = "Canvas"
 
-interface ToolboxState {
-  toolbox: string
-}
-
 const Container = styled("div", (props) => ({
-  boxShadow: "rgb(0 0 0 / 15%) 0px 1px 1px",
+//   boxShadow: "rgb(0 0 0 / 15%) 0px 1px 1px",
   height: "50px",
+//   backgroundColor: '#fff',
+  position: 'absolute',
+  bottom: '80px',
+  left: '0px',
+  right: '0px',
+  borderRadius: '30px',
   display: "flex",
+  justifyContent: 'center'
 }))
 
 const Toolbox = () => {
-  const [state, setState] = React.useState<ToolboxState>({ toolbox: "Text" })
+  const [state, setState] = React.useState({ toolbox: "Text" })
   const { setActiveSubMenu } = useAppContext()
-  const activeObject = useActiveObject() as ILayer
+  const activeObject = useActiveObject()
   const editor = useEditor()
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+
+  if(!isTabletOrMobile) return null
 
   React.useEffect(() => {
     const selectionType = getSelectionType(activeObject)
@@ -44,7 +50,7 @@ const Toolbox = () => {
     let watcher = async () => {
       if (activeObject) {
         // @ts-ignore
-        const selectionType = getSelectionType(activeObject) as any
+        const selectionType = getSelectionType(activeObject)
 
         if (selectionType.length > 1) {
           setState({ toolbox: "Multiple" })
@@ -68,10 +74,9 @@ const Toolbox = () => {
 
   return (
     <Container>
-      <Box flex='grow' display="flex" alignItems="center" height={50}>
-        <Component />
+      <Box display="flex" alignItems="center" height={50} color='light' borderStyle="shadow" rounding={6}>
+        <Component has_toolbox />
       </Box>
-      <Navbar />
     </Container>
   )
 }

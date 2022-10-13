@@ -16,7 +16,7 @@ export default function () {
   const editor = useEditor()
   const [fetching, setFetching] = React.useState(false)
   const [commonFonts, setCommonFonts] = React.useState<any[]>([])
-  const { fonts } = useAppContext()
+  const { fonts, setIsShowMobileModal } = useAppContext()
 
   React.useEffect(() => {
     fetchFonts()
@@ -53,23 +53,23 @@ export default function () {
         metadata: {},
       }
       editor.objects.add<IStaticText>(options)
+      setIsShowMobileModal(false)
     }
   }
   
   return (
-    <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+    <Box height="100%" width="100%" display="flex">
       <Scrollable>
         <div style={{
             display: 'grid',
             gap: '0.5rem',
-           
-          }}>
+        }}>
             { fetching && <ListLoadingPlaceholder /> }
 
             {commonFonts.map(font => (
               <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
                 <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
-                  <Box padding={2} borderStyle='sm'>
+                  <Box padding={2} borderStyle="raisedTopShadow">
                      <div style={{
                         display: 'flex',
                         paddingLeft: '1rem',
@@ -89,6 +89,6 @@ export default function () {
             ))}
           </div>
       </Scrollable>
-    </Block>
+    </Box>
   )
 }

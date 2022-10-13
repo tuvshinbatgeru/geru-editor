@@ -11,6 +11,8 @@ interface IAppContext {
     setFonts: (fonts: any[]) => void;
     isSaving: boolean | undefined;
     setIsSaving: (isSaving: boolean) => void; 
+    isShowMobileModal: boolean
+    setIsShowMobileModal: (isShowMobileModal: boolean) => void;
     isMobile: boolean | undefined;
     setIsMobile: React.Dispatch<React.SetStateAction<boolean | undefined>>;
     templates: Template[];
@@ -33,6 +35,8 @@ export const AppContext = createContext<IAppContext>({
     dimensions: { width: 1000, height: 1000 },
     isSaving: false,
     setIsSaving: () => {},
+    isShowMobileModal: false,
+    setIsShowMobileModal: () => {},
     setDimensions: () => {},
     fonts: [],
     setFonts: () => {},
@@ -64,6 +68,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [dimensions, setDimensions] = useState({ width: 1000, height: 1000 })
     const [fonts, setFonts] = useState([])
     const [isSaving, setIsSaving] = useState(false)
+    const [isShowMobileModal, setIsShowMobileModal] = useState(false)
 
     const context = {
         isMobile,
@@ -88,6 +93,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setCurrentTemplate,
         backgroundColor,
         setBackgroundColor,
+        isShowMobileModal,
+        setIsShowMobileModal
     };
     
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
