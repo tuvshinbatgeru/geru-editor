@@ -222,7 +222,7 @@ export default function (props) {
       {
         has_toolbox && (
           <Box display={"flex"} alignItems={"center"} flex='grow' maxWidth={width - 60} overflow="scrollX">
-            <Block
+            {/* <Block
               onClick={() => setActiveSubMenu("FontSelector")}
               $style={{
                 border: "1px solid rgb(185,185,185)",
@@ -241,20 +241,13 @@ export default function (props) {
               <Block display={"flex"}>
                 <ChevronDown size={22} />
               </Block>
-            </Block>
+            </Block> */}
 
             <TextFontSize />
             <Block display={"flex"} alignItems={"center"}>
-              <StatefulTooltip
-                placement={PLACEMENT.bottom}
-                showArrow={true}
-                accessibilityType={"tooltip"}
-                content="Text color"
-              >
-                <Button onClick={() => setActiveSubMenu("TextFill")} size={SIZE.mini} kind={KIND.tertiary}>
-                  <TextColor color={state.color} size={22} />
-                </Button>
-              </StatefulTooltip>
+              <Button onClick={() => setActiveSubMenu("TextFill")} size={SIZE.mini} kind={KIND.tertiary}>
+                <TextColor color={state.color} size={22} />
+              </Button>
 
               <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Bold">
                 <Button
@@ -305,10 +298,10 @@ export default function (props) {
               <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
 
               <TextSpacing />
-              <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
+              {/* <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
               <Button onClick={() => setActiveSubMenu("TextEffects")} size={SIZE.compact} kind={KIND.tertiary}>
                 Effects
-              </Button>
+              </Button> */}
             </Block>
           </Box>
         )
@@ -423,7 +416,6 @@ function TextLetterCase() {
   const [state, setState] = React.useState<{ upper: boolean }>({ upper: false })
   const editor = useEditor()
   return (
-    <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Letter case">
       <Button
         onClick={() => {
           if (!state.upper) {
@@ -439,7 +431,6 @@ function TextLetterCase() {
       >
         <LetterCase size={24} />
       </Button>
-    </StatefulTooltip>
   )
 }
 
@@ -611,7 +602,7 @@ function TextSpacing() {
       )}
     >
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Spacing">
+        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"}>
           <Button size={SIZE.mini} kind={KIND.tertiary}>
             <Spacing size={24} />
           </Button>
@@ -700,7 +691,7 @@ function TextAlign() {
       autoFocus
     >
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Align">
+        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"}>
           <Button size={SIZE.mini} kind={KIND.tertiary}>
             <TextAlignCenter size={24} />
           </Button>

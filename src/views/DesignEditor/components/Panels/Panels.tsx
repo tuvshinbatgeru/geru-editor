@@ -11,6 +11,8 @@ function Panels() {
       {
         !isTabletOrMobile && (<PanelItem />)
       }
+
+      {/* <PanelItem /> */}
     </>
   )
 }

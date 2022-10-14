@@ -20,6 +20,8 @@ const Container = styled('div', props => ({
 const MobileContainer = styled('div', props => ({
     background: '#1B1927',
     height: '100%',
+    width: '100%',
+    display: 'flex',
     boxShadow: '1px 0px 1px rgba(0, 0, 0, 0.15)',
 }))
 
@@ -39,9 +41,9 @@ function PanelsList() {
 
     React.useEffect(() => {
         if (activeSubMenu) {
-        setState({ panel: activeSubMenu })
+            setState({ panel: activeSubMenu })
         } else {
-        setState({ panel: activePanel })
+            setState({ panel: activePanel })
         }
     }, [activeSubMenu])
 
@@ -51,6 +53,7 @@ function PanelsList() {
     if(isTabletOrMobile) {
         return <MobileContainer>{Component && <Component />}</MobileContainer>
     }
+    
     return <Container>{Component && <Component />}</Container>
 }
 

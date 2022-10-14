@@ -21,12 +21,12 @@ const Container = styled("div", (props) => ({
 
 function PanelsList() {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
-  const { activePanel, isShowMobileModal, setIsShowMobileModal } = useAppContext()
+  const { activePanel, activeSubMenu, setActiveSubMenu, isShowMobileModal, setIsShowMobileModal } = useAppContext()
   const { t } = useTranslation("editor")
   const PANEL_ITEMS = BASE_ITEMS
 
   const ZINDEX = new FixedZIndex(1)
-  
+
   if(isTabletOrMobile) {
     return (
       <Box display='flex' zIndex={ZINDEX}>
@@ -39,6 +39,33 @@ function PanelsList() {
             onClick={() => setIsShowMobileModal(!isShowMobileModal)}
           />
         </Box>
+
+        {
+          activeSubMenu && (
+            <Modal
+              accessibilityModalLabel='Modal'
+              onDismiss={() => setActiveSubMenu("")}
+              // align='center'
+            >
+                <Box position='fixed' display='flex' direction='column' bottom height="30%" width='100%' left>
+                  <div style={{ position: 'absolute', top: -50, left: 0, right: 0 }}>
+                    <Box display="flex" justifyContent='center'>
+                      <IconButton
+                        accessibilityLabel="close"
+                        icon="cancel"
+                        size='md'
+                        bgColor="transparentDarkGray"
+                        onClick={() => setActiveSubMenu("")}
+                      />
+                    </Box>
+                  </div>
+                  <Box flex="grow">
+                    <PanelItem />
+                  </Box>
+                </Box>
+            </Modal>
+          )
+        }
 
         {
           isShowMobileModal && (

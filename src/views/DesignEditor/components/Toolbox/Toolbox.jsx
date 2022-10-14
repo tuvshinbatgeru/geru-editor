@@ -7,7 +7,8 @@ import useAppContext from "~/hooks/useAppContext"
 import Navbar from '~/views/DesignEditor/components/Navbar'
 import { Box, ScrollBoundaryContainer } from 'gestalt'
 import { useMediaQuery } from 'react-responsive'
-import Common from "./Common"
+
+import Fill from "./Fill"
 
 const DEFAULT_TOOLBOX = "Canvas"
 
@@ -67,7 +68,7 @@ const Toolbox = () => {
   if(isTabletOrMobile) return (
     <Container>
       <Box flex='grow' display="flex" alignItems="center" height={50}>
-          {/* <Common /> */}
+          <Fill />
       </Box>
       <Navbar />
     </Container>
@@ -76,8 +77,11 @@ const Toolbox = () => {
 
   return (
     <Container>
-      <Box flex='grow' display="flex" alignItems="center" height={50}>
+      <Box flex='grow' display="flex" alignItems="center" height={50} width="100%">
+        <Fill />
+        <Box flex='grow'>
           <Component has_common has_toolbox />
+        </Box>
       </Box>
       <Navbar />
     </Container>

@@ -12,11 +12,12 @@ function GraphicEditor(props) {
     params = {}
   } = props
 
-  const { onSuccessCallback = () => {} } = params
+  const { onHeaderComponent = () => {}, onSuccessCallback = () => {} } = params
 
   return (
     <>
       <EditorContainer>
+        {onHeaderComponent()}
         <Preview onSuccessCallback={onSuccessCallback} />
         <div style={{ display: "flex", flex: 1 }}>
           <Panels />
