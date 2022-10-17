@@ -4,7 +4,7 @@ import { useActiveObject, useEditor } from "@layerhub-io/react"
 import { Input } from "baseui/input"
 import { Block } from "baseui/block"
 import { ChevronDown } from "baseui/icon"
-import { Box } from 'gestalt'
+import { Box, IconButton } from 'gestalt'
 
 import Common from "./Common"
 import TextColor from "~/components/Icons/TextColor"
@@ -12,7 +12,7 @@ import Bold from "~/components/Icons/Bold"
 import Italic from "~/components/Icons/Italic"
 import Underline from "~/components/Icons/Underline"
 import TextAlignCenter from "~/components/Icons/TextAlignCenter"
-
+import useEyeDropper from 'use-eye-dropper'
 import { useWindowSize } from "~/hooks/useWindowSize"
 import { useMediaQuery } from 'react-responsive'
 import { Button, SIZE, KIND } from "baseui/button"
@@ -66,6 +66,7 @@ export default function (props) {
   const { setActiveSubMenu, fonts } = useAppContext()
   const editor = useEditor()
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+  const { open, close, isSupported } = useEyeDropper()
 
   React.useEffect(() => {
     if (activeObject && activeObject.type === "StaticText") {
@@ -90,6 +91,18 @@ export default function (props) {
       }
     }
   }, [editor, activeObject])
+
+  const pickColor = () => {
+    open()
+    .then(color => {
+      //changeBackgroundColor(color.sRGBHex)
+      if (activeObject) {
+        editor.objects.update({ fill: color.sRGBHex })
+      }
+    })
+    .catch(e => {
+    })
+  }
 
   const makeBold = React.useCallback(async () => {
     if (state.bold) {
@@ -248,6 +261,18 @@ export default function (props) {
               <Button onClick={() => setActiveSubMenu("TextFill")} size={SIZE.mini} kind={KIND.tertiary}>
                 <TextColor color={state.color} size={22} />
               </Button>
+
+              {
+                isSupported() ?
+                  <IconButton 
+                    accessibilityLabel="Color Picker"
+                    icon="color-picker"
+                    size='sm'
+                    // bgColor="lightGray"
+                    onClick={pickColor}
+                  />
+                : <span>EyeDropper API not supported in this browser</span>
+              }
 
               <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Bold">
                 <Button

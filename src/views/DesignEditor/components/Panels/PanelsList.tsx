@@ -129,7 +129,7 @@ function PanelsList() {
 
 function PanelListItem({ label, icon, activePanel, name }: any) {
     
-    const { setActivePanel } = useAppContext()
+    const { setActivePanel, setActiveSubMenu } = useAppContext()
     const setIsSidebarOpen = useSetIsSidebarOpen()
     const [css, theme] = useStyletron()
     const selected = name === activePanel
@@ -141,6 +141,7 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
             // editor.deselect()
             setIsSidebarOpen(true)
             setActivePanel(name)
+            setActiveSubMenu("")
           }}
         >
             <div style={{

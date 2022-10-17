@@ -52,15 +52,38 @@ const Loader = (props) => {
 
             setCurrentScene({ ...template, id: currentScene?.id })
         } else {
+            let layers = currentScene.layers
+            
+            layers.forEach((object) => {
+                if (object.type === "StaticText" || object.type === "DynamicText") {
+                    fonts.push({
+                        name: object.fontFamily,
+                        url: object.fontURL,
+                        options: { style: "normal", weight: 400 },
+                    })
+                }
+
+                if(object.type === 'Background') {
+                    object.fill = `#${backgroundColor}`
+                    object.width = dimensions.width
+                    object.height = dimensions.height
+                    object.left = 0
+                    object.top = 0
+                }
+            })
+
             setCurrentScene({ ...currentScene, 
                 id: currentScene?.id,
+                layers,
                 frame: {
                     width: parseInt(dimensions.width),
                     height: parseInt(dimensions.height),
+                    backgroundColor,
                 },
             })
         }
         
+        editor.frame.setBackgroundColor(backgroundColor)
         editor.frame.resize({
             width: parseInt(dimensions.width),
             height: parseInt(dimensions.height),

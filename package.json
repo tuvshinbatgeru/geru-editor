@@ -1,13 +1,16 @@
 {
   "name": "geru-editor",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "main": "./dist/index.js",
   "scripts": {
+    "start": "vite",
     "dev": "vite",
-    "build": "pnpm run clean && pnpm run compile",
+    "web": "vite build",
+    "build-tsc": "pnpm run clean && pnpm run compile",
     "clean": "rm -rf ./dist",
     "compile": "tsc && tsc-alias",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "heroku-postbuild": "npm run web"
   },
   "dependencies": {
     "@layerhub-io/react": "^0.2.4",
@@ -40,6 +43,7 @@
     "resize-observer-polyfill": "^1.5.1",
     "styletron-engine-atomic": "1.5.0-beta.2",
     "styletron-react": "6.1.0-beta.2",
+    "use-eye-dropper": "^1.4.2",
     "use-latest": "^1.2.1"
   },
   "devDependencies": {

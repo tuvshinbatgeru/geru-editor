@@ -8,20 +8,8 @@ import { Box } from 'gestalt'
 import { HeaderText } from 'geru-components'
 import { useActiveObject, useEditor } from "@layerhub-io/react"
 
-const PRESET_COLORS = [
-  "#f44336",
-  "#ff9800",
-  "#ffee58",
-  "#66bb6a",
-  "#26a69a",
-  "#03a9f4",
-  "#3f51b5",
-  "#673ab7",
-  "#9c27b0",
-  "#ec407a",
-  "#8d6e63",
-  "#d9d9d9",
-]
+import { colors } from '~/constants/colors'
+const PRESET_COLORS = colors
 
 export default function () {
   const [color, setColor] = React.useState("#b32aa9")

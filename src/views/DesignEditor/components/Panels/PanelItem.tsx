@@ -31,7 +31,6 @@ interface State {
 
 function PanelsList() {
     const [state, setState] = React.useState<State>({ panel: "Text" })
-    const isSidebarOpen = useIsSidebarOpen()
     const { activePanel, activeSubMenu } = useAppContext()
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
