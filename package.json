@@ -3,7 +3,7 @@
   "version": "0.0.33",
   "main": "./dist/index.js",
   "scripts": {
-    "start": "vite",
+    "start": "vite --port $PORT",
     "dev": "vite",
     "web": "vite build",
     "build-tsc": "pnpm run clean && pnpm run compile",
