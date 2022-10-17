@@ -13,6 +13,7 @@ import { useMediaQuery } from 'react-responsive'
 import { Box, Card, TapArea, Spinner } from 'gestalt'
 import { TransformImage } from 'geru-components'
 import { fetchUserUploads, fileUpload } from "~/views/DesignEditor/utils/services"
+import { getImageDimensions } from '../../../utils/helper'
 
 const Image = (props) => {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
@@ -44,7 +45,7 @@ const Image = (props) => {
 export default function () {
   const [uploads, setUploads] = React.useState([])
   const editor = useEditor()
-  const { setIsShowMobileModal } = useAppContext()
+  const { setIsShowMobileModal, dimensions } = useAppContext()
 
   const [page, setPage] = useState(1)
   const [pages, setPages] = useState(1)
@@ -106,10 +107,19 @@ export default function () {
     setUploads([...uploads, upload])
   }
 
-  const addImageToCanvas = (url) => {
+  const addImageToCanvas = async (url) => {
+    let adjustScale = 1
+
+    const recommendedSize = Math.ceil(dimensions.height / 2)
+    const { height } = await getImageDimensions(url)
+
+    adjustScale = recommendedSize / height
+    
     const options = {
       type: "StaticImage",
       src: url,
+      scaleX: adjustScale,
+      scaleY: adjustScale
     }
 
     editor.objects.add(options)
@@ -137,7 +147,7 @@ export default function () {
   }
 
   return (
-      <Box height="100%" width="100%" display="flex" direction="column">
+      <Box height="100%" width="100%" display="flex" direction="column" color='dark'>
           <WidgetLoader />
           <Box paddingX={2} paddingY={3}>
             <Widget

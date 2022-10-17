@@ -34,6 +34,7 @@ export const BASE_ITEMS = [
 
 export enum PanelType {
   TEMPLATES = "Templates",
+  STICKERS = "Stickers",
   BACKGROUND = "Background",
   UPLOADS = "Uploads",
 }

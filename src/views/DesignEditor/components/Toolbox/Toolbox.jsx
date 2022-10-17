@@ -77,7 +77,7 @@ const Toolbox = () => {
 
   return (
     <Container>
-      <Box flex='grow' display="flex" alignItems="center" height={50} width="100%">
+      <Box flex='grow' display="flex" alignItems="center" height={50} width="100%" color='light'>
         <Fill />
         <Box flex='grow'>
           <Component has_common has_toolbox />
