@@ -44,7 +44,8 @@
     "styletron-engine-atomic": "1.5.0-beta.2",
     "styletron-react": "6.1.0-beta.2",
     "use-eye-dropper": "^1.4.2",
-    "use-latest": "^1.2.1"
+    "use-latest": "^1.2.1",
+    "vite": "^3.1.8"
   },
   "devDependencies": {
     "@layerhub-io/types": "^0.2.0",
@@ -55,7 +56,6 @@
     "tsc-alias": "^1.5.0",
     "typescript": "^4.6.3",
     "typescript-plugin-css-modules": "^3.4.0",
-    "vite": "^3.0.0",
     "vite-tsconfig-paths": "^3.5.0"
   }
 }
