@@ -2295,9 +2295,9 @@ gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.2.tgz#32a6ee76c3d7f52d46b2b1ae5d93fea8580a25e0"
 
-geru-components@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/geru-components/-/geru-components-0.0.12.tgz#d7dd9409bb7b6f2cae6654fd6c559529768ce1b7"
+geru-components@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/geru-components/-/geru-components-0.0.16.tgz#a75b2036a4e547ceb3114058ea177c7e1abdae32"
   dependencies:
     "@cloudinary/react" "^1.5.0"
     "@cloudinary/url-gen" "^1.8.6"
