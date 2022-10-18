@@ -52,7 +52,7 @@ const Loader = (props) => {
 
             setCurrentScene({ ...template, id: currentScene?.id })
         } else {
-            let layers = currentScene.layers
+            let layers = (currentScene && currentScene.layers) ? currentScene.layers : []
             
             layers.forEach((object) => {
                 if (object.type === "StaticText" || object.type === "DynamicText") {

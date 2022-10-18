@@ -147,15 +147,14 @@ export default function () {
                   </div>
                 </StatefulPopover>
 
-                {isSupported() ?
-                    <IconButton 
-                      accessibilityLabel="Color Picker"
-                      icon="color-picker"
-                      size='lg'
-                      bgColor="lightGray"
-                      onClick={pickColor}
-                    />
-                  : <span>EyeDropper API not supported in this browser</span>
+                {isSupported() &&
+                  <IconButton
+                    accessibilityLabel="Color Picker"
+                    icon="color-picker"
+                    size='lg'
+                    bgColor="lightGray"
+                    onClick={pickColor}
+                  />
                 }
               </div>
             </div>

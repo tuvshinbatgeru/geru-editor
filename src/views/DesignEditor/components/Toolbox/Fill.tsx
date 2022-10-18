@@ -49,15 +49,14 @@ export default function () {
         !activeObject && (
           <Box>
             {
-              isSupported() ?
-                <IconButton 
-                  accessibilityLabel="Color Picker"
-                  icon="color-picker"
-                  size='sm'
-                  bgColor="lightGray"
-                  onClick={pickColor}
-                />
-              : <span>EyeDropper API not supported in this browser</span>
+              isSupported() &&
+              <IconButton 
+                accessibilityLabel="Color Picker"
+                icon="color-picker"
+                size='sm'
+                bgColor="lightGray"
+                onClick={pickColor}
+              />
             }
           </Box>
         )

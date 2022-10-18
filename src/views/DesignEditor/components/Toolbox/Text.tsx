@@ -263,7 +263,7 @@ export default function (props) {
               </Button>
 
               {
-                isSupported() ?
+                isSupported() &&
                   <IconButton 
                     accessibilityLabel="Color Picker"
                     icon="color-picker"
@@ -271,7 +271,6 @@ export default function (props) {
                     // bgColor="lightGray"
                     onClick={pickColor}
                   />
-                : <span>EyeDropper API not supported in this browser</span>
               }
 
               <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Bold">

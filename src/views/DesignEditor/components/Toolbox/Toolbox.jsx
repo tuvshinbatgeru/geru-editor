@@ -67,7 +67,7 @@ const Toolbox = () => {
 
   if(isTabletOrMobile) return (
     <Container>
-      <Box flex='grow' display="flex" alignItems="center" height={50}>
+      <Box flex='grow' display="flex" alignItems="center" height={50} color='light'>
           <Fill />
       </Box>
       <Navbar />
