@@ -12,12 +12,13 @@ import Paste from "~/components/Icons/Paste"
 import SendToBack from "~/components/Icons/SendToBack"
 import Unlocked from "~/components/Icons/Unlocked"
 import useAppContext from "~/hooks/useAppContext"
-import { backgroundRemovedImageUpload, fileUpload } from "../../utils/services"
 import { getBase64 } from "../../utils/helper"
-
+import { Box, Spinner, FixedZIndex } from 'gestalt'
+import { HeaderText } from 'geru-components'
+//import { backgroundRemove } from "../../utils/services"
 function ContextMenu() {
   const { backgroundRemove , setBackgroundRemove} = useAppContext()
-//  console.log("1",backgroundRemove);
+
   const contextMenuRequest = useContextMenuRequest()
 //  const [isBackgroundRemove, setIsBackgroundRemove] = useState(false)
   const editor = useEditor()
@@ -29,27 +30,38 @@ function ContextMenu() {
       }
     }
   }
-
+  console.log("0. -- false",backgroundRemove);
   const backgroundRemove1 = async () => {
-   
+    //setIsBackgroundRemove(true)
+    setBackgroundRemove(true)
+    console.log("1. -- true",backgroundRemove)
     if (editor) {
         const component: any = await editor.scene.exportAsComponent()
         if (component) {
-            setBackgroundRemove(true)
+            //setTimeout(() => {
+            //    setBackgroundRemove(false)
+            //}, 3000);
+            //setBackgroundRemove(true)
             //console.log( component.src)
             let imageSrc = component.src
-            let user_id = "5fdc722f79be6300207c731b"
+            let user_id = "62837571527f65326bb4fec4"
             getBase64(imageSrc, user_id)
             .then(async function (rs) {
                 let result = await rs
                 console.log("result",result)
-                setBackgroundRemove(false)
+                //setBackgroundRemove(false)
             }).catch((err)=>{
                 console.log(err)
+                setBackgroundRemove(false)
+            }).then(()=> {
                 setBackgroundRemove(false)
             })
             
         }
+        //setIsBackgroundRemove(false)
+        //setBackgroundRemove(true)
+
+        console.log("2. -- false",backgroundRemove)
     }
   }
   if (!contextMenuRequest || !contextMenuRequest.target) {
@@ -109,7 +121,9 @@ function ContextMenu() {
       </>
     )
   }
-  console.log("2",backgroundRemove);
+//  console.log("2",backgroundRemove);
+
+  const zIndex = new FixedZIndex(99)
   return (
     <>
       {!contextMenuRequest.target.locked ? (
@@ -235,6 +249,28 @@ function ContextMenu() {
           >
             <Unlocked size={24} />
           </ContextMenuItem>
+         {!isBackgroundRemove && ( <Box position="absolute" left top height="100%" width="100%"
+            zIndex={zIndex}
+            display='flex'
+            alignItems="center"
+            direction='column'
+            justifyContent="center"
+            dangerouslySetInlineStyle={{
+                __style: {
+                    backgroundColor:'rgba(0,0,30,0.4)',
+                    backdropFilter: 'blur(10px)',
+                    opacity: 1
+                }
+            }}
+        >
+            <HeaderText color='white'>
+                Creating your work of art hold on a bit ...
+            </HeaderText>
+            <Box height={12} />
+            <Box color='light' rounding='circle' padding={1}> 
+                <Spinner accessibilityLabel='loading' show={true} />
+            </Box>
+        </Box>)}
         </div>
       )}
     </>
@@ -272,6 +308,7 @@ function ContextMenuItem({
       })}
     >
       {children} {label}
+        
     </div>
   )
 }

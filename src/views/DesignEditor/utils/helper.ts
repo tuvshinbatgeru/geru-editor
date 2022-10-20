@@ -75,12 +75,11 @@ export const getBase64 = async (url, user_id) => {
               });
             const outputBlob = await response_last.blob();
             const updatedFile = new File([outputBlob], "removed.png")
-            backgroundRemovedImageUpload(updatedFile, function(err, result) {
+            backgroundRemovedImageUpload(updatedFile, async function(err, result) {
                 if(err || !result) {
                     return
                 }
-                fileUpload(user_id, result)
-                
+                await fileUpload(user_id, result)
                 const new_options = {
                     type: 'StaticImage',
                     metadata: { src: result.url },
