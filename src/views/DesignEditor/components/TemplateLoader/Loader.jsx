@@ -7,12 +7,12 @@ import { useEditor } from "@layerhub-io/react"
 import { Button } from 'gestalt'
 
 const Loader = (props) => {
-    const { setCurrentScene, currentScene } = useDesignEditorContext()
+    const { setCurrentScene, currentScene, currentDesign, setCurrentDesign } = useDesignEditorContext()
     const { dimensions, backgroundColor } = useAppContext()
     const editor = useEditor()
 
     React.useEffect(() => {
-        if(editor && !_isEmpty(props.template)) {
+        if(editor) {
             handleLoadTemplate()
         }
     }, [JSON.stringify(props.template), backgroundColor, dimensions])
@@ -20,38 +20,51 @@ const Loader = (props) => {
     const handleLoadTemplate = async () => {
         let fonts = []
 
-        const template = _cloneDeep(props.template)
+        let template = _cloneDeep(props.template)
 
-        template.layers.forEach((object) => {
-            if (object.type === "StaticText" || object.type === "DynamicText") {
-                fonts.push({
-                    name: object.fontFamily,
-                    url: object.fontURL,
-                    options: { style: "normal", weight: 400 },
-                })
+        if(!_isEmpty(template)) {
+            template.frame.width = dimensions.width
+            template.frame.height = dimensions.height
+
+            template.layers.forEach((object) => {
+                if (object.type === "StaticText" || object.type === "DynamicText") {
+                    fonts.push({
+                        name: object.fontFamily,
+                        url: object.fontURL,
+                        options: { style: "normal", weight: 400 },
+                    })
+                }
+
+                if(object.type === 'Background') {
+                    object.fill = `#${backgroundColor}`
+                    object.width = dimensions.width
+                    object.height = dimensions.height
+                    object.left = 0
+                    object.top = 0
+                }
+            })
+        
+            const filteredFonts = fonts.filter((f) => !!f.url)
+
+            if (filteredFonts.length > 0) {
+                await loadFonts(filteredFonts)
             }
 
-            if(object.type === 'Background') {
-                object.fill = `#${backgroundColor}`
-                object.width = dimensions.width
-                object.height = dimensions.height
-                object.left = 0
-                object.top = 0
-            }
-        })
-    
-        const filteredFonts = fonts.filter((f) => !!f.url)
-
-        if (filteredFonts.length > 0) {
-            await loadFonts(filteredFonts)
+            setCurrentScene({ ...template, id: currentScene?.id })
+        } else {
+            setCurrentScene({ ...currentScene, 
+                id: currentScene?.id,
+                frame: {
+                    width: parseInt(dimensions.width),
+                    height: parseInt(dimensions.height),
+                },
+            })
         }
-
+        
         editor.frame.resize({
-            width: parseInt(template.frame.width),
-            height: parseInt(template.frame.height),
+            width: parseInt(dimensions.width),
+            height: parseInt(dimensions.height),
         })
-
-        setCurrentScene({ ...template, id: currentScene?.id })
     }
     
     const loadFonts = fonts => {
