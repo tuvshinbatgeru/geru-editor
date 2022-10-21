@@ -5,14 +5,12 @@ import { styled } from "baseui"
 import Items from "./Items"
 import useAppContext from "~/hooks/useAppContext"
 import Navbar from '~/views/DesignEditor/components/Navbar'
-import { ILayer } from "@layerhub-io/types"
-import { Box } from 'gestalt'
+import { Box, ScrollBoundaryContainer } from 'gestalt'
+import { useMediaQuery } from 'react-responsive'
+
+import Fill from "./Fill"
 
 const DEFAULT_TOOLBOX = "Canvas"
-
-interface ToolboxState {
-  toolbox: string
-}
 
 const Container = styled("div", (props) => ({
   boxShadow: "rgb(0 0 0 / 15%) 0px 1px 1px",
@@ -21,10 +19,11 @@ const Container = styled("div", (props) => ({
 }))
 
 const Toolbox = () => {
-  const [state, setState] = React.useState<ToolboxState>({ toolbox: "Text" })
+  const [state, setState] = React.useState({ toolbox: "Text" })
   const { setActiveSubMenu } = useAppContext()
-  const activeObject = useActiveObject() as ILayer
+  const activeObject = useActiveObject()
   const editor = useEditor()
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
   React.useEffect(() => {
     const selectionType = getSelectionType(activeObject)
@@ -44,7 +43,7 @@ const Toolbox = () => {
     let watcher = async () => {
       if (activeObject) {
         // @ts-ignore
-        const selectionType = getSelectionType(activeObject) as any
+        const selectionType = getSelectionType(activeObject)
 
         if (selectionType.length > 1) {
           setState({ toolbox: "Multiple" })
@@ -66,10 +65,23 @@ const Toolbox = () => {
   // @ts-ignore
   const Component = Items[state.toolbox] ? Items[state.toolbox] : Items[DEFAULT_TOOLBOX]
 
+  if(isTabletOrMobile) return (
+    <Container>
+      <Box flex='grow' display="flex" alignItems="center" height={50} color='light'>
+          <Fill />
+      </Box>
+      <Navbar />
+    </Container>
+  )
+
+
   return (
     <Container>
-      <Box flex='grow' display="flex" alignItems="center" height={50}>
-        <Component />
+      <Box flex='grow' display="flex" alignItems="center" height={50} width="100%" color='light'>
+        <Fill />
+        <Box flex='grow'>
+          <Component has_common has_toolbox />
+        </Box>
       </Box>
       <Navbar />
     </Container>

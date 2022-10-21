@@ -4,13 +4,17 @@ import { useActiveObject, useEditor } from "@layerhub-io/react"
 import { Input } from "baseui/input"
 import { Block } from "baseui/block"
 import { ChevronDown } from "baseui/icon"
+import { Box, IconButton } from 'gestalt'
+
 import Common from "./Common"
 import TextColor from "~/components/Icons/TextColor"
 import Bold from "~/components/Icons/Bold"
 import Italic from "~/components/Icons/Italic"
 import Underline from "~/components/Icons/Underline"
 import TextAlignCenter from "~/components/Icons/TextAlignCenter"
-
+import useEyeDropper from 'use-eye-dropper'
+import { useWindowSize } from "~/hooks/useWindowSize"
+import { useMediaQuery } from 'react-responsive'
 import { Button, SIZE, KIND } from "baseui/button"
 import { StatefulTooltip, PLACEMENT } from "baseui/tooltip"
 import LetterCase from "~/components/Icons/LetterCase"
@@ -54,11 +58,15 @@ const initialOptions: TextState = {
     options: [],
   },
 }
-export default function () {
+export default function (props) {
+  const { has_common = false, has_toolbox = false } = props
+  const { width, height } = useWindowSize()
   const [state, setState] = React.useState<TextState>(initialOptions)
   const activeObject = useActiveObject() as Required<IStaticText>
   const { setActiveSubMenu, fonts } = useAppContext()
   const editor = useEditor()
+  const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+  const { open, close, isSupported } = useEyeDropper()
 
   React.useEffect(() => {
     if (activeObject && activeObject.type === "StaticText") {
@@ -83,6 +91,18 @@ export default function () {
       }
     }
   }, [editor, activeObject])
+
+  const pickColor = () => {
+    open()
+    .then(color => {
+      //changeBackgroundColor(color.sRGBHex)
+      if (activeObject) {
+        editor.objects.update({ fill: color.sRGBHex })
+      }
+    })
+    .catch(e => {
+    })
+  }
 
   const makeBold = React.useCallback(async () => {
     if (state.bold) {
@@ -210,99 +230,110 @@ export default function () {
   }, [editor, state])
   return (
     <Block
-      $style={{ flex: 1, display: "flex", alignItems: "center", padding: "0 12px", justifyContent: "space-between" }}
+      $style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: 'flex-end', padding: "0 12px" }}
     >
-      <Block display={"flex"} gridGap="0.5rem" alignItems={"center"}>
-        <Block
-          onClick={() => setActiveSubMenu("FontSelector")}
-          $style={{
-            border: "1px solid rgb(185,185,185)",
-            borderRadius: "4px",
-            padding: "0.2rem 0.45rem",
-            cursor: "pointer",
-            fontWeight: 500,
-            fontSize: "14px",
-            gap: "0.5rem",
-          }}
-          height={"24px"}
-          display={"flex"}
-          alignItems={"center"}
-        >
-          <Block>{state.family}</Block>
-          <Block display={"flex"}>
-            <ChevronDown size={22} />
-          </Block>
-        </Block>
-
-        <TextFontSize />
-        <Block display={"flex"} alignItems={"center"}>
-          <StatefulTooltip
-            placement={PLACEMENT.bottom}
-            showArrow={true}
-            accessibilityType={"tooltip"}
-            content="Text color"
-          >
-            <Button onClick={() => setActiveSubMenu("TextFill")} size={SIZE.mini} kind={KIND.tertiary}>
-              <TextColor color={state.color} size={22} />
-            </Button>
-          </StatefulTooltip>
-
-          <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Bold">
-            <Button
-              style={{ ...(!state.bold && { color: "rgb(169,169,169)" }) }}
-              disabled={!state.styleOptions.hasBold}
-              onClick={makeBold}
-              size={SIZE.mini}
-              kind={KIND.tertiary}
+      {
+        has_toolbox && (
+          <Box display={"flex"} alignItems={"center"} flex='grow' maxWidth={width - 60} overflow="scrollX">
+            {/* <Block
+              onClick={() => setActiveSubMenu("FontSelector")}
+              $style={{
+                border: "1px solid rgb(185,185,185)",
+                borderRadius: "4px",
+                padding: "0.2rem 0.45rem",
+                cursor: "pointer",
+                fontWeight: 500,
+                fontSize: "14px",
+                gap: "0.5rem",
+              }}
+              height={"24px"}
+              display={"flex"}
+              alignItems={"center"}
             >
-              <Bold size={20} />
-            </Button>
-          </StatefulTooltip>
+              <Block>{state.family}</Block>
+              <Block display={"flex"}>
+                <ChevronDown size={22} />
+              </Block>
+            </Block> */}
 
-          <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Italic">
-            <Button
-              style={{ ...(!state.italic && { color: "rgb(169,169,169)" }) }}
-              disabled={!state.styleOptions.hasItalic}
-              onClick={makeItalic}
-              size={SIZE.mini}
-              kind={KIND.tertiary}
-            >
-              <Italic size={20} />
-            </Button>
-          </StatefulTooltip>
+            <TextFontSize />
+            <Block display={"flex"} alignItems={"center"}>
+              <Button onClick={() => setActiveSubMenu("TextFill")} size={SIZE.mini} kind={KIND.tertiary}>
+                <TextColor color={state.color} size={22} />
+              </Button>
 
-          <StatefulTooltip
-            placement={PLACEMENT.bottom}
-            showArrow={true}
-            accessibilityType={"tooltip"}
-            content="Underline"
-          >
-            <Button
-              style={{ ...(!state.underline && { color: "rgb(169,169,169)" }) }}
-              onClick={makeUnderline}
-              size={SIZE.mini}
-              kind={KIND.tertiary}
-            >
-              <Underline size={24} />
-            </Button>
-          </StatefulTooltip>
+              {
+                isSupported() &&
+                  <IconButton 
+                    accessibilityLabel="Color Picker"
+                    icon="color-picker"
+                    size='sm'
+                    // bgColor="lightGray"
+                    onClick={pickColor}
+                  />
+              }
 
-          <TextLetterCase />
+              <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Bold">
+                <Button
+                  style={{ ...(!state.bold && { color: "rgb(169,169,169)" }) }}
+                  disabled={!state.styleOptions.hasBold}
+                  onClick={makeBold}
+                  size={SIZE.mini}
+                  kind={KIND.tertiary}
+                >
+                  <Bold size={20} />
+                </Button>
+              </StatefulTooltip>
 
-          <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
+              <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Italic">
+                <Button
+                  style={{ ...(!state.italic && { color: "rgb(169,169,169)" }) }}
+                  disabled={!state.styleOptions.hasItalic}
+                  onClick={makeItalic}
+                  size={SIZE.mini}
+                  kind={KIND.tertiary}
+                >
+                  <Italic size={20} />
+                </Button>
+              </StatefulTooltip>
 
-          <TextAlign />
+              <StatefulTooltip
+                placement={PLACEMENT.bottom}
+                showArrow={true}
+                accessibilityType={"tooltip"}
+                content="Underline"
+              >
+                <Button
+                  style={{ ...(!state.underline && { color: "rgb(169,169,169)" }) }}
+                  onClick={makeUnderline}
+                  size={SIZE.mini}
+                  kind={KIND.tertiary}
+                >
+                  <Underline size={24} />
+                </Button>
+              </StatefulTooltip>
 
-          <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
+              <TextLetterCase />
 
-          <TextSpacing />
-          <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
-          <Button onClick={() => setActiveSubMenu("TextEffects")} size={SIZE.compact} kind={KIND.tertiary}>
-            Effects
-          </Button>
-        </Block>
-      </Block>
-      <Common />
+              <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
+
+              <TextAlign />
+
+              <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
+
+              <TextSpacing />
+              {/* <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
+              <Button onClick={() => setActiveSubMenu("TextEffects")} size={SIZE.compact} kind={KIND.tertiary}>
+                Effects
+              </Button> */}
+            </Block>
+          </Box>
+        )
+      }
+      
+      {
+        has_common && <Common />
+      }
     </Block>
   )
 }
@@ -409,7 +440,6 @@ function TextLetterCase() {
   const [state, setState] = React.useState<{ upper: boolean }>({ upper: false })
   const editor = useEditor()
   return (
-    <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Letter case">
       <Button
         onClick={() => {
           if (!state.upper) {
@@ -425,7 +455,6 @@ function TextLetterCase() {
       >
         <LetterCase size={24} />
       </Button>
-    </StatefulTooltip>
   )
 }
 
@@ -597,7 +626,7 @@ function TextSpacing() {
       )}
     >
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Spacing">
+        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"}>
           <Button size={SIZE.mini} kind={KIND.tertiary}>
             <Spacing size={24} />
           </Button>
@@ -686,7 +715,7 @@ function TextAlign() {
       autoFocus
     >
       <Block>
-        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Align">
+        <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"}>
           <Button size={SIZE.mini} kind={KIND.tertiary}>
             <TextAlignCenter size={24} />
           </Button>

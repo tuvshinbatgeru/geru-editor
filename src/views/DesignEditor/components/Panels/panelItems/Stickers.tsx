@@ -6,15 +6,18 @@ import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
 import { Text,Box, TapArea, Column, Mask, Card } from "gestalt"
 import { HeaderText, TransformImage } from "geru-components"
 import { useMediaQuery } from 'react-responsive'
-import { useEditor } from "@layerhub-io/react"
+import { useEditor, useActiveObject } from "@layerhub-io/react"
 import { colors } from 'geru-components/dist/utils'
 import {fetchPacks} from "../../../utils/services"
-import { currencyFormat } from '../../../utils/helper'
+import { currencyFormat, getImageDimensions } from '../../../utils/helper'
+import useAppContext from '~/hooks/useAppContext'
 
 export default function () {
     const editor = useEditor()
     const [fetching, setFetching] = useState(false)
     const [objects, setObjects] = useState([])
+    const { setIsShowMobileModal, dimensions } = useAppContext()
+    const activeObject = useActiveObject()
 
     useEffect(() => {
         getStickers()
@@ -31,27 +34,41 @@ export default function () {
         .catch(err => console.log(err))
         .then(() => setFetching(false))
     }
-    const addObject = React.useCallback(
-        (item) => {
-          if (editor) {
-            const options = {
-              type: "StaticImage",
-              src: item.url
-            }
 
-            editor.objects.add(options)
-          }
-        },
-        [editor]
-    )
+    const addImateToCanvas = async (item) => {
+      let adjustScale = 1
+
+      const recommendedSize = Math.ceil(dimensions.height / 2)
+      const { height } = await getImageDimensions(item.url)
+
+      adjustScale = recommendedSize / height
+      
+      const options = {
+        type: "StaticImage",
+        src: item.url,
+        scaleX: adjustScale,
+        scaleY: adjustScale
+      }
+
+      editor.objects.add(options)
+      setIsShowMobileModal(false)
+    }
+
+    const addObject = (item) => {
+      if (editor) {
+        addImateToCanvas(item)
+      }
+    }
+    
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
     if(isTabletOrMobile){
         return (
-          <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', height: '100%', width: '100%', flexDirection: 'column' }}>
             <Box height='100%'>
               <Scrollbars>
                 <Box paddingX={6} paddingY={4}>
+                  { fetching && <ListLoadingPlaceholder /> }
                   {objects.map((obj, index) => (
                     <Pack 
                       key={index}

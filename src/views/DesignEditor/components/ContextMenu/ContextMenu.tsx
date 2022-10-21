@@ -30,7 +30,7 @@ function ContextMenu() {
       }
     }
   }
-  console.log("0. -- false",backgroundRemove);
+//  console.log("0. -- false",backgroundRemove);
   const backgroundRemove1 = async () => {
     //setIsBackgroundRemove(true)
     setBackgroundRemove(true)
@@ -89,7 +89,7 @@ function ContextMenu() {
             disabled={true}
             onClick={() => {
               editor.objects.copy()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Duplicate"
             label="copy"
@@ -99,7 +99,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               editor.objects.paste()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Paste"
             label="paste"
@@ -110,7 +110,7 @@ function ContextMenu() {
             disabled={true}
             onClick={() => {
               editor.objects.remove()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Delete"
             label="delete"
@@ -144,7 +144,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               editor.objects.copy()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Duplicate"
             label="copy"
@@ -154,7 +154,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               editor.objects.paste()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Paste"
             label="paste"
@@ -164,7 +164,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               editor.objects.remove()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Delete"
             label="delete"
@@ -175,7 +175,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               editor.objects.bringForward()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Forward"
             label="bring forward"
@@ -185,7 +185,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               editor.objects.sendBackwards()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Backward"
             label="send backward"
@@ -195,7 +195,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               handleAsComponentHandler()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Elements"
             label="Save as component"
@@ -206,6 +206,9 @@ function ContextMenu() {
             onClick={() => {
                 backgroundRemove1()
                 editor.cancelContextMenu()
+            //  handleAsComponentHandler()
+            ////  editor.cancelContextMenu()
+            alert("removing ... ")
             }}
             icon="Templates"
             label="Background remove"
@@ -216,7 +219,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               editor.objects.lock()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Locked"
             label="lock"
@@ -242,7 +245,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               editor.objects.unlock()
-              editor.cancelContextMenu()
+              //editor.cancelContextMenu()
             }}
             icon="Unlocked"
             label="unlock"

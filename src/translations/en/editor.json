@@ -7,11 +7,12 @@
             "images": "Images",
             "videos": "Videos",
             "uploads": "Uploads",
+            "artworks": "Artworks",
             "text": "Text",
             "graphics": "Graphics",
             "stickers": "Stickers",
             "mydesign": "My design",
-            "nft": "nft",
+            "nft": "",
             "pixabay": "Pixabay",
             "layers": "Layers"
         }

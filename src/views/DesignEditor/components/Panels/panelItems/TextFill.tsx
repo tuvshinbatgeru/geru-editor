@@ -4,22 +4,12 @@ import Scrollable from "~/components/Scrollable"
 import { HexColorPicker } from "react-colorful"
 import { Delete } from "baseui/icon"
 import { throttle } from "lodash"
+import { Box } from 'gestalt'
+import { HeaderText } from 'geru-components'
 import { useActiveObject, useEditor } from "@layerhub-io/react"
 
-const PRESET_COLORS = [
-  "#f44336",
-  "#ff9800",
-  "#ffee58",
-  "#66bb6a",
-  "#26a69a",
-  "#03a9f4",
-  "#3f51b5",
-  "#673ab7",
-  "#9c27b0",
-  "#ec407a",
-  "#8d6e63",
-  "#d9d9d9",
-]
+import { colors } from '~/constants/colors'
+const PRESET_COLORS = colors
 
 export default function () {
   const [color, setColor] = React.useState("#b32aa9")
@@ -35,27 +25,15 @@ export default function () {
   }, 100)
 
   return (
-    <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-      <Block
-        $style={{
-          display: "flex",
-          alignItems: "center",
-          fontWeight: 500,
-          justifyContent: "space-between",
-          padding: "1.5rem",
-        }}
-      >
-        <Block>Text Fill</Block>
-
-        <Block $style={{ cursor: "pointer", display: "flex" }}>
-          <Delete size={24} />
-        </Block>
-      </Block>
+    <Block $style={{ flex: 1, display: "flex", flexDirection: "column", height: '100%' }}>
       <Scrollable>
-        <Block padding={"0 1.5rem"}>
+        <Block padding={"1.5rem 1.5rem"}>
           <HexColorPicker onChange={updateObjectFill} style={{ width: "100%" }} />
           <Block>
-            <Block $style={{ padding: "0.75rem 0", fontWeight: 500, fontSize: "14px" }}>Preset colors</Block>
+            <Box height={20} />
+            <Box paddingY={4}>
+              <HeaderText color='white'>Preset colors</HeaderText>
+            </Box>
             <Block $style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr", gap: "0.25rem" }}>
               {PRESET_COLORS.map((color, index) => (
                 <Block

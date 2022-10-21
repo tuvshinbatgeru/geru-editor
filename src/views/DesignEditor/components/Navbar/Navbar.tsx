@@ -7,6 +7,7 @@ import { resizeImage } from '~/views/DesignEditor/utils/helper'
 import {uploadTemporaryArtwork, saveTemplate} from "../../utils/services"
 import _isEmpty from 'lodash/isEmpty'
 import { toast } from 'react-toastify'
+
 export default function () {
     const { setIsSaving } = useAppContext()
     const editor = useEditor()
@@ -65,8 +66,7 @@ export default function () {
         
     }
     return (
-        // @ts-ignore
-        <Box display="flex" justifyContent="end" alignItems="center" paddingX={6}>
+        <Box display="flex" justifyContent="end" alignItems="center" paddingX={6} color='light'>
             <TapArea tapStyle="compress" fullWidth={false} onTap={() => setTemplateModal(!templateModal)}>
                 <Box color='dark' paddingY={2} paddingX={4} justifyContent='center' alignItems='center'  display='flex'>
                     <Icon 
@@ -76,7 +76,7 @@ export default function () {
                         color='light'
                     />
                     <Box width={8} />
-                    <Text color='light' weight='bold' align='center' overflow='noWrap'>{fetching ? "Saving ..." : "Save template"}</Text>
+                    <HeaderText size='md' whiteSpace='nowrap' color='white'>{fetching ? "Saving ..." : "Save template"}</HeaderText>
                 </Box>
             </TapArea>
             <Box width={8} />
@@ -89,7 +89,7 @@ export default function () {
                         color='light'
                     />
                     <Box width={8} />
-                    <Text color='light' weight='bold' align='center'>Done</Text>
+                    <HeaderText size='md' whiteSpace='nowrap' color='white'>Done</HeaderText>
                 </Box>
             </TapArea>
             
@@ -118,7 +118,7 @@ export default function () {
                                     <Box width={30} />
                                     <TapArea onTap={onSaveTemplate}>
                                         <Box color='errorBase' padding={4}>
-                                            <HeaderText align='center'  size="md"  color='white' weight='bold'>Save</HeaderText>
+                                            <HeaderText align='center' size="md"  color='white' weight='bold'>Save</HeaderText>
                                         </Box>
                                     </TapArea>
                                 </Box>

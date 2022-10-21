@@ -7,7 +7,7 @@ import { styled } from 'baseui'
 import { useMediaQuery } from 'react-responsive'
 
 const Container = styled('div', props => ({
-    background: '#ffffff',
+    background: '#1B1927',
     width: '360px',
     flex: 'none',
     boxShadow: '1px 0px 1px rgba(0, 0, 0, 0.15)',
@@ -20,6 +20,8 @@ const Container = styled('div', props => ({
 const MobileContainer = styled('div', props => ({
     background: '#1B1927',
     height: '100%',
+    width: '100%',
+    display: 'flex',
     boxShadow: '1px 0px 1px rgba(0, 0, 0, 0.15)',
 }))
 
@@ -29,7 +31,6 @@ interface State {
 
 function PanelsList() {
     const [state, setState] = React.useState<State>({ panel: "Text" })
-    const isSidebarOpen = useIsSidebarOpen()
     const { activePanel, activeSubMenu } = useAppContext()
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
@@ -39,9 +40,9 @@ function PanelsList() {
 
     React.useEffect(() => {
         if (activeSubMenu) {
-        setState({ panel: activeSubMenu })
+            setState({ panel: activeSubMenu })
         } else {
-        setState({ panel: activePanel })
+            setState({ panel: activePanel })
         }
     }, [activeSubMenu])
 
@@ -51,6 +52,7 @@ function PanelsList() {
     if(isTabletOrMobile) {
         return <MobileContainer>{Component && <Component />}</MobileContainer>
     }
+    
     return <Container>{Component && <Component />}</Container>
 }
 

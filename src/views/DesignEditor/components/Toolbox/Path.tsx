@@ -66,7 +66,6 @@ export default function () {
         </Block>
         <Flip />
       </Block>
-      <Common />
     </Block>
   )
 }

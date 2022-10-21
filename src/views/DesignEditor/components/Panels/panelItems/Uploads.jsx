@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { Block } from "baseui/block"
 import Scrollable from "~/components/Scrollable"
-import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
+import useAppContext from "~/hooks/useAppContext"
 
+import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
 import { Scrollbars } from 'react-custom-scrollbars'
 import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 import InfiniteScroll from 'react-infinite-scroller'
@@ -14,8 +15,8 @@ import { useMediaQuery } from 'react-responsive'
 import { Box, Card, TapArea, Spinner ,Text,FixedZIndex} from 'gestalt'
 import { TransformImage ,HeaderText} from 'geru-components'
 import { fetchUserUploads, fileUpload } from "~/views/DesignEditor/utils/services"
-import useAppContext from "~/hooks/useAppContext"
 
+import { getImageDimensions } from '../../../utils/helper'
 
 const Image = (props) => {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
@@ -55,6 +56,8 @@ export default function () {
   const [uploads, setUploads] = React.useState([])
   const editor = useEditor()
   const setIsSidebarOpen = useSetIsSidebarOpen()
+  const { setIsShowMobileModal, dimensions } = useAppContext()
+
   const [page, setPage] = useState(1)
   const [pages, setPages] = useState(1)
   const [fetching, setFetching] = useState(false)
@@ -114,13 +117,23 @@ export default function () {
     setUploads([...uploads, upload])
   }
 
-  const addImageToCanvas = (url) => {
+  const addImageToCanvas = async (url) => {
+    let adjustScale = 1
+
+    const recommendedSize = Math.ceil(dimensions.height / 2)
+    const { height } = await getImageDimensions(url)
+
+    adjustScale = recommendedSize / height
+    
     const options = {
       type: "StaticImage",
       src: url,
+      scaleX: adjustScale,
+      scaleY: adjustScale
     }
 
     editor.objects.add(options)
+    setIsShowMobileModal(false)
   }
 
   const successCallBack = (res) => {
@@ -294,10 +307,9 @@ export default function () {
 
 
   return (
-      <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        <Scrollable>
+      <Box height="100%" width="100%" display="flex" direction="column" color='dark'>
           <WidgetLoader />
-          <Box paddingX={4} paddingY={4}>
+          <Box paddingX={2} paddingY={3}>
             <Widget
               //sources={['local', 'dropbox', 'facebook']} // set the sources available for uploading -> by default
               sources={['local']}
@@ -378,7 +390,7 @@ export default function () {
               // the Public ID unique, and just use the normalized file name -> default = true
             />
           </Box>
-
+        <Scrollable>
           <Box paddingX={2}>
           {
             fetching && (
@@ -437,6 +449,6 @@ export default function () {
             }
           </Box>
         </Scrollable>
-      </Block>
+      </Box>
   )
 }

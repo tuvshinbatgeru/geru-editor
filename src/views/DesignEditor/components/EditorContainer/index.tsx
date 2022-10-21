@@ -8,9 +8,7 @@ export default function ({ children }: { children: React.ReactNode }) {
         width: "100vw",
         height: "100vh",
         display: "flex",
-        flexDirection: "column",
-        background: "#FFFFFF",
-        fontFamily: "Uber Move Text",
+        flexDirection: "column"
       }}
     >
       {children}

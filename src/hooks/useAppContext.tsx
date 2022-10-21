@@ -26,7 +26,9 @@ function useAppContext() {
     fonts,
     setFonts,
     isSaving,
-    setIsSaving
+    setIsSaving,
+    isShowMobileModal,
+    setIsShowMobileModal
   } = useContext(AppContext)
 
   return {
@@ -53,7 +55,9 @@ function useAppContext() {
     fonts,
     setFonts,
     isSaving,
-    setIsSaving
+    setIsSaving,
+    isShowMobileModal,
+    setIsShowMobileModal
   }
 }
 

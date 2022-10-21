@@ -3,6 +3,7 @@ import Text from "./Text"
 import Customize from "./Customize"
 import FontSelector from "./FontSelector"
 import Templates from "./Templates"
+import Artworks from "./Artworks"
 import Uploads from "./Uploads"
 import Images from "./Images"
 import Videos from "./Videos"
@@ -24,6 +25,7 @@ export default {
   FontSelector: FontSelector,
   Templates: Templates,
   Uploads: Uploads,
+  Artworks: Artworks,
   Images: Images,
   Videos: Videos,
   Elements: Elements,
