@@ -32,42 +32,42 @@ const Toolbox = () => {
 
   if(!isTabletOrMobile) return null
 
-//  React.useEffect(() => {
-//    const selectionType = getSelectionType(activeObject)
-//    if (selectionType) {
-//      if (selectionType.length > 1) {
-//        setState({ toolbox: "Multiple" })
-//      } else {
-//        setState({ toolbox: selectionType[0] })
-//      }
-//    } else {
-//      setState({ toolbox: DEFAULT_TOOLBOX })
-//      setActiveSubMenu("")
-//    }
-//  }, [activeObject])
+  React.useEffect(() => {
+    const selectionType = getSelectionType(activeObject)
+    if (selectionType) {
+      if (selectionType.length > 1) {
+        setState({ toolbox: "Multiple" })
+      } else {
+        setState({ toolbox: selectionType[0] })
+      }
+    } else {
+      setState({ toolbox: DEFAULT_TOOLBOX })
+      setActiveSubMenu("")
+    }
+  }, [activeObject])
 
-//  React.useEffect(() => {
-//    let watcher = async () => {
-//      if (activeObject) {
-//        // @ts-ignore
-//        const selectionType = getSelectionType(activeObject)
+  React.useEffect(() => {
+    let watcher = async () => {
+      if (activeObject) {
+        // @ts-ignore
+        const selectionType = getSelectionType(activeObject)
 
-//        if (selectionType.length > 1) {
-//          setState({ toolbox: "Multiple" })
-//        } else {
-//          setState({ toolbox: selectionType[0] })
-//        }
-//      }
-//    }
-//    if (editor) {
-//      editor.on("history:changed", watcher)
-//    }
-//    return () => {
-//      if (editor) {
-//        editor.off("history:changed", watcher)
-//      }
-//    }
-//  }, [editor, activeObject])
+        if (selectionType.length > 1) {
+          setState({ toolbox: "Multiple" })
+        } else {
+          setState({ toolbox: selectionType[0] })
+        }
+      }
+    }
+    if (editor) {
+      editor.on("history:changed", watcher)
+    }
+    return () => {
+      if (editor) {
+        editor.off("history:changed", watcher)
+      }
+    }
+  }, [editor, activeObject])
 
   // @ts-ignore
   const Component = Items[state.toolbox] ? Items[state.toolbox] : Items[DEFAULT_TOOLBOX]
