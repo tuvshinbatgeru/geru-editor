@@ -205,7 +205,7 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
                 backgroundRemove1()
-                editor.cancelContextMenu()
+                // editor.cancelContextMenu()
             //  handleAsComponentHandler()
             ////  editor.cancelContextMenu()
             alert("removing ... ")
@@ -252,28 +252,6 @@ function ContextMenu() {
           >
             <Unlocked size={24} />
           </ContextMenuItem>
-         {!isBackgroundRemove && ( <Box position="absolute" left top height="100%" width="100%"
-            zIndex={zIndex}
-            display='flex'
-            alignItems="center"
-            direction='column'
-            justifyContent="center"
-            dangerouslySetInlineStyle={{
-                __style: {
-                    backgroundColor:'rgba(0,0,30,0.4)',
-                    backdropFilter: 'blur(10px)',
-                    opacity: 1
-                }
-            }}
-        >
-            <HeaderText color='white'>
-                Creating your work of art hold on a bit ...
-            </HeaderText>
-            <Box height={12} />
-            <Box color='light' rounding='circle' padding={1}> 
-                <Spinner accessibilityLabel='loading' show={true} />
-            </Box>
-        </Box>)}
         </div>
       )}
     </>

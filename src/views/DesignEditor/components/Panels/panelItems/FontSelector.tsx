@@ -48,7 +48,8 @@ export default function () {
         fill: "#333333",
         metadata: {},
       }
-      editor.objects.add<IStaticText>(options)
+      
+      editor.objects.add(options)
     }
   }
   

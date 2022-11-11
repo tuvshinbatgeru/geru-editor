@@ -52,7 +52,7 @@ export default function () {
         fill: "#000",
         metadata: {},
       }
-      editor.objects.add<IStaticText>(options)
+      editor.objects.add(options)
       setIsShowMobileModal(false)
     }
   }
