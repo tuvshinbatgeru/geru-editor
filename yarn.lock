@@ -667,20 +667,22 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@layerhub-io/core@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.npmjs.org/@layerhub-io/core/-/core-0.2.6.tgz"
+"@layerhub-io/core@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@layerhub-io/core/-/core-0.3.3.tgz#9301d61455cfdf1156faa1572a395ec639a356c3"
+  integrity sha512-mCNiENceq8SYXlCo2MWfmftyZaJXrJu4mI7RvwOrtQ8dhVA1hNVDmr9jP4a2JLoaUFPmAxcyRIwnvLUyQMjx+A==
   dependencies:
-    "@layerhub-io/objects" "^0.1.1"
-    "@layerhub-io/types" "^0.2.0"
+    "@layerhub-io/objects" "^0.2.0"
+    "@layerhub-io/types" "^0.3.0"
     fabric "^5.2.1"
     lodash "^4.17.21"
     nanoid "^3.3.3"
     resize-observer-polyfill "^1.5.1"
 
-"@layerhub-io/objects@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/@layerhub-io/objects/-/objects-0.1.1.tgz"
+"@layerhub-io/objects@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@layerhub-io/objects/-/objects-0.2.0.tgz#3e2cde9300860fe465f668c59f957510f010f1a4"
+  integrity sha512-6PKye5SQs2fn6+4AVVZzItI746oQSipssOEYGskb0WoI33LJxXY0IPdQl48MwZVishOJ91dFoQ0MXCPKZDtX9A==
   dependencies:
     lodash "^4.17.21"
 
@@ -691,11 +693,12 @@
     dom-css "^2.1.0"
     raf "^3.4.1"
 
-"@layerhub-io/react@^0.2.4":
-  version "0.2.6"
-  resolved "https://registry.npmjs.org/@layerhub-io/react/-/react-0.2.6.tgz"
+"@layerhub-io/react@^0.3.2":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@layerhub-io/react/-/react-0.3.3.tgz#de0e822697efa5a236577e49fb9a8af86445d76d"
+  integrity sha512-pTnJou/V935tQeD51K4DCXHCF01x6hAugJCoR2LX+Pa2c+aKqLBZxdHPEHCzoEUmxnuh+2pJnBYHMkHpTbC0uQ==
   dependencies:
-    "@layerhub-io/core" "^0.2.6"
+    "@layerhub-io/core" "^0.3.3"
     react "^18.0.0"
     react-dom "^18.0.0"
     resize-observer-polyfill "^1.5.1"
@@ -703,6 +706,11 @@
 "@layerhub-io/types@^0.2.0":
   version "0.2.1"
   resolved "https://registry.npmjs.org/@layerhub-io/types/-/types-0.2.1.tgz"
+
+"@layerhub-io/types@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@layerhub-io/types/-/types-0.3.0.tgz#b77eddf24fe63e813218a2187bd76efc67445143"
+  integrity sha512-GcQdBSCKeVjR8qcW/zQuucSZXxK6ub1ugCDskUcZ7rcfK/of41Sbq39G3ASMynTb/RzlrgcNa4zwIadtPBAV2Q==
 
 "@mapbox/node-pre-gyp@^1.0.0":
   version "1.0.10"
@@ -2950,13 +2958,6 @@ needle@^3.1.0:
     iconv-lite "^0.6.3"
     sax "^1.2.4"
 
-next-routes@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.npmjs.org/next-routes/-/next-routes-1.4.2.tgz"
-  integrity sha512-1Ljs0BEV9IGcJLKxC/WZUtmftSvmkY6DlI8fVs8dClCoR82QRzBGRka/L/XB76wE5814MMeP9qVJYQil0FE9QQ==
-  dependencies:
-    path-to-regexp "^2.1.0"
-
 next-seo@^5.5.0:
   version "5.6.0"
   resolved "https://registry.npmjs.org/next-seo/-/next-seo-5.6.0.tgz"
@@ -3060,11 +3061,6 @@ path-is-absolute@^1.0.0:
 path-parse@^1.0.7:
   version "1.0.7"
   resolved "https://registry.npmjs.org/path-parse/-/path-parse-1.0.7.tgz"
-
-path-to-regexp@^2.1.0:
-  version "2.4.0"
-  resolved "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-2.4.0.tgz"
-  integrity sha512-G6zHoVqC6GGTQkZwF4lkuEyMbVOjoBKAEybQUypI1WTkqinCOrq2x6U2+phkJ1XsEMTy4LjtwPI7HW+NVrRR2w==
 
 path-type@^4.0.0:
   version "4.0.0"

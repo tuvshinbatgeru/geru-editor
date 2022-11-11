@@ -50,8 +50,6 @@ const Image = (props) => {
 }
 
 export default function () {
-    
-
   const { backgroundRemove , setBackgroundRemove} = useAppContext()
   const [uploads, setUploads] = React.useState([])
   const editor = useEditor()
@@ -61,8 +59,8 @@ export default function () {
   const [page, setPage] = useState(1)
   const [pages, setPages] = useState(1)
   const [fetching, setFetching] = useState(false)
-  //const { user_id } = //{props}
-  const user_id = "62837571527f65326bb4fec4"
+  
+  const user_id = Cookies.get('user_id') ? Cookies.get('user_id') : ""
   const is_logged_in = Cookies.get('token') ? true : false
 
   React.useEffect(() => {

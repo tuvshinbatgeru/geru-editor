@@ -18,7 +18,7 @@ import { BallTriangle } from  'react-loader-spinner'
 const Image = (props) => {
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
     const { photo, addImageToCanvas = () => {} } = props
-    let width = 1800 * photo.ratio
+
     return (
         <Box 
             column={isTabletOrMobile ? 4 : 6}
@@ -27,11 +27,20 @@ const Image = (props) => {
             borderStyle={"raisedTopShadow"}
         >
             <TapArea onTap={() => addImageToCanvas(photo.cover_url)}>
-                <GestaltImage
+                <div style={{
+                    background: photo.tg
+                }}>
+                    <TransformImage 
+                        url={photo.cover_url}
+                        width={300}
+                        height={Math.ceil(photo.ratio * 300)}
+                    />
+                </div>
+                {/* <GestaltImage
                     src={photo.medium_cover_url}
                     naturalWidth={1800}
                     naturalHeight={width}
-                />
+                /> */}
                          
           <div style={{ position: 'absolute', bottom: 7, display: 'flex', width: '100%', height: '40%' }}>
             <Box display='flex' width='100%' >
@@ -42,7 +51,7 @@ const Image = (props) => {
                     display: 'flex', 
                     justifyContent: 'center', 
                     alignItems: 'end' }}>
-                <Text color='light' align='center' size="300" weight='bold'>{"15K"}</Text>
+                <Text color='light' align='center' size="300" weight='bold'>{"15$"}</Text>
               </div>
             </Box>
           </div>
@@ -251,7 +260,7 @@ export default function () {
             <Box display='flex' justifyContent='center' paddingY={4} paddingX={4} >
                 <TapArea tapStyle="compress" onTap={() => setIsOpenMobileFilter(true)} fullWidth >
                     <Box color='light' borderStyle='shadow' paddingY={4} height={48} paddingX={4} rounding={8} display='flex' alignItems='center'>
-                        <Text justifyContent='center' alignItems='center' color="dark" weight='bold'>Шүүх</Text>
+                        <Text justifyContent='center' alignItems='center' color="dark" weight='bold'>Filter</Text>
 
                         <Box width={8} />
 

@@ -1,6 +1,6 @@
 {
   "name": "geru-editor",
-  "version": "0.0.37",
+  "version": "0.0.38",
   "main": "./dist/index.js",
   "scripts": {
     "start": "vite --port $PORT",
@@ -13,7 +13,7 @@
     "heroku-postbuild": "npm run web"
   },
   "dependencies": {
-    "@layerhub-io/react": "^0.2.4",
+    "@layerhub-io/react": "^0.3.2",
     "@layerhub-io/react-custom-scrollbar": "^0.0.1",
     "@nfteyez/sol-rayz": "^0.10.2",
     "@solana/web3.js": "^1.63.1",
