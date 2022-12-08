@@ -1,6 +1,6 @@
 {
   "name": "geru-editor",
-  "version": "0.0.38",
+  "version": "0.0.39",
   "main": "./dist/index.js",
   "scripts": {
     "start": "vite --port $PORT",
@@ -24,6 +24,7 @@
     "axios": "^0.27.2",
     "baseui": "^12.0.0",
     "ethers": "^5.7.1",
+    "framer-motion": "^7.6.7",
     "geru-components": "^0.0.16",
     "gestalt": "^73.2.1",
     "i18next": "^21.8.13",

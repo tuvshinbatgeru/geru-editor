@@ -7,12 +7,14 @@ import Scrollable from "~/components/Scrollable"
 import { vectors } from "~/constants/mock-data"
 import { useEditor } from "@layerhub-io/react"
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
+import useAppContext from '~/hooks/useAppContext'
 
 export default function () {
   const inputFileRef = React.useRef<HTMLInputElement>(null)
 
   const editor = useEditor()
   const setIsSidebarOpen = useSetIsSidebarOpen()
+  const { setIsShowMobileModal, dimensions } = useAppContext()
 
   const addObject = React.useCallback(
     (url: string) => {
@@ -22,6 +24,7 @@ export default function () {
           src: url,
         }
         editor.objects.add(options)
+        setIsShowMobileModal(false)
       }
     },
     [editor]
@@ -100,10 +103,10 @@ function GraphicItem({ preview, onClick }: { preview: any; onClick?: (option: an
       className={css({
         position: "relative",
         height: "84px",
-        background: "#f8f8fb",
+        background: "#f2f2f2",
         cursor: "pointer",
         padding: "12px",
-        borderRadius: "8px",
+        // borderRadius: "8px",
         overflow: "hidden",
         "::before:hover": {
           opacity: 1,

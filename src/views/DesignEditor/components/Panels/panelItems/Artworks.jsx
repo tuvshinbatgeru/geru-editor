@@ -257,11 +257,11 @@ export default function () {
     return (
         <Box display="flex"  height="100%" direction="column" width="100%" >
           
-            <Box display='flex' justifyContent='center' paddingY={4} paddingX={4} >
-                <TapArea tapStyle="compress" onTap={() => setIsOpenMobileFilter(true)} fullWidth >
-                    <Box color='light' borderStyle='shadow' paddingY={4} height={48} paddingX={4} rounding={8} display='flex' alignItems='center'>
+            <Box display='flex' justifyContent='center' paddingY={4} paddingX={4}>
+                <TapArea tapStyle="compress" onTap={() => setIsOpenMobileFilter(true)} fullWidth>
+                    <Box color='light' borderStyle='shadow' paddingY={4} height={48} paddingX={4} display='flex' alignItems='center'>
                         <Text justifyContent='center' alignItems='center' color="dark" weight='bold'>Filter</Text>
-
+        
                         <Box width={8} />
 
                         <Icon 

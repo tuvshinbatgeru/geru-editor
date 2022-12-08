@@ -89,7 +89,7 @@ function PanelsList() {
                   <Box flex="grow">
                     <PanelItem />
                   </Box>
-                  <Box direction='row' display='flex' justifyContent='center'>
+                  <Box direction='row' display='flex' justifyContent='center' overflow="scrollX">
                     {
                       PANEL_ITEMS.map(panelListItem => (
                         <PanelListItem

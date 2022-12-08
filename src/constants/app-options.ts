@@ -5,6 +5,11 @@ export const BASE_ITEMS = [
         icon: "Icon_Sticker",
     },
     {
+        id: "graphics",
+        name: "Graphics",
+        icon: "Icon_Sticker",
+    },
+    {
         id: "artworks",
         name: "Artworks",
         icon: "Icon_Image",
@@ -24,17 +29,11 @@ export const BASE_ITEMS = [
         name: "Mydesign",
         icon: "Icon_Position",
     },
-    {
-        id: "nft",
-        name: "nft",
-        icon: "Icon_Nft",
-    }
-    //  ,
-    //  {
-    //    id: "graphics",
-    //    name: "Graphics",
-    //    icon: "Icon_Nft",
-    //  }
+    // {
+    //     id: "nft",
+    //     name: "nft",
+    //     icon: "Icon_Nft",
+    // }
 ]
 
 export enum PanelType {

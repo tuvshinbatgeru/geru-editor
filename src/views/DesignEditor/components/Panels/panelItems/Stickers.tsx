@@ -12,6 +12,8 @@ import {fetchPacks} from "../../../utils/services"
 import { currencyFormat, getImageDimensions } from '../../../utils/helper'
 import useAppContext from '~/hooks/useAppContext'
 
+import { motion, LayoutGroup } from 'framer-motion'
+
 export default function () {
     const editor = useEditor()
     const [fetching, setFetching] = useState(false)
@@ -108,24 +110,26 @@ const Sticker = (props) => {
 
   return (
     <Column span={4} key={sticker.url}>
-      <Box padding={3} position='relative'>
-        <TapArea onTap={() => props.onTapSticker(sticker)}>
-          <Card>
-            <Mask>
-              <TransformImage 
-                url={sticker.url} 
-              />
-            </Mask>
-          </Card>
-          <div style={{ position: 'absolute', bottom: 7, display: 'flex', width: '100%', height: '40%' }}>
-            <Box display='flex' width='100%'>
-              <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
-                <Text color='light' align='center' size="200" weight='bold'>{sticker.price ? `${currencyFormat(sticker.price)}` : 'Free'}</Text>
-              </div>
-            </Box>
-          </div>
-        </TapArea>
-      </Box>
+      <motion.div layout>
+        <Box padding={3} position='relative'>
+          <TapArea onTap={() => props.onTapSticker(sticker)}>
+            <Card>
+              <Mask>
+                <TransformImage 
+                  url={sticker.url} 
+                />
+              </Mask>
+            </Card>
+            <div style={{ position: 'absolute', bottom: 7, display: 'flex', width: '100%', height: '40%' }}>
+              <Box display='flex' width='100%'>
+                <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
+                  <Text color='light' align='center' size="200" weight='bold'>{sticker.price ? `${currencyFormat(sticker.price)}` : 'Free'}</Text>
+                </div>
+              </Box>
+            </div>
+          </TapArea>
+        </Box>
+      </motion.div>
     </Column>
   )
 }
@@ -151,17 +155,28 @@ const Pack = (props) => {
             )
           }
         </Box>
-        <Box display='flex' alignItems='center' wrap>
-          {
-            stickers.slice(0, is_collapse ? 3 : stickers.length).map(sticker => (
-              <Sticker
-                sticker={sticker}
-                key={sticker._id}
-                onTapSticker={onTapSticker}
-              />
-            ))
-          }
-        </Box>
+        <LayoutGroup>
+          <Box display='flex' alignItems='center' wrap>
+            {
+              stickers.slice(0, 3).map(sticker => (
+                  <Sticker
+                    sticker={sticker}
+                    key={sticker._id}
+                    onTapSticker={onTapSticker}
+                  />
+              ))
+            }
+            {
+              !is_collapse && stickers.slice(3, stickers.length).map(sticker => (
+                  <Sticker
+                    sticker={sticker}
+                    key={sticker._id}
+                    onTapSticker={onTapSticker}
+                  />
+              ))
+            }
+          </Box>
+        </LayoutGroup>
       </Box>
     )
   }
