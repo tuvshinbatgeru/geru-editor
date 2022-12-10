@@ -1,161 +1,183 @@
 import React from "react"
-import { useStyletron } from "baseui"
+import { Scrollbars } from 'react-custom-scrollbars'
 import { Block } from "baseui/block"
-import { Button, SIZE } from "baseui/button"
-import AngleDoubleLeft from "~/components/Icons/AngleDoubleLeft"
-import Scrollable from "~/components/Scrollable"
-import { vectors } from "~/constants/mock-data"
-import { useEditor } from "@layerhub-io/react"
-import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
+import { useEffect, useState } from 'react'
+import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
+import { Text,Box, TapArea, Column, Mask, Card } from "gestalt"
+import { HeaderText, TransformImage } from "geru-components"
+import { useMediaQuery } from 'react-responsive'
+import { useEditor, useActiveObject } from "@layerhub-io/react"
+import { colors } from 'geru-components/dist/utils'
+import {fetchPacksWithParams} from "../../../utils/services"
+import { currencyFormat, getImageDimensions } from '../../../utils/helper'
 import useAppContext from '~/hooks/useAppContext'
 
+import { motion, LayoutGroup } from 'framer-motion'
+
 export default function () {
-  const inputFileRef = React.useRef<HTMLInputElement>(null)
+    const editor = useEditor()
+    const [fetching, setFetching] = useState(false)
+    const [objects, setObjects] = useState([])
+    const { setIsShowMobileModal, dimensions } = useAppContext()
 
-  const editor = useEditor()
-  const setIsSidebarOpen = useSetIsSidebarOpen()
-  const { setIsShowMobileModal, dimensions } = useAppContext()
+    useEffect(() => {
+        getStickers()
+    }, [])
 
-  const addObject = React.useCallback(
-    (url: string) => {
-      if (editor) {
-        const options = {
-          type: "StaticVector",
-          src: url,
-        }
-        editor.objects.add(options)
-        setIsShowMobileModal(false)
+    const getStickers = () => {
+        setFetching(true)
+        fetchPacksWithParams({
+          pack_type: 'graphics',
+        })
+        .then(res => {
+            if(res.data.code == 0) {
+                setObjects(res.data.packs.docs)
+            }
+        })
+        .catch(err => console.log(err))
+        .then(() => setFetching(false))
+    }
+
+    const addImateToCanvas = async (item) => {
+      // let adjustScale = 1
+
+      // const recommendedSize = Math.ceil(dimensions.height / 2)
+      // const { height } = await getImageDimensions(item.url)
+
+      // adjustScale = recommendedSize / height
+      
+      const options = {
+        type: "StaticVector",
+        src: item.url,
+        // scaleX: adjustScale,
+        // scaleY: adjustScale
       }
-    },
-    [editor]
-  )
 
-  const handleDropFiles = (files: FileList) => {
-    const file = files[0]
-    const url = URL.createObjectURL(file)
-    editor.objects.add({
-      src: url,
-      type: "StaticVector",
-    })
-  }
+      editor.objects.add(options)
+      setIsShowMobileModal(false)
+    }
 
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    handleDropFiles(e.target.files!)
-  }
+    const addObject = (item) => {
+      if (editor) {
+        addImateToCanvas(item)
+      }
+    }
+    
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
-  const handleInputFileRefClick = () => {
-    inputFileRef.current?.click()
-  }
+    if(isTabletOrMobile){
+        return (
+          <div style={{ display: 'flex', height: '100%', width: '100%', flexDirection: 'column' }}>
+            <Box height='100%'>
+              <Scrollbars>
+                <Box paddingX={6} paddingY={4}>
+                  { fetching && <ListLoadingPlaceholder /> }
+                  {objects.map((obj, index) => (
+                    <Pack 
+                      key={index}
+                      item={obj}
+                      onTapSticker={addObject}
+                    />
+                  ))}
+                </Box>
+              </Scrollbars>
+            </Box>
+          </div>
+        )
+    }
+    return (
+        <>
+            <Block $style={{ flex: 1, display: "flex", flexDirection: "column" , backgroundColor: colors.colorBlack}}>
+                <Scrollbars>
+                        <Box paddingX={4}>
+                          { fetching && <ListLoadingPlaceholder /> }
+                           {objects.map((obj, index) => (
+                            <Pack 
+                                key={index}
+                                item={obj}
+                                onTapSticker={addObject}
+                             />
+                           ))}
+                        </Box>
+                </Scrollbars>
+            </Block>
+           
+        </>
+    )
+}
+
+const Sticker = (props) => {
+  const { sticker } = props
 
   return (
-    <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-      {/*<Block
-        $style={{
-          display: "flex",
-          alignItems: "center",
-          fontWeight: 500,
-          justifyContent: "space-between",
-          padding: "1.5rem",
-        }}
-      >
-        <Block>Graphics</Block>
-
-        <Block onClick={() => setIsSidebarOpen(false)} $style={{ cursor: "pointer", display: "flex" }}>
-          <AngleDoubleLeft size={18} />
-        </Block>
-      </Block>*/}
-
-      {/*<Block padding={"0 1.5rem"}>
-        <Button
-          onClick={handleInputFileRefClick}
-          size={SIZE.compact}
-          overrides={{
-            Root: {
-              style: {
-                width: "100%",
-              },
-            },
-          }}
-        >
-          Computer
-        </Button>
-      </Block>*/}
-      <Scrollable>
-        <input onChange={handleFileInput} type="file" id="file" ref={inputFileRef} style={{ display: "none" }} />
-        <Block>
-          <Block $style={{ display: "grid", gap: "8px", padding: "1.5rem", gridTemplateColumns: "1fr 1fr" }}>
-            {vectors.map((vector, index) => (
-              <GraphicItem onClick={() => addObject(vector)} key={index} preview={vector} />
-            ))}
-          </Block>
-        </Block>
-      </Scrollable>
-    </Block>
+    <Column span={4} key={sticker.url}>
+      <motion.div layout>
+        <Box padding={3} position='relative'>
+          <TapArea onTap={() => props.onTapSticker(sticker)}>
+            <Card>
+              <Mask>
+                <TransformImage 
+                  url={sticker.url} 
+                />
+              </Mask>
+            </Card>
+            <div style={{ position: 'absolute', bottom: 7, display: 'flex', width: '100%', height: '40%' }}>
+              <Box display='flex' width='100%'>
+                <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
+                  <Text color='light' align='center' size="200" weight='bold'>{sticker.price ? `${currencyFormat(sticker.price)}` : 'Free'}</Text>
+                </div>
+              </Box>
+            </div>
+          </TapArea>
+        </Box>
+      </motion.div>
+    </Column>
   )
 }
 
-function GraphicItem({ preview, onClick }: { preview: any; onClick?: (option: any) => void }) {
-  const [css] = useStyletron()
-  return (
-    <div
-      onClick={onClick}
-      // onClick={() => onClick(component.layers[0])}
-      className={css({
-        position: "relative",
-        height: "84px",
-        background: "#f2f2f2",
-        cursor: "pointer",
-        padding: "12px",
-        // borderRadius: "8px",
-        overflow: "hidden",
-        "::before:hover": {
-          opacity: 1,
-        },
-      })}
-    >
-      <div
-        className={css({
-          backgroundImage: `linear-gradient(to bottom,
-          rgba(0, 0, 0, 0) 0,
-          rgba(0, 0, 0, 0.006) 8.1%,
-          rgba(0, 0, 0, 0.022) 15.5%,
-          rgba(0, 0, 0, 0.047) 22.5%,
-          rgba(0, 0, 0, 0.079) 29%,
-          rgba(0, 0, 0, 0.117) 35.3%,
-          rgba(0, 0, 0, 0.158) 41.2%,
-          rgba(0, 0, 0, 0.203) 47.1%,
-          rgba(0, 0, 0, 0.247) 52.9%,
-          rgba(0, 0, 0, 0.292) 58.8%,
-          rgba(0, 0, 0, 0.333) 64.7%,
-          rgba(0, 0, 0, 0.371) 71%,
-          rgba(0, 0, 0, 0.403) 77.5%,
-          rgba(0, 0, 0, 0.428) 84.5%,
-          rgba(0, 0, 0, 0.444) 91.9%,
-          rgba(0, 0, 0, 0.45) 100%)`,
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          opacity: 0,
-          transition: "opacity 0.3s ease-in-out",
-          height: "100%",
-          width: "100%",
-          ":hover": {
-            opacity: 1,
-          },
-        })}
-      ></div>
-      <img
-        src={preview}
-        className={css({
-          width: "100%",
-          height: "100%",
-          objectFit: "contain",
-          pointerEvents: "none",
-          verticalAlign: "middle",
-        })}
-      />
-    </div>
-  )
-}
+const Pack = (props) => {
+    const [is_collapse, setIsCollapse] = useState(true)
+    const { item, onTapSticker = () => {} } = props
+    const { stickers = [] } = item
+  
+    return (
+      <Box marginBottom={2} paddingY={2}>
+        <Box display='flex' justifyContent='between' alignItems='center'>
+          <HeaderText color='white' size="2lg">{item.title}</HeaderText>
+          {
+            stickers.length > 3 && (
+              <Box>
+                <TapArea onTap={() => setIsCollapse(!is_collapse)}>
+                  <Box padding={2}>
+                    <Text underline weight='bold' align='center' color='light'>{is_collapse ? 'see all' : 'close'}</Text>
+                  </Box>
+                </TapArea>
+              </Box>
+            )
+          }
+        </Box>
+        <LayoutGroup>
+          <Box display='flex' alignItems='center' wrap>
+            {
+              stickers.slice(0, 3).map(sticker => (
+                  <Sticker
+                    sticker={sticker}
+                    key={sticker._id}
+                    onTapSticker={onTapSticker}
+                  />
+              ))
+            }
+            {
+              !is_collapse && stickers.slice(3, stickers.length).map(sticker => (
+                  <Sticker
+                    sticker={sticker}
+                    key={sticker._id}
+                    onTapSticker={onTapSticker}
+                  />
+              ))
+            }
+          </Box>
+        </LayoutGroup>
+      </Box>
+    )
+  }

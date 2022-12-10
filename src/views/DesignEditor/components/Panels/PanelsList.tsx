@@ -164,7 +164,7 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
                 <Icon size={24} color={selected ? 'black' : 'white'} icon={icon} />
                 <div style={{ height: 4 }} />
                     <Text size='200' color={selected ? 'dark' : 'light'}>
-                        {label}
+                        {String(label)}
                     </Text>
                 </Box>
             </div>

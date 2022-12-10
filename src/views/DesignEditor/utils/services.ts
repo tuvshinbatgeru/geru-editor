@@ -13,6 +13,12 @@ export async function fetchPacks() {
 	return await request().get('/api/pack/all')
 }
 
+export async function fetchPacksWithParams(params) { 
+	return await request().get('/api/pack', {
+		params
+	})
+}
+
 export async function fetchFonts() {
 	return await request().get('/api/font')
 }

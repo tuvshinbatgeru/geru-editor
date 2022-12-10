@@ -234,7 +234,7 @@ export default function (props) {
     >
       {
         has_toolbox && (
-          <Box display={"flex"} alignItems={"center"} flex='grow' maxWidth={width - 60} overflow="scrollX">
+          <Box display={"flex"} alignItems={"center"} flex='grow' maxWidth={width - 60} overflow="scrollX" paddingY={2}>
             {/* <Block
               onClick={() => setActiveSubMenu("FontSelector")}
               $style={{

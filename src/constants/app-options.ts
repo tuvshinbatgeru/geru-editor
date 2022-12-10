@@ -9,11 +9,11 @@ export const BASE_ITEMS = [
         name: "Graphics",
         icon: "Icon_Sticker",
     },
-    {
-        id: "artworks",
-        name: "Artworks",
-        icon: "Icon_Image",
-    },
+    // {
+    //     id: "artworks",
+    //     name: "Artworks",
+    //     icon: "Icon_Image",
+    // },
     {
         id: "uploads",
         name: "Uploads",

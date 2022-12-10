@@ -14,8 +14,7 @@ const Preview = (props) => {
   const makePreview = React.useCallback(async () => {
     if (isSaving) {
         const template = editor.scene.exportToJSON()
-        template.layers = template.layers.filter((layer) => layer.id != 'background')
-
+        //template.layers = template.layers.filter((layer) => layer.id != 'background')
         const image = (await editor.renderer.render(template)) as string
         const resized = await resizeImage(image, 1400, 1400)
 
