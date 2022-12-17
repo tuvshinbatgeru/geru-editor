@@ -20,6 +20,7 @@ const Loader = (props) => {
 
     const handleLoadTemplate = async () => {
         let fonts = []
+        let bgColor = backgroundColor 
 
         // let template = {
         //     "id": "dC1JWDly7rSqI-0zqBib2",
@@ -77,7 +78,8 @@ const Loader = (props) => {
                 }
 
                 if(object.type === 'Background') {
-                    object.fill = `#${backgroundColor}`
+                    // object.fill = object.fill == `#${bgColor}` ? `#${bgColor}`
+                    bgColor = object.fill
                     object.width = dimensions.width
                     object.height = dimensions.height
                     object.left = 0
@@ -105,7 +107,7 @@ const Loader = (props) => {
                 }
 
                 if(object.type === 'Background') {
-                    object.fill = `#${backgroundColor}`
+                    object.fill = `#${bgColor}`
                     object.width = dimensions.width
                     object.height = dimensions.height
                     object.left = 0
@@ -119,12 +121,12 @@ const Loader = (props) => {
                 frame: {
                     width: parseInt(dimensions.width),
                     height: parseInt(dimensions.height),
-                    backgroundColor,
+                    backgroundColor: bgColor,
                 },
             })
         }
-        
-        editor.frame.setBackgroundColor(backgroundColor)
+
+        editor.frame.setBackgroundColor(bgColor)
         editor.frame.resize({
             width: parseInt(dimensions.width),
             height: parseInt(dimensions.height),
