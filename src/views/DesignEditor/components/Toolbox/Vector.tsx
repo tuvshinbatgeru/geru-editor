@@ -80,6 +80,7 @@ export default function (props) {
                           style={{
                             height: "24px",
                             width: "24px",
+                            borderRadius: '12px',
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",

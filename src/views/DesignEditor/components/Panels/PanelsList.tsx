@@ -10,7 +10,7 @@ import { styled } from "baseui"
 import { useTranslation } from "react-i18next"
 import { Box, IconButton, Text, Modal, TapArea, FixedZIndex } from "gestalt"
 import { useMediaQuery } from 'react-responsive'
-import { Icon } from "geru-components"
+import Icon from "geru-components/dist/Icon"
 import { colors } from 'geru-components/dist/utils'
 
 const Container = styled("div", (props) => ({

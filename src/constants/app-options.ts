@@ -7,7 +7,7 @@ export const BASE_ITEMS = [
     {
         id: "graphics",
         name: "Graphics",
-        icon: "Icon_Sticker",
+        icon: "Icon_Category",
     },
     // {
     //     id: "artworks",
