@@ -29,8 +29,15 @@ function PanelsList() {
 
   if(isTabletOrMobile) {
     return (
-      <Box display='flex' zIndex={ZINDEX}>
-        <Box bottom position='fixed' overflow='hidden' paddingX={2} paddingY={3}>
+      <Box display='flex' zIndex={ZINDEX} position='relative'>
+        <div style={{
+          position: 'fixed',
+          bottom: 0,
+          paddingTop: 10,
+          paddingBottom: 10,
+          paddingLeft: 8,
+          paddingRight: 8,
+        }}>
           <IconButton 
             size="lg"
             icon='add'
@@ -38,7 +45,7 @@ function PanelsList() {
             accessibilityLabel='Model button'
             onClick={() => setIsShowMobileModal(!isShowMobileModal)}
           />
-        </Box>
+        </div>
 
         {
           activeSubMenu && (
@@ -72,7 +79,6 @@ function PanelsList() {
             <Modal
               accessibilityModalLabel='Modal'
               onDismiss={() => setIsShowMobileModal(!isShowMobileModal)}
-              // align='center'
             >
                 <Box position='fixed' display='flex' direction='column' bottom height="80%" width='100%' left>
                   <div style={{ position: 'absolute', top: -50, left: 0, right: 0 }}>

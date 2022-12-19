@@ -29,6 +29,8 @@ interface IAppContext {
     setActiveSubMenu: (option: string) => void;
     currentTemplate: any;
     setCurrentTemplate: any;
+    isAssetLoading: boolean;
+    setIsAssetLoading: (isAssetLoading: boolean) => void;
 }
 
 export const AppContext = createContext<IAppContext>({
@@ -58,6 +60,8 @@ export const AppContext = createContext<IAppContext>({
     setActiveSubMenu: (value: string) => {},
     currentTemplate: {},
     setCurrentTemplate: {},
+    isAssetLoading: false,
+    setIsAssetLoading: () => {},
 });
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
@@ -74,6 +78,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [fonts, setFonts] = useState([])
     const [isSaving, setIsSaving] = useState(false)
     const [isShowMobileModal, setIsShowMobileModal] = useState(false)
+    const [isAssetLoading, setIsAssetLoading] = useState(false)
 
     const context = {
         isMobile,
@@ -101,7 +106,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         backgroundColor,
         setBackgroundColor,
         isShowMobileModal,
-        setIsShowMobileModal
+        setIsShowMobileModal,
+        isAssetLoading,
+        setIsAssetLoading,
     };
     
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

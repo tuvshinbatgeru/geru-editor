@@ -18,7 +18,7 @@ export default function () {
     const editor = useEditor()
     const [fetching, setFetching] = useState(false)
     const [objects, setObjects] = useState([])
-    const { setIsShowMobileModal, dimensions } = useAppContext()
+    const { setIsShowMobileModal, dimensions, setIsAssetLoading } = useAppContext()
     const activeObject = useActiveObject()
 
     useEffect(() => {
@@ -38,6 +38,7 @@ export default function () {
     }
 
     const addImateToCanvas = async (item) => {
+      setIsAssetLoading(true)
       let adjustScale = 1
 
       const recommendedSize = Math.ceil(dimensions.height / 2)
@@ -54,6 +55,7 @@ export default function () {
 
       editor.objects.add(options)
       setIsShowMobileModal(false)
+      setIsAssetLoading(false)
     }
 
     const addObject = (item) => {

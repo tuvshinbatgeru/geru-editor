@@ -14,7 +14,7 @@ export default function () {
       
       <Canvas
         config={{
-          background: "#f1f2f6",
+          background: "#f4f4f4",
           controlsPosition: {
             rotation: "BOTTOM",
           },

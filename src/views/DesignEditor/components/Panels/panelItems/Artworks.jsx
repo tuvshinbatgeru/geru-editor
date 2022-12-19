@@ -13,7 +13,6 @@ import { TransformImage ,HeaderText} from 'geru-components'
 import { fetchUserUploads, fileUpload, fetchArtworks , fetchSuggestedTopics} from "~/views/DesignEditor/utils/services"
 import { getImageDimensions } from '../../../utils/helper'
 import _isEmpty from 'lodash/isEmpty'
-import { BallTriangle } from  'react-loader-spinner'
 
 const Image = (props) => {
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
@@ -61,7 +60,7 @@ const Image = (props) => {
 }
 
 export default function () {
-    const { backgroundRemove} = useAppContext()
+    const { backgroundRemove, isAssetLoading, setIsAssetLoading } = useAppContext()
     const [artworks, setArtworks] = React.useState([])
     const editor = useEditor()
     const [queueSearch, setQueueSearch] = useState("latest");
@@ -130,7 +129,7 @@ export default function () {
 
     const addImageToCanvas = async (url) => {
         let adjustScale = 1
-        setAddImageLoader(true)
+        setIsAssetLoading(true)
         const recommendedSize = Math.ceil(dimensions.height / 2)
         const { height } = await getImageDimensions(url)
 
@@ -145,7 +144,7 @@ export default function () {
 
         editor.objects.add(options)
         setIsShowMobileModal(false)
-        setAddImageLoader(false)
+        setIsAssetLoading(false)
     }
     const zIndex = new FixedZIndex(2)
     const FilterTrigger ={}
@@ -302,40 +301,7 @@ export default function () {
                 </Box>
             )
         }
-        {
-            addImageLoader && (
-                <Box 
-                    position="absolute" 
-                    left top height="100%" width="100%"
-                    zIndex={zIndex}
-                    display='flex'
-                    alignItems="center"
-                    direction='column'
-                    justifyContent="center"
-                    dangerouslySetInlineStyle={{
-                        __style: {
-                            backgroundColor:'rgba(0,0,30,0.4)',
-                            backdropFilter: 'blur(20px)',
-                            opacity: 1
-                        }
-                    }}
-                    >
-                    <Box height={12} />
-                    <Box> 
-                        <BallTriangle
-                            height={100}
-                            width={100}
-                            radius={5}
-                            color="white"   
-                            ariaLabel="ball-triangle-loading"
-                            wrapperClass={{}}
-                            wrapperStyle=""
-                            visible={true}
-                        />
-                    </Box>
-                </Box>
-            )
-        }
+        
         <Box height='100%' paddingX={2} >
             <Scrollbars>
                 <InfiniteScroll

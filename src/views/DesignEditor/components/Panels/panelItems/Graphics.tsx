@@ -18,7 +18,7 @@ export default function () {
     const editor = useEditor()
     const [fetching, setFetching] = useState(false)
     const [objects, setObjects] = useState([])
-    const { setIsShowMobileModal, dimensions } = useAppContext()
+    const { setIsShowMobileModal, dimensions, setIsAssetLoading } = useAppContext()
 
     useEffect(() => {
         getStickers()
@@ -46,6 +46,7 @@ export default function () {
 
       // adjustScale = recommendedSize / height
       
+      setIsAssetLoading(true)
       const options = {
         type: "StaticVector",
         src: item.url,
@@ -55,6 +56,7 @@ export default function () {
 
       editor.objects.add(options)
       setIsShowMobileModal(false)
+      setIsAssetLoading(false)
     }
 
     const addObject = (item) => {

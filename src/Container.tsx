@@ -5,6 +5,7 @@ import useAppContext from "~/hooks/useAppContext"
 
 function Container({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null)
+
   const { isMobile, setIsMobile } = useAppContext()
   // const dispatch = useAppDispatch()
   const updateMediaQuery = (value: number) => {

@@ -14,7 +14,7 @@ const Container = styled("div", (props) => ({
 //   boxShadow: "rgb(0 0 0 / 15%) 0px 1px 1px",
   height: "50px",
 //   backgroundColor: '#fff',
-  position: 'absolute',
+  position: 'fixed',
   bottom: '80px',
   left: '0px',
   right: '0px',

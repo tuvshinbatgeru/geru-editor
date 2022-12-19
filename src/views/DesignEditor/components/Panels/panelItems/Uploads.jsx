@@ -50,7 +50,7 @@ const Image = (props) => {
 }
 
 export default function () {
-  const { backgroundRemove , setBackgroundRemove} = useAppContext()
+  const { backgroundRemove , setBackgroundRemove, setIsAssetLoading } = useAppContext()
   const [uploads, setUploads] = React.useState([])
   const editor = useEditor()
   const setIsSidebarOpen = useSetIsSidebarOpen()
@@ -116,6 +116,7 @@ export default function () {
   }
 
   const addImageToCanvas = async (url) => {
+    setIsAssetLoading(true)
     let adjustScale = 1
 
     const recommendedSize = Math.ceil(dimensions.height / 2)
@@ -132,6 +133,7 @@ export default function () {
 
     editor.objects.add(options)
     setIsShowMobileModal(false)
+    setIsAssetLoading(false)
   }
 
   const successCallBack = (res) => {

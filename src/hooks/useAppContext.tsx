@@ -28,7 +28,9 @@ function useAppContext() {
     isSaving,
     setIsSaving,
     isShowMobileModal,
-    setIsShowMobileModal
+    setIsShowMobileModal,
+    isAssetLoading,
+    setIsAssetLoading,
   } = useContext(AppContext)
 
   return {
@@ -57,7 +59,9 @@ function useAppContext() {
     isSaving,
     setIsSaving,
     isShowMobileModal,
-    setIsShowMobileModal
+    setIsShowMobileModal,
+    isAssetLoading,
+    setIsAssetLoading,
   }
 }
 
