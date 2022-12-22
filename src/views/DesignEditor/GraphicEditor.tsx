@@ -21,12 +21,14 @@ function GraphicEditor(props) {
         <Preview onSuccessCallback={onSuccessCallback} />
         <AssetLoading />
 
-        <Panels />
-        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          <Toolbox />
-          <Canvas />
-          <ActiveObjectToolbox />
-          <Footer />
+        <div style={{ display: "flex", flex: 1 }}>
+          <Panels />
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative" }}>
+            <Toolbox />
+            <Canvas />
+            <ActiveObjectToolbox />
+            <Footer />
+          </div>
         </div>
       </EditorContainer>
     </>

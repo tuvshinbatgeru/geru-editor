@@ -1,12 +1,7 @@
 import React from "react"
-import Icons from "~/components/Icons"
-import { Button, KIND, SIZE } from "baseui/button"
 import { useZoomRatio, useEditor, useActiveObject } from "@layerhub-io/react"
 import useAppContext from "~/hooks/useAppContext"
 
-import { Block } from "baseui/block"
-import { Slider } from "baseui/slider"
-import { Input } from "baseui/input"
 import { useMediaQuery } from 'react-responsive'
 import { Box } from 'gestalt'
 import Items from "../../Toolbox/Items"
@@ -90,7 +85,7 @@ export default function () {
   }, [zoomRatio])
 
   if(isTabletOrMobile) return (
-    <Box display='flex' height={70} direction='row'>
+    <Box display='flex' position="fixed" color='light' bottom height={70} direction='row' left right width="100%">
         <Box width={70} />
         <Box flex='grow' display='flex' alignItems="center">
           <Component has_common has_toolbox={false} />

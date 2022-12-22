@@ -30,8 +30,6 @@ const Toolbox = () => {
   const editor = useEditor()
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
-  if(!isTabletOrMobile) return null
-
   React.useEffect(() => {
     const selectionType = getSelectionType(activeObject)
     if (selectionType) {
@@ -59,15 +57,19 @@ const Toolbox = () => {
         }
       }
     }
+
     if (editor) {
       editor.on("history:changed", watcher)
     }
+
     return () => {
       if (editor) {
         editor.off("history:changed", watcher)
       }
     }
   }, [editor, activeObject])
+
+  if(!isTabletOrMobile) return null
 
   // @ts-ignore
   const Component = Items[state.toolbox] ? Items[state.toolbox] : Items[DEFAULT_TOOLBOX]
