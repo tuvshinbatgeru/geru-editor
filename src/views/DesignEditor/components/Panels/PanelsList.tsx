@@ -21,9 +21,12 @@ const Container = styled("div", (props) => ({
 
 function PanelsList() {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
-  const { activePanel, activeSubMenu, setActiveSubMenu, isShowMobileModal, setIsShowMobileModal } = useAppContext()
+  const { activePanel, activeSubMenu, setActiveSubMenu, isShowMobileModal, setIsShowMobileModal, ignoreAppOptions } = useAppContext()
   const { t } = useTranslation("editor")
-  const PANEL_ITEMS = BASE_ITEMS
+  
+  let PANEL_ITEMS = BASE_ITEMS.filter((item) => {
+    return !ignoreAppOptions.includes(item.id)
+  })
 
   const ZINDEX = new FixedZIndex(1)
 

@@ -9,11 +9,11 @@ export const BASE_ITEMS = [
         name: "Graphics",
         icon: "Icon_Category",
     },
-    // {
-    //     id: "artworks",
-    //     name: "Artworks",
-    //     icon: "Icon_Image",
-    // },
+    {
+        id: "artworks",
+        name: "Artworks",
+        icon: "Icon_Image",
+    },
     {
         id: "uploads",
         name: "Uploads",
@@ -29,11 +29,11 @@ export const BASE_ITEMS = [
         name: "Mydesign",
         icon: "Icon_Position",
     },
-    // {
-    //     id: "nft",
-    //     name: "nft",
-    //     icon: "Icon_Nft",
-    // }
+    {
+        id: "nft",
+        name: "nft",
+        icon: "Icon_Nft",
+    }
 ]
 
 export enum PanelType {

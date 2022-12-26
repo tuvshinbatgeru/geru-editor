@@ -31,6 +31,8 @@ interface IAppContext {
     setCurrentTemplate: any;
     isAssetLoading: boolean;
     setIsAssetLoading: (isAssetLoading: boolean) => void;
+    ignoreAppOptions: any[];
+    setIgnoreAppOptions: (ignoreAppOptions: any[]) => void;
 }
 
 export const AppContext = createContext<IAppContext>({
@@ -62,6 +64,8 @@ export const AppContext = createContext<IAppContext>({
     setCurrentTemplate: {},
     isAssetLoading: false,
     setIsAssetLoading: () => {},
+    ignoreAppOptions: [],
+    setIgnoreAppOptions: () => {}
 });
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
@@ -79,6 +83,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [isSaving, setIsSaving] = useState(false)
     const [isShowMobileModal, setIsShowMobileModal] = useState(false)
     const [isAssetLoading, setIsAssetLoading] = useState(false)
+    const [ignoreAppOptions, setIgnoreAppOptions] = useState([])
 
     const context = {
         isMobile,
@@ -109,6 +114,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setIsShowMobileModal,
         isAssetLoading,
         setIsAssetLoading,
+        ignoreAppOptions,
+        setIgnoreAppOptions
     };
     
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

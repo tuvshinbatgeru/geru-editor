@@ -31,6 +31,8 @@ function useAppContext() {
     setIsShowMobileModal,
     isAssetLoading,
     setIsAssetLoading,
+    ignoreAppOptions,
+    setIgnoreAppOptions,
   } = useContext(AppContext)
 
   return {
@@ -62,6 +64,8 @@ function useAppContext() {
     setIsShowMobileModal,
     isAssetLoading,
     setIsAssetLoading,
+    ignoreAppOptions,
+    setIgnoreAppOptions
   }
 }
 
