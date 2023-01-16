@@ -6,7 +6,7 @@ import { useEditor } from "@layerhub-io/react"
 import { defaultFonts } from '~/constants/fonts'
 
 function DesignEditor(props) {
-  const { setBackgroundColor, setDimensions, setFonts, setIgnoreAppOptions } = useAppContext()
+  const { setBackgroundColor, setDimensions, setFonts, setIgnoreAppOptions, setStickerParams } = useAppContext()
   const { params = {} } = props
   const { template = {} } = params 
 
@@ -18,10 +18,12 @@ function DesignEditor(props) {
       const fonts = params.fonts || defaultFonts
       const backgroundColor = params.backgroundColor || "000"
       const ignoreAppOptions = params.ignoreAppOptions || []
+      const stickerParams = params.stickerParams || {}
 
       setDimensions(dimensions)
       setBackgroundColor(backgroundColor)
       setIgnoreAppOptions(ignoreAppOptions)
+      setStickerParams(stickerParams)
       
       setFonts(fonts.map((font) => {
         return {

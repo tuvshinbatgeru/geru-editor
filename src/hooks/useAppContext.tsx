@@ -33,6 +33,8 @@ function useAppContext() {
     setIsAssetLoading,
     ignoreAppOptions,
     setIgnoreAppOptions,
+    stickerParams,
+    setStickerParams,
   } = useContext(AppContext)
 
   return {
@@ -65,7 +67,9 @@ function useAppContext() {
     isAssetLoading,
     setIsAssetLoading,
     ignoreAppOptions,
-    setIgnoreAppOptions
+    setIgnoreAppOptions,
+    stickerParams,
+    setStickerParams
   }
 }
 

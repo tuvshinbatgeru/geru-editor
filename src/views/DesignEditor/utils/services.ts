@@ -9,8 +9,10 @@ export async function fetchStickers() {
 	return await request().get('/api/sticker/all')
 }
 
-export async function fetchPacks() { 
-	return await request().get('/api/pack/all')
+export async function fetchPacks(params) { 
+	return await request().get('/api/pack/all', {
+		params
+	})
 }
 
 export async function fetchPacksWithParams(params) { 

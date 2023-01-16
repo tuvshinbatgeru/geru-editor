@@ -1,6 +1,6 @@
 {
   "name": "geru-editor",
-  "version": "0.0.51",
+  "version": "0.0.53",
   "main": "./dist/index.js",
   "scripts": {
     "start": "vite --port $PORT",

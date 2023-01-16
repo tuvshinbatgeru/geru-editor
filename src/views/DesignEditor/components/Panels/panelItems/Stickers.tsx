@@ -18,7 +18,7 @@ export default function () {
     const editor = useEditor()
     const [fetching, setFetching] = useState(false)
     const [objects, setObjects] = useState([])
-    const { setIsShowMobileModal, dimensions, setIsAssetLoading } = useAppContext()
+    const { setIsShowMobileModal, dimensions, setIsAssetLoading, stickerParams } = useAppContext()
     const activeObject = useActiveObject()
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function () {
 
     const getStickers = () => {
         setFetching(true)
-        fetchPacks()
+        fetchPacks(stickerParams)
         .then(res => {
             if(res.data.code == 0) {
                 setObjects(res.data.packs)
