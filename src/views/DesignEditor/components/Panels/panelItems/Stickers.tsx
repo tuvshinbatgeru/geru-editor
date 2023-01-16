@@ -23,7 +23,7 @@ export default function () {
 
     useEffect(() => {
         getStickers()
-    }, [])
+    }, [stickerParams])
 
     const getStickers = () => {
         setFetching(true)
