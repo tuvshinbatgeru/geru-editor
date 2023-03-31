@@ -2,7 +2,7 @@ import { Network, Alchemy } from "alchemy-sdk";
 
 // TODO: securely read it from env
 const settings = {
-    apiKey: "ty4BTuS6mhlrzEhWOtW8d3a3MTUc5Lev",
+    apiKey: "8wE5F5Wzfi1EnzyOuLgh6BQfzpmChfNx",
     network: Network.ETH_MAINNET,
 };
 

@@ -109,8 +109,10 @@ export default function () {
                         templates.length == 0 && 
                             <Box paddingX={4} paddingY={6}>
                                     <Flex gap={12} direction='column'>
-                                    <HeaderText color='white' align='center'>Танд одоогоор урласан загвар алга байна...</HeaderText>
-                                    <Text color='light' align='center'>Та өөрийн загвараа хийж дуусгаад баруун дээр байрлах</Text>
+                                    <HeaderText color='white' align='center'>You don't have any templates.</HeaderText>
+                                    <Text color='light' align='center'>
+                                        To save templates, tap the button.
+                                    </Text>
                                         {isTabletOrMobile ? 
                                             <Box color='dark' padding={2} justifyContent='center' alignItems='center'  >
                                                 <IconButton 
@@ -130,7 +132,6 @@ export default function () {
                                             <Box width={5} />
                                             <Text color='light' weight='bold' align='center' overflow='noWrap'>{"Save template"}</Text>
                                         </Box>}
-                                        <Text color='light' align='center'>товчийг дарснаар загвараа хадгалах боломжтой.</Text>
                                     </Flex>
                             </Box>
                     }

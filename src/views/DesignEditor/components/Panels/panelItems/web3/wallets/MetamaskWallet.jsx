@@ -19,6 +19,7 @@ const MetamaskWallet = (props) => {
     const [nfts, setNFTs] = useState([])
     const [fetching, setFetching] = useState(false)
     const [connected, setConnected] = useState(false)
+    
     const isMetaMaskInstalled = () => {
         const { ethereum } = window;
         return Boolean(ethereum && ethereum.isMetaMask);
@@ -85,17 +86,28 @@ const MetamaskWallet = (props) => {
         }
     }, [])
     return (
-       <Box borderStyle="sm">
-          <TapArea tapStyle="compress" onTap={onClickConnect} fullWidth={false}>
-                <Box display='flex' paddingX={4} paddingY={2} color='blue' borderStyle='shadow' alignItems='center'>
-                    <img
-                        src="https://opensea.io/static/images/logos/metamask-fox.svg"
-                        width={50}
-                        height={50}
-                    />
-                    <Box width={20} />
-                    <HeaderText size="xl" color='white'>MetaMask</HeaderText>
-                </Box>
+       <Box>
+            {
+                true && (
+                    <TapArea tapStyle="compress" onTap={onClickConnect} fullWidth={false}>
+                        <Box display='flex' paddingX={4} paddingY={2} alignItems='center' color='lightWash' rounding={2}>
+                            <Box>
+                                <img
+                                    src="https://opensea.io/static/images/logos/metamask-fox.svg"
+                                    width={50}
+                                    height={50}
+                                />
+                            </Box>
+                            <Box width={20} />
+                            <Box>
+                                <Text weight='bold' size='400'>MetaMask</Text>
+                                <Text size='200'>Connect to your MetaMask Wallet</Text>
+                            </Box>
+                        </Box>
+                    </TapArea>
+                )
+            }
+            
                 <Box padding={4}>
                     <Box paddingY={4}>
                         {/*<Text size="sm" color='light'>{connected ? wallet : null}</Text>*/}
@@ -130,7 +142,7 @@ const MetamaskWallet = (props) => {
                                                 ))
                                                 }
                                             </Masonry>
-                                            ) : <HeaderText size="xl" color='red'>{fetching ? loading_nfts_text : wallet_empty_text}</HeaderText>
+                                            ) : <Text size="xl" color='light'>{fetching ? loading_nfts_text : wallet_empty_text}</Text>
                                         }
                                     </Box>
                                 )
@@ -140,7 +152,7 @@ const MetamaskWallet = (props) => {
                     
                    </Box>
                 </Box>
-          </TapArea>
+          
        </Box>
     )
 }
