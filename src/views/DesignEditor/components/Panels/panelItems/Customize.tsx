@@ -147,7 +147,7 @@ export default function () {
                   </div>
                 </StatefulPopover>
 
-                {isSupported() &&
+                {false &&
                   <IconButton
                     accessibilityLabel="Color Picker"
                     icon="color-picker"

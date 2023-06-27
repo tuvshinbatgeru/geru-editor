@@ -263,7 +263,7 @@ export default function (props) {
               </Button>
 
               {
-                isSupported() &&
+                false &&
                   <IconButton 
                     accessibilityLabel="Color Picker"
                     icon="color-picker"

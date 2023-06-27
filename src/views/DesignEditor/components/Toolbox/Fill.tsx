@@ -28,7 +28,7 @@ export default function () {
 
   return (
     <Box display='flex' alignItems='center'>
-      <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"}>
+      {/* <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"}>
         <Button
           onClick={() => setActiveSubMenu("Customize")}
           size={SIZE.mini}
@@ -44,12 +44,12 @@ export default function () {
             />
           </Mask>
         </Button>
-      </StatefulTooltip>
+      </StatefulTooltip> */}
       {
         !activeObject && (
           <Box>
             {
-              isSupported() &&
+              false &&
               <IconButton 
                 accessibilityLabel="Color Picker"
                 icon="color-picker"

@@ -4,11 +4,11 @@ export const BASE_ITEMS = [
         name: "Stickers",
         icon: "Icon_Sticker",
     },
-    {
-        id: "graphics",
-        name: "Graphics",
-        icon: "Icon_Category",
-    },
+    // {
+    //     id: "graphics",
+    //     name: "Graphics",
+    //     icon: "Icon_Category",
+    // },
     {
         id: "artworks",
         name: "Artworks",

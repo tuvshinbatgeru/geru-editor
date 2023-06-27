@@ -121,7 +121,7 @@ export const defaultFonts = [{
   "_id": {
     "$oid": "6200e509c1827236a0d2f20d"
   },
-  "url": "https://s3.eu-west-1.amazonaws.com/simplood.geruapp/fonts/Montserrat-Regular.ttf",
+  "url": "https://res.cloudinary.com/urlan/raw/upload/v1687865220/fonts/Montserrat-Black_h8w15r.ttf",
   "name": "Montserrat",
   "__v": 0
 },{
