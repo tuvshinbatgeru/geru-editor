@@ -27,9 +27,7 @@ export default function () {
 
     const getStickers = () => {
         setFetching(true)
-        fetchPacks({
-          store: "638462a9c1345300b4a5cde4"
-        })
+        fetchPacks({})
         .then(res => {
             if(res.data.code == 0) {
                 setObjects(res.data.packs)
