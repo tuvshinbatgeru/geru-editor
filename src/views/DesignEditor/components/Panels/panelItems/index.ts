@@ -17,6 +17,7 @@ import TextEffects from "./TextEffects"
 import Stickers from "./Stickers"
 import Mydesign from "./Mydesign"
 import nft from "./nft"
+import Pixabay from "./Pixabay"
 
 export default {
   StaticText: TextProperties,
@@ -31,6 +32,7 @@ export default {
   Elements: Elements,
   Graphics: Graphics,
   Layers: Layers,
+  Pixabay: Pixabay,
   TextFill: TextFill,
   PathFill: PathFill,
   CanvasFill: CanvasFill,

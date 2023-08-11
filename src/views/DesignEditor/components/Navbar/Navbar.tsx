@@ -8,7 +8,7 @@ import {uploadTemporaryArtwork, saveTemplate} from "../../utils/services"
 import _isEmpty from 'lodash/isEmpty'
 import { toast } from 'react-toastify'
 
-export default function () {
+export default function (props) {
     const { setIsSaving } = useAppContext()
     const editor = useEditor()
     const [templateName, setTemplateName] = React.useState("")
@@ -44,7 +44,7 @@ export default function () {
             }
 
             setFetching(true)
-            saveTemplate({
+            props.onSaveTemplateCallback({
                 editor_json: template,
                 preview_url: result.secure_url,
                 name: templateName

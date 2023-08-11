@@ -176,12 +176,12 @@ export default function () {
           cloudName='urlan' // your cloudinary account cloud name. 
           // Located on https://cloudinary.com/console/
           uploadPreset={'tyt2eb9j'} // check that an upload preset exists and check mode is signed or unisgned
-          //buttonText={'Зураг оруулах'} // default 'Upload Files'
-          buttonText={"Upload Files"}
+          buttonText={'Зураг хуулах'} // default 'Upload Files'
+          // buttonText={"Upload Files"}
           style={{
             border: 'none',
             fontSize: 16,
-            fontFamily: "GeruBebas",
+            fontFamily: "proxima-nova",
             color: "#fff",
             width: '100%',
             backgroundColor: '#CD1E3B',
@@ -219,13 +219,6 @@ export default function () {
               inProgress: '#00CDA5',
               complete: '#00CDA5',
               sourceBg: '#272428'
-            },
-            fonts: {
-              default: null,
-              "'GeruBebas', sans-serif": {
-                url: 'https://fonts.googleapis.com/css?family=Fira+Sans',
-                active: true
-              }
             }
           }} // ability to customise the style of the widget uploader
           destroy={true} // will destroy the widget on completion

@@ -13,7 +13,7 @@ function GraphicEditor(props) {
     params = {}
   } = props
 
-  const { onHeaderComponent = () => {}, onSuccessCallback = () => {} } = params
+  const { onHeaderComponent = () => {}, onSuccessCallback = () => {}, onSaveTemplateCallback = () => {}, } = params
 
   return (
     <>
@@ -24,7 +24,9 @@ function GraphicEditor(props) {
         <div style={{ display: "flex", flex: 1 }}>
           <Panels />
           <div style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative" }}>
-            <Toolbox />
+            <Toolbox 
+              onSaveTemplateCallback={onSaveTemplateCallback}
+            />
             <Canvas />
             <ActiveObjectToolbox />
             <Footer />

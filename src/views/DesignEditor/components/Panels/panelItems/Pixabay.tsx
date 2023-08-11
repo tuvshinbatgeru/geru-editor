@@ -3,7 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { Block } from "baseui/block"
 import { useEffect, useState } from 'react'
 import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
-import { Text,Box, TapArea, Column, Mask, Card, Image } from "gestalt"
+import { Text,Box, TapArea, Column, Mask, Card, Image, TextField } from "gestalt"
 import { HeaderText, TransformImage } from "geru-components"
 import { useMediaQuery } from 'react-responsive'
 import { useEditor, useActiveObject } from "@layerhub-io/react"
@@ -14,42 +14,34 @@ import useAppContext from '~/hooks/useAppContext'
 
 import { motion, LayoutGroup } from 'framer-motion'
 
+import axios from 'axios'
+
 export default function () {
     const editor = useEditor()
     const [fetching, setFetching] = useState(false)
     const [objects, setObjects] = useState([])
+    const [query, setQuery] = useState("")
     const { setIsShowMobileModal, dimensions, setIsAssetLoading } = useAppContext()
 
     useEffect(() => {
         getStickers()
-    }, [])
+    }, [query])
 
     const getStickers = () => {
         setFetching(true)
-        fetchPacksWithParams({
-          pack_type: 'graphics',
+        axios.get("https://pixabay.com/api/", {
+          params: {
+            key: "38559773-0732c38025706649560b23742",
+            q: query,
+            image_type: "illustration",
+            pretty: true
+          }
         })
         .then(res => {
-            // console.log(res.data)
-            if(res.data.code == 0) {
-                setObjects(res.data.elements)
-            }
+            setObjects(res.data.hits)
         })
         .catch(err => console.log(err))
         .then(() => setFetching(false))
-    }
-
-    const _getType = (ext) => {
-      switch(ext) {
-        case "png":
-        case "jpeg":
-        case "jpg":
-          return "StaticImage"
-        case "svg":
-          return "StaticVector"
-        default:
-          return "StaticVector"
-      }
     }
 
     const addImateToCanvas = async (item) => {
@@ -59,12 +51,16 @@ export default function () {
       // const { height } = await getImageDimensions(item.url)
 
       // adjustScale = recommendedSize / height
+
+      // alert(item.largeImageURL)
+      console.log(item.largeImageURL)
       
       setIsAssetLoading(true)
-      
       const options = {
-        type: _getType(item.extension),
-        src: item.url,
+        type: "StaticVector",
+        src: item.largeImageURL,
+        // width: item.imageWidth,
+        // height: item.imageHeight
         // scaleX: adjustScale,
         // scaleY: adjustScale
       }
@@ -87,17 +83,15 @@ export default function () {
           <div style={{ display: 'flex', height: '100%', width: '100%', flexDirection: 'column' }}>
             <Box height='100%'>
               <Scrollbars>
-                <Box paddingX={6} paddingY={4}>
+                <Box paddingX={6} paddingY={4} display='flex' wrap>
                   { fetching && <ListLoadingPlaceholder /> }
-                  <Box display="flex" wrap>
-                    {objects.map((obj, index) => (
-                      <Sticker
-                        sticker={obj}
-                        key={index}
-                        onTapSticker={addObject}
-                      />
-                    ))}
-                  </Box>
+                  {objects.map((obj, index) => (
+                    <Sticker 
+                      key={index}
+                      item={obj}
+                      onTapSticker={addObject}
+                  />
+                  ))}
                 </Box>
               </Scrollbars>
             </Box>
@@ -107,18 +101,24 @@ export default function () {
     return (
         <>
             <Block $style={{ flex: 1, display: "flex", flexDirection: "column" , backgroundColor: colors.colorBlack}}>
+                <Box padding={4}>
+                  <TextField 
+                    id="query"
+                    value={query}
+                    onChange={({ value }) => setQuery(value)}
+                  />
+                </Box>
+
                 <Scrollbars>
-                        <Box paddingX={4}>
+                        <Box paddingX={4} display='flex' wrap>
                           { fetching && <ListLoadingPlaceholder /> }
-                          <Box display="flex" wrap>
                            {objects.map((obj, index) => (
-                            <Sticker
-                              sticker={obj}
-                              key={index}
-                              onTapSticker={addObject}
-                            />
+                            <Sticker 
+                                key={index}
+                                item={obj}
+                                onTapSticker={addObject}
+                             />
                            ))}
-                           </Box>
                         </Box>
                 </Scrollbars>
             </Block>
@@ -128,34 +128,24 @@ export default function () {
 }
 
 const Sticker = (props) => {
-  const { sticker } = props
+  const { item } = props
 
   return (
-    <Column span={4} key={sticker.url}>
+    <Column span={6} key={item.url}>
       <motion.div layout>
         <Box padding={3} position='relative'>
-          <TapArea onTap={() => props.onTapSticker(sticker)}>
+          <TapArea onTap={() => props.onTapSticker(item)}>
             <Card>
               <Mask>
-                <Image
-                    src={sticker.url}
-                    naturalHeight={sticker.height}
-                    naturalWidth={sticker.width}
-                    alt="sticker"
-                    color="transparent"
+                <Image 
+                  src={item.previewURL}
+                  alt="But"
+                  color="transparent"
+                  naturalHeight={item.imageHeight}
+                  naturalWidth={item.imageWidth}
                 />
-                {/* <TransformImage 
-                  url={sticker.url} 
-                /> */}
               </Mask>
             </Card>
-            <div style={{ position: 'absolute', bottom: 7, display: 'flex', width: '100%', height: '40%' }}>
-              <Box display='flex' width='100%'>
-                <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
-                  <Text color='light' align='center' size="200" weight='bold'>{sticker.price ? `${currencyFormat(sticker.price)}` : 'Free'}</Text>
-                </div>
-              </Box>
-            </div>
           </TapArea>
         </Box>
       </motion.div>

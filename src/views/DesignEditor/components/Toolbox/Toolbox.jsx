@@ -20,7 +20,7 @@ const Container = styled("div", (props) => ({
   top: 0,
 }))
 
-const Toolbox = () => {
+const Toolbox = (props) => {
   const [state, setState] = React.useState({ toolbox: "Text" })
   const { setActiveSubMenu } = useAppContext()
   const activeObject = useActiveObject()
@@ -72,7 +72,7 @@ const Toolbox = () => {
       <Box flex='grow' display="flex" alignItems="center" height={50} color='light'>
           <Fill />
       </Box>
-      <Navbar />
+      <Navbar onSaveTemplateCallback={props.onSaveTemplateCallback} />
     </Container>
   )
 
@@ -85,7 +85,7 @@ const Toolbox = () => {
           <Component has_common has_toolbox />
         </Box>
       </Box>
-      <Navbar />
+      <Navbar onSaveTemplateCallback={props.onSaveTemplateCallback} />
     </Container>
   )
 }

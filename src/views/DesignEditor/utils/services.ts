@@ -16,7 +16,7 @@ export async function fetchPacks(params) {
 }
 
 export async function fetchPacksWithParams(params) { 
-	return await request().get('/api/pack', {
+	return await request().get('/api/element/all', {
 		params
 	})
 }
@@ -56,6 +56,10 @@ export async function deleteTemplate(id) {
 }
 export async function fetchTemplates() {
 	return await request().get('/api/template')
+}
+
+export async function fetchAllTemplates(params) {
+	return await request().get('/api/template/all', { params })
 }
 
 export async function saveTemplate(params) {

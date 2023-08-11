@@ -48,6 +48,8 @@ function PanelsList() {
 
     // @ts-ignore
     const Component = panelItems[state.panel]
+// 
+    // alert(state.panel)
 
     if(isTabletOrMobile) {
         return <MobileContainer>{Component && <Component />}</MobileContainer>

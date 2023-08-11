@@ -35,6 +35,8 @@ interface IAppContext {
     setIgnoreAppOptions: (ignoreAppOptions: any[]) => void;
     stickerParams: any;
     setStickerParams: (stickerParams: any) => void;
+    params: any;
+    setParams: (params: any) => void;
 }
 
 export const AppContext = createContext<IAppContext>({
@@ -58,7 +60,7 @@ export const AppContext = createContext<IAppContext>({
     setUploads: () => {},
     shapes: [],
     setShapes: () => {},
-    activePanel: PanelType.STICKERS,
+    activePanel: PanelType.TEMPLATES,
     setActivePanel: () => {},
     activeSubMenu: null,
     setActiveSubMenu: (value: string) => {},
@@ -70,6 +72,8 @@ export const AppContext = createContext<IAppContext>({
     setIgnoreAppOptions: () => {},
     stickerParams: {},
     setStickerParams: () => {},
+    params: {},
+    setParams: () => {}
 });
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
@@ -78,7 +82,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [templates, setTemplates] = useState<Template[]>([]);
     const [uploads, setUploads] = useState<any[]>([]);
     const [shapes, setShapes] = useState<Template[]>([]);
-    const [activePanel, setActivePanel] = useState<PanelType>(PanelType.STICKERS);
+    const [activePanel, setActivePanel] = useState<PanelType>(PanelType.TEMPLATES);
     const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
     const [currentTemplate, setCurrentTemplate] = useState(null);
     const [backgroundColor, setBackgroundColor] = useState("fff");
@@ -89,6 +93,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [isAssetLoading, setIsAssetLoading] = useState(false)
     const [ignoreAppOptions, setIgnoreAppOptions] = useState([])
     const [stickerParams, setStickerParams] = useState({})
+    const [params, setParams] = useState({})
 
     const context = {
         isMobile,
@@ -122,7 +127,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         ignoreAppOptions,
         setIgnoreAppOptions,
         stickerParams,
-        setStickerParams
+        setStickerParams,
+        params,
+        setParams
     };
     
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

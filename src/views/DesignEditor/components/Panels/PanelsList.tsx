@@ -102,7 +102,7 @@ function PanelsList() {
                     {
                       PANEL_ITEMS.map(panelListItem => (
                         <PanelListItem
-                          label={t(`panels.panelsList.${panelListItem.id}`)}
+                          label={panelListItem.label}
                           name={panelListItem.name}
                           key={panelListItem.name}
                           icon={panelListItem.icon}
@@ -124,7 +124,7 @@ function PanelsList() {
       <Scrollable autoHide={true}>
         {PANEL_ITEMS.map((panelListItem) => (
           <PanelListItem
-            label={t(`panels.panelsList.${panelListItem.id}`)}
+            label={panelListItem.label}
             name={panelListItem.name}
             key={panelListItem.name}
             icon={panelListItem.icon}
@@ -161,9 +161,11 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
                 <Box 
                     display='flex'
                     minHeight={90} 
-                    minWidth={80}
+                    minWidth={100}
+                    // color="brand"
                     maxHeight={120} 
-                    maxWidth={100}
+                    maxWidth={140}
+                    // color="brand"
                     direction='column'
                     justifyContent='center'
                     alignItems='center'
@@ -172,9 +174,14 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
 
                 <Icon size={24} color={selected ? 'black' : 'white'} icon={icon} />
                 <div style={{ height: 4 }} />
-                    <Text size='200' color={selected ? 'dark' : 'light'}>
-                        {String(label)}
-                    </Text>
+                  {
+                    String(label).split(" ").map((str) => (
+                      <Text size='200' color={selected ? 'dark' : 'light'}>
+                          {String(str)}
+                      </Text>
+                    ))    
+                  }
+                    
                 </Box>
             </div>
         

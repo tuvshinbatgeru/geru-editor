@@ -35,6 +35,8 @@ function useAppContext() {
     setIgnoreAppOptions,
     stickerParams,
     setStickerParams,
+    params,
+    setParams
   } = useContext(AppContext)
 
   return {
@@ -69,7 +71,9 @@ function useAppContext() {
     ignoreAppOptions,
     setIgnoreAppOptions,
     stickerParams,
-    setStickerParams
+    setStickerParams,
+    params,
+    setParams
   }
 }
 
