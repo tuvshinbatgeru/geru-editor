@@ -24,9 +24,7 @@ function GraphicEditor(props) {
         <div style={{ display: "flex", flex: 1 }}>
           <Panels />
           <div style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative" }}>
-            <Toolbox 
-              onSaveTemplateCallback={onSaveTemplateCallback}
-            />
+            <Toolbox />
             <Canvas />
             <ActiveObjectToolbox />
             <Footer />

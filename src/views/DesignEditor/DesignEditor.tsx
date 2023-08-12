@@ -43,7 +43,7 @@ function DesignEditor(props) {
 
   return (
     <>
-      <TemplateLoader template={template} />,
+      <TemplateLoader template={template} />
       <GraphicEditor {...props} />
     </>
   )

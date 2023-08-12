@@ -60,6 +60,7 @@ export default function (props) {
                     alert(res.data.errors[0].msg)
                 }
                 if(res.data.code == 0) {
+                    toast.success('Амжилттай хадгаллаа')
                     setTemplateModal(!templateModal)
                 }
             })

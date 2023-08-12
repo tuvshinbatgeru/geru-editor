@@ -8,7 +8,7 @@ import PanelItem from './PanelItem'
 
 import { styled } from "baseui"
 import { useTranslation } from "react-i18next"
-import { Box, IconButton, Text, Modal, TapArea, FixedZIndex } from "gestalt"
+import { Box, IconButton, Layer, Text, Modal, TapArea, FixedZIndex } from "gestalt"
 import { useMediaQuery } from 'react-responsive'
 import Icon from "geru-components/dist/Icon"
 import { colors } from 'geru-components/dist/utils'
@@ -29,12 +29,13 @@ function PanelsList() {
   })
 
   const ZINDEX = new FixedZIndex(1)
+  const ModalZINDEX = new FixedZIndex(3)
 
   if(isTabletOrMobile) {
     return (
       <Box display='flex' zIndex={ZINDEX} position='relative'>
         <div style={{
-          position: 'fixed',
+          position: 'absolute',
           bottom: 0,
           paddingTop: 10,
           paddingBottom: 10,
@@ -79,40 +80,42 @@ function PanelsList() {
 
         {
           isShowMobileModal && (
-            <Modal
-              accessibilityModalLabel='Modal'
-              onDismiss={() => setIsShowMobileModal(!isShowMobileModal)}
-            >
-                <Box position='fixed' display='flex' direction='column' bottom height="80%" width='100%' left>
-                  <div style={{ position: 'absolute', top: -50, left: 0, right: 0 }}>
-                    <Box display="flex" justifyContent='center'>
-                      <IconButton
-                        accessibilityLabel="close"
-                        icon="cancel"
-                        size='md'
-                        bgColor="transparentDarkGray"
-                        onClick={() => setIsShowMobileModal(false)}
-                      />
-                    </Box>
-                  </div>
-                  <Box flex="grow">
-                    <PanelItem />
-                  </Box>
-                  <Box direction='row' display='flex' justifyContent='center' overflow="scrollX">
-                    {
-                      PANEL_ITEMS.map((panelListItem, index) => (
-                        <PanelListItem
-                          label={panelListItem.label}
-                          name={panelListItem.name}
-                          key={index}
-                          icon={panelListItem.icon}
-                          activePanel={activePanel}
+            <Layer zIndex={ModalZINDEX}>
+              <Modal
+                accessibilityModalLabel='Modal'
+                onDismiss={() => setIsShowMobileModal(!isShowMobileModal)}
+              >
+                  <Box position='fixed' display='flex' direction='column' bottom height="80%" width='100%' left>
+                    <div style={{ position: 'absolute', top: -50, left: 0, right: 0, zIndex: 3, }}>
+                      <Box display="flex" justifyContent='center'>
+                        <IconButton
+                          accessibilityLabel="close"
+                          icon="cancel"
+                          size='md'
+                          bgColor="transparentDarkGray"
+                          onClick={() => setIsShowMobileModal(false)}
                         />
-                      ))
-                    }
+                      </Box>
+                    </div>
+                    <Box flex="grow">
+                      <PanelItem />
+                    </Box>
+                    <Box direction='row' display='flex' justifyContent='center' overflow="scrollX">
+                      {
+                        PANEL_ITEMS.map((panelListItem, index) => (
+                          <PanelListItem
+                            label={panelListItem.label}
+                            name={panelListItem.name}
+                            key={index}
+                            icon={panelListItem.icon}
+                            activePanel={activePanel}
+                          />
+                        ))
+                      }
+                    </Box>
                   </Box>
-                </Box>
-            </Modal>
+              </Modal>
+            </Layer>
           )
         }
       </Box>
