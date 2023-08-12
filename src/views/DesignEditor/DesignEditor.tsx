@@ -39,7 +39,7 @@ function DesignEditor(props) {
         }
       }))
     }
-  }, [editor])
+  }, [editor, props.params])
 
   return (
     <>

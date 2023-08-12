@@ -30,10 +30,9 @@ export default function () {
     const getStickers = () => {
         setFetching(true)
         fetchPacksWithParams({
-          pack_type: 'graphics',
+          extensions: ['png', 'jpeg', 'jpg', 'svg'],
         })
         .then(res => {
-            // console.log(res.data)
             if(res.data.code == 0) {
                 setObjects(res.data.elements)
             }
@@ -49,7 +48,7 @@ export default function () {
         item.extension == "woff2"
       ) {
         const new_font = {
-          name: "Oswald",
+          name: item.name,
           url: item.secure_url,
         }
   
