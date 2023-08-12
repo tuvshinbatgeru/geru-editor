@@ -100,11 +100,11 @@ function PanelsList() {
                   </Box>
                   <Box direction='row' display='flex' justifyContent='center' overflow="scrollX">
                     {
-                      PANEL_ITEMS.map(panelListItem => (
+                      PANEL_ITEMS.map((panelListItem, index) => (
                         <PanelListItem
                           label={panelListItem.label}
                           name={panelListItem.name}
-                          key={panelListItem.name}
+                          key={index}
                           icon={panelListItem.icon}
                           activePanel={activePanel}
                         />
@@ -176,7 +176,7 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
                 <div style={{ height: 4 }} />
                   {
                     String(label).split(" ").map((str) => (
-                      <Text size='200' color={selected ? 'dark' : 'light'}>
+                      <Text size='200' key={str} color={selected ? 'dark' : 'light'}>
                           {String(str)}
                       </Text>
                     ))    

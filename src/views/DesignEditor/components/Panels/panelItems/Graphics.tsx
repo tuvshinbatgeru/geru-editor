@@ -12,7 +12,10 @@ import {fetchPacksWithParams} from "../../../utils/services"
 import { currencyFormat, getImageDimensions } from '../../../utils/helper'
 import useAppContext from '~/hooks/useAppContext'
 
+import { FontItem } from "~/interfaces/common"
+import { nanoid } from "nanoid"
 import { motion, LayoutGroup } from 'framer-motion'
+import { loadFonts } from "~/utils/fonts"
 
 export default function () {
     const editor = useEditor()
@@ -39,37 +42,60 @@ export default function () {
         .then(() => setFetching(false))
     }
 
-    const _getType = (ext) => {
-      switch(ext) {
+    const _getType = async (item) => {
+      if(item.extension == "otf" ||
+        item.extension == "ttf" ||
+        item.extension == "woff" ||
+        item.extension == "woff2"
+      ) {
+        const new_font = {
+          name: "Oswald",
+          url: item.secure_url,
+        }
+  
+        await loadFonts([new_font])
+
+        return {
+          id: nanoid(),
+          type: "StaticText",
+          width: 420,
+          text: "TYPE TEXT",
+          fontSize: 92,
+          fontFamily: "Oswald",
+          textAlign: "center",
+          fontStyle: "normal",
+          fontURL: item.secure_url,
+          fill: "#fff",
+          metadata: {},
+        }
+      }
+
+      switch(item.extension) {
         case "png":
         case "jpeg":
         case "jpg":
-          return "StaticImage"
+          return {
+            type: "StaticImage",
+            src: item.url,
+          }
         case "svg":
-          return "StaticVector"
+          return {
+            type: "StaticVector",
+            src: item.url,
+          }
         default:
-          return "StaticVector"
+          return {
+            type: "StaticVector"
+          }
       }
     }
 
     const addImateToCanvas = async (item) => {
-      // let adjustScale = 1
-
-      // const recommendedSize = Math.ceil(dimensions.height / 2)
-      // const { height } = await getImageDimensions(item.url)
-
-      // adjustScale = recommendedSize / height
-      
       setIsAssetLoading(true)
       
-      const options = {
-        type: _getType(item.extension),
-        src: item.url,
-        // scaleX: adjustScale,
-        // scaleY: adjustScale
-      }
-
+      let options = await _getType(item)
       editor.objects.add(options)
+
       setIsShowMobileModal(false)
       setIsAssetLoading(false)
     }

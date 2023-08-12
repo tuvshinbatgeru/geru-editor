@@ -9,7 +9,7 @@ import _isEmpty from 'lodash/isEmpty'
 import { toast } from 'react-toastify'
 
 export default function (props) {
-    const { setIsSaving } = useAppContext()
+    const { setIsSaving, params } = useAppContext()
     const editor = useEditor()
     const [templateName, setTemplateName] = React.useState("")
 
@@ -44,10 +44,16 @@ export default function (props) {
             }
 
             setFetching(true)
-            props.onSaveTemplateCallback({
+            saveTemplate({
                 editor_json: template,
                 preview_url: result.secure_url,
-                name: templateName
+                name: templateName,
+                customization: params.customization,
+                area_name: params.area_name,
+                selected_variation: params.selected_variation,
+                lookup_id: params.lookup_id,
+                product_title: params.product_title,
+                color: params.color
             })
             .then(res => {
                 if(res.data.code != 0) {

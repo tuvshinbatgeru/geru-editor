@@ -2410,10 +2410,10 @@ gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz"
 
-geru-components@^0.0.18:
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/geru-components/-/geru-components-0.0.18.tgz#8f9d6e87ed251a34948a67888252c8023ab81cb8"
-  integrity sha512-lgUJltre9FpJLeyCnzHCciAruRgDHSVpQ5G2IKEgjyj8eDDlwsTeIqIs9IXum2NuZ39YvEfbRvpPDWaX4ARcTA==
+geru-components@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/geru-components/-/geru-components-0.0.21.tgz#b6ac334face14a68fd84928b42afdb2a4d2c6433"
+  integrity sha512-7O48/MC/g0mA0lECqQ+EItyEJBSjD0zLj9AiOwBb5mhiKTOXgkhZvq23J7puiJqr7z1g3CrGmXk0jSlmEXZxJg==
   dependencies:
     "@cloudinary/react" "^1.5.0"
     "@cloudinary/url-gen" "^1.8.6"
