@@ -5,6 +5,7 @@ import { Delete } from "baseui/icon"
 import { throttle } from "lodash"
 import { useActiveObject, useEditor } from "@layerhub-io/react"
 import { TEXT_EFFECTS } from "~/constants/design-editor"
+import { Text, Box, TapArea } from 'gestalt'
 import Outline from "./Common/Outline"
 import Shadow from "./Common/Shadow"
 
@@ -13,7 +14,7 @@ const EFFECTS = {
     fill: "#333333",
     strokeWidth: 0,
     shadow: {
-      blur: 2,
+      blur: 0,
       color: "#afafaf",
       offsetX: 10,
       offsetY: 10,
@@ -23,7 +24,7 @@ const EFFECTS = {
   Shadow: {
     fill: "#333333",
     shadow: {
-      blur: 2,
+      blur: 0,
       color: "#afafaf",
       offsetX: 10,
       offsetY: 10,
@@ -33,7 +34,7 @@ const EFFECTS = {
   Lift: {
     fill: "#333333",
     shadow: {
-      blur: 25,
+      blur: 0,
       color: "rgba(0,0,0,0.45)",
       offsetX: 0,
       offsetY: 0,
@@ -41,11 +42,11 @@ const EFFECTS = {
     },
   },
   Hollow: {
-    stroke: "#000000",
+    stroke: "#fff",
     fill: null,
     strokeWidth: 2,
     shadow: {
-      blur: 25,
+      blur: 0,
       color: "rgba(0,0,0,0.45)",
       offsetX: 0,
       offsetY: 0,
@@ -69,7 +70,7 @@ const EFFECTS = {
     fill: "#fd79a8",
     strokeWidth: 2,
     shadow: {
-      blur: 25,
+      blur: 0,
       color: "#fd79a8",
       offsetX: 0,
       offsetY: 0,
@@ -110,48 +111,40 @@ export default function () {
           padding: "1.5rem",
         }}
       >
-        <Block>Effects</Block>
+        <Text color='light' size='400' weight="bold">Effects</Text>
 
         <Block $style={{ cursor: "pointer", display: "flex" }}>
-          <Delete size={24} />
+          <Delete size={24} color='white' />
         </Block>
       </Block>
       <Scrollable>
-        <Block padding={"0 1.5rem"}>
-          <Block $style={{ display: "grid", gridTemplateColumns: "80px 80px 80px", gap: "0.5rem" }}>
+        <Box display='flex' wrap>
             {TEXT_EFFECTS.map((effect, index) => {
               return (
-                <Block style={{ cursor: "pointer" }} key={index}>
-                  <Block
-                    onClick={() => applyEffect(effect.name)}
-                    $style={{
-                      border: "1px solid #afafaf",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      height: "80px",
-                    }}
-                  >
-                    <img style={{ width: "70px" }} src={effect.preview} />
+                <Box column={4} key={index} marginBottom={4}>
+                  <Block style={{ cursor: "pointer" }} key={index}>
+                    <TapArea
+                      onTap={() => applyEffect(effect.name)}
+                      tapStyle="compress"
+                    >
+                      <Box height={70} display="flex" justifyContent="center" alignItems="center">
+                        <img style={{ width: "70px" }} src={effect.preview} />
+                      </Box>
+                    </TapArea>
+                    <Box marginTop={2}>
+                      <Text color='light' align="center">
+                        {effect.name}
+                      </Text>
+                    </Box>
                   </Block>
-                  <Block
-                    $style={{
-                      textAlign: "center",
-                      padding: "0.5rem",
-                      fontSize: "14px",
-                    }}
-                  >
-                    {effect.name}
-                  </Block>
-                </Block>
+                </Box>
               )
             })}
-          </Block>
-          {/* <Block>
+        </Box>
+        <Box mdMarginTop={10}>
             <Outline />
             <Shadow />
-          </Block> */}
-        </Block>
+        </Box>
       </Scrollable>
     </Block>
   )

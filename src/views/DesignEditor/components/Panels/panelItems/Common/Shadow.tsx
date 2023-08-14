@@ -5,6 +5,7 @@ import { HexColorPicker } from "react-colorful"
 import { Slider } from "baseui/slider"
 import { Input } from "baseui/input"
 import { useActiveObject, useEditor } from "@layerhub-io/react"
+import { Box, Text } from 'gestalt'
 
 interface Options {
   enabled: boolean
@@ -51,7 +52,7 @@ function Shadow() {
   }
 
   return (
-    <div style={{ padding: "0 1.5rem" }}>
+    <Box paddingX={3}>
       <div
         style={{
           margin: "1rem 0 0.5rem",
@@ -69,7 +70,11 @@ function Shadow() {
             // @ts-ignore
             onChange={(e) => handleChange("enabled", e.target.checked)}
           ></Checkbox>
-          Shadow
+          <Box marginStart={2}>
+            <Text color='light'>
+                Shadow
+            </Text>
+          </Box>
         </div>
         <StatefulPopover
           placement={PLACEMENT.bottomLeft}
@@ -114,40 +119,12 @@ function Shadow() {
         </StatefulPopover>
       </div>
 
-      <div style={{ height: "10px" }}></div>
-
-      <div style={{ padding: "0 8px" }}>
-        <div>
-          <div style={{ fontSize: "14px" }}>Blur</div>
-          <Slider
-            overrides={{
-              InnerThumb: () => null,
-              ThumbValue: () => null,
-              TickBar: () => null,
-              Thumb: {
-                style: {
-                  height: "12px",
-                  width: "12px",
-                  paddingLeft: 0,
-                },
-              },
-              Track: {
-                style: {
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                },
-              },
-            }}
-            value={[options.blur]}
-            onChange={({ value }) => handleChange("blur", value)}
-          />
-        </div>
-      </div>
-
       <div>
         <div style={{ height: "10px" }}></div>
         <div style={{ padding: "0 8px" }}>
-          <div style={{ fontSize: "14px" }}>Offset Y</div>
+          <Text color='light'>
+              Offset Y
+          </Text>
           <Slider
             overrides={{
               InnerThumb: () => null,
@@ -171,9 +148,12 @@ function Shadow() {
             onChange={({ value }) => handleChange("offsetY", value)}
           />
         </div>
+        <div style={{ height: "10px" }}></div>
         <div style={{ padding: "0 8px" }}>
           <div>
-            <div style={{ fontSize: "14px" }}>Offset X</div>
+            <Text color='light'>
+                Offset X
+            </Text>
             <Slider
               overrides={{
                 InnerThumb: () => null,
@@ -199,7 +179,7 @@ function Shadow() {
           </div>
         </div>
       </div>
-    </div>
+    </Box>
   )
 }
 export default Shadow

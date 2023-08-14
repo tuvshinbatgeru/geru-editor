@@ -72,10 +72,5 @@ export const TEXT_EFFECTS = [
     id: 5,
     name: "Splice",
     preview: "https://i.ibb.co/B2JPTfq/splice.webp",
-  },
-  {
-    id: 6,
-    name: "Neon",
-    preview: "https://i.ibb.co/fHdD2mx/neon.webp",
-  },
+  }
 ]

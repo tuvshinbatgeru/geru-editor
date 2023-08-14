@@ -5,6 +5,7 @@ import { HexColorPicker } from "react-colorful"
 import { Slider } from "baseui/slider"
 import { Input } from "baseui/input"
 import { useActiveObject, useEditor } from "@layerhub-io/react"
+import { Text, Box } from 'gestalt'
 
 interface Options {
   enabled: boolean
@@ -50,7 +51,7 @@ function Outline() {
   }
 
   return (
-    <div style={{ padding: "2rem 2rem 0" }}>
+    <Box paddingX={3}>
       <div>
         <div
           style={{
@@ -68,7 +69,11 @@ function Outline() {
               checked={options.enabled}
               onChange={(e) => handleChange("enabled", (e.target as any).checked)}
             ></Checkbox>
-            Outline
+            <Box marginStart={2}>
+              <Text color='light'>
+                Outline
+              </Text>
+            </Box>
           </div>
           <StatefulPopover
             placement={PLACEMENT.bottomLeft}
@@ -117,7 +122,9 @@ function Outline() {
 
       <div style={{ padding: "0 8px" }}>
         <div>
-          <div style={{ fontSize: "14px" }}>Size</div>
+          <Text color='light'>
+              Size
+          </Text>
           <Slider
             overrides={{
               InnerThumb: () => null,
@@ -142,7 +149,7 @@ function Outline() {
           />
         </div>
       </div>
-    </div>
+    </Box>
   )
 }
 

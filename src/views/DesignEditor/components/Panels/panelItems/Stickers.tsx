@@ -144,7 +144,7 @@ const Pack = (props) => {
     return (
       <Box marginBottom={2} paddingY={2}>
         <Box display='flex' justifyContent='between' alignItems='center'>
-          <HeaderText color='white' size="2lg">{item.title}</HeaderText>
+          <Text color='light' weight="bold">{item.title}</Text>
           {
             stickers.length > 3 && (
               <Box>

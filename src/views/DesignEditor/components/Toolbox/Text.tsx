@@ -322,10 +322,10 @@ export default function (props) {
               <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
 
               <TextSpacing />
-              {/* <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
+              <Block width={"1px"} height={"24px"} backgroundColor="rgb(213,213,213)" margin={"0 4px"} />
               <Button onClick={() => setActiveSubMenu("TextEffects")} size={SIZE.compact} kind={KIND.tertiary}>
                 Effects
-              </Button> */}
+              </Button>
             </Block>
           </Box>
         )
