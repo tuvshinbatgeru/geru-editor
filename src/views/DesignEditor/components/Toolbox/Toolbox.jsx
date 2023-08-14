@@ -16,13 +16,11 @@ const Container = styled("div", (props) => ({
   boxShadow: "rgb(0 0 0 / 15%) 0px 1px 1px",
   height: "50px",
   display: "flex",
-  position: 'absolute',
+  position: `${props => props.position}`,
   top: 0,
   left: 0,
   right: 0,
-  zIndex: 2,
-  // position: 'sticky',
-  // top: 0,
+  zIndex: `${props => props.zIndex}`,
 }))
 
 const Toolbox = (props) => {
@@ -73,7 +71,7 @@ const Toolbox = (props) => {
   const Component = Items[state.toolbox] ? Items[state.toolbox] : Items[DEFAULT_TOOLBOX]
 
   if(isTabletOrMobile) return (
-    <Container>
+    <Container position="absolute" zIndex={2}>
       <Box flex='grow' display="flex" alignItems="center" height={50} color='light'>
           <Fill />
       </Box>
@@ -83,7 +81,7 @@ const Toolbox = (props) => {
 
 
   return (
-    <Container>
+    <Container position="sticky" zIndex={0}>
       <Box flex='grow' display="flex" alignItems="center" height={50} width="100%" color='light'>
         <Fill />
         <Box flex='grow'>

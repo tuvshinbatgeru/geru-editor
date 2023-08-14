@@ -98,14 +98,20 @@ export default function () {
         fontSize: 92,
         fontFamily: font.name,
         textAlign: "center",
-        fontStyle: "normal",
+        // fontStyle: "normal",
+        // fill: "transparent",
+        // stroke: "1px solid red",
+        stroke: "green",
+        strokeWidth: 10,
+        fill: "transparent", 
+        // fontStyle: "oblique",
         fontURL: font.secure_url || font.url,
-        fill: (backgroundColor == "#fff" || backgroundColor == "fff") ? "#000" : "#fff", 
+        // fill: (backgroundColor == "#fff" || backgroundColor == "fff") ? "#000" : "#fff", 
         metadata: {},
       }
 
       // alert(JSON.stringify(opti))
-      console.log(options)
+      // console.log(options)
 
 
       editor.objects.add(options)
@@ -120,53 +126,54 @@ export default function () {
             display: 'grid',
             gap: '0.5rem',
         }}>
-            { fetching && <ListLoadingPlaceholder /> }
+            { 
+              fetching ? <ListLoadingPlaceholder /> : <>
+                  {uploaded_fonts.map(font => (
+                      <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
+                        <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
+                          <Box padding={2} borderStyle="raisedTopShadow">
+                            <div style={{
+                                display: 'flex',
+                                paddingLeft: '1rem',
+                                paddingTop: '1rem',
+                                paddingBottom: '1rem',
+                                fontSize: '20px',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                fontFamily: font.name
+                            }}>
+                              <span style={{ color: "#fff" }}>{font.name}</span>
+                            </div>
+                          </Box>
+                        </Box>
+                      </TapArea>
+                    ))}
 
-            {uploaded_fonts.map(font => (
-              <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
-                <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
-                  <Box padding={2} borderStyle="raisedTopShadow">
-                     <div style={{
-                        display: 'flex',
-                        paddingLeft: '1rem',
-                        paddingTop: '1rem',
-                        paddingBottom: '1rem',
-                        fontSize: '20px',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        fontFamily: font.name
-                    }}>
-                      <span style={{ color: "#fff" }}>{font.name}</span>
-                    </div>
-                  </Box>
-                </Box>
-              </TapArea>
-            ))}
+                    {local_fonts.map(font => (
+                      <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
+                        <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
+                          <Box padding={2} borderStyle="raisedTopShadow">
+                            <div style={{
+                                display: 'flex',
+                                paddingLeft: '1rem',
+                                paddingTop: '1rem',
+                                paddingBottom: '1rem',
+                                fontSize: '20px',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                fontFamily: font.name
+                            }}>
+                              <span style={{ color: "#fff" }}>{font.name}</span>
+                            </div>
+                          </Box>
+                        </Box>
+                      </TapArea>
+                    ))}
+              </>
+            }
 
-            {local_fonts.map(font => (
-              <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
-                <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
-                  <Box padding={2} borderStyle="raisedTopShadow">
-                     <div style={{
-                        display: 'flex',
-                        paddingLeft: '1rem',
-                        paddingTop: '1rem',
-                        paddingBottom: '1rem',
-                        fontSize: '20px',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        fontFamily: font.name
-                    }}>
-                      <span style={{ color: "#fff" }}>{font.name}</span>
-                    </div>
-                  </Box>
-                </Box>
-              </TapArea>
-            ))}
-
-            
           </div>
       </Scrollable>
     </Box>
