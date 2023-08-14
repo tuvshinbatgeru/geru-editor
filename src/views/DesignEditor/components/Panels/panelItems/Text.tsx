@@ -10,7 +10,7 @@ import { Block } from "baseui/block"
 import Scrollable from "~/components/Scrollable"
 import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
 
-import { TapArea, Box } from "gestalt"
+import { TapArea, Box, Spinner } from "gestalt"
 import useAppContext from "~/hooks/useAppContext"
 
 export default function () {
@@ -125,7 +125,12 @@ export default function () {
             gap: '0.5rem',
         }}>
             { 
-              fetching ? <ListLoadingPlaceholder /> : <>
+              fetching ? <Box>
+                <Box display='flex' paddingY={10} justifyContent="center">
+                  <Spinner show={true} accessibilityLabel="Loading" />
+                </Box>
+                <ListLoadingPlaceholder />
+              </Box> : <>
                   {uploaded_fonts.map(font => (
                       <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
                         <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >

@@ -162,16 +162,13 @@ const Sticker = (props) => {
           <TapArea onTap={() => props.onTapSticker(sticker)}>
             <Card>
               <Mask>
-                <Image
-                    src={sticker.url}
-                    naturalHeight={sticker.height}
-                    naturalWidth={sticker.width}
-                    alt="sticker"
-                    color="transparent"
+                <TransformImage 
+                  url={sticker.url}
+                  // width={200}
+                  // height={Math.ceil(sticker.height / sticker.width) * 200}
+                  // width={300}
+                  // height={Math.ceil(sticker.width / sticker.height) * 300} 
                 />
-                {/* <TransformImage 
-                  url={sticker.url} 
-                /> */}
               </Mask>
             </Card>
             <div style={{ position: 'absolute', bottom: 7, display: 'flex', width: '100%', height: '40%' }}>

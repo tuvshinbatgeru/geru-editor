@@ -5,8 +5,6 @@ export const getTextProperties = (object: Required<IStaticText>, fonts: any[]) =
   const color = object.fill
   const family = object.fontFamily
 
-  debugger
-
   const selectedFont = fonts.find((sampleFont) => sampleFont.postscript_name === family)
   const groupedFonts = groupBy(fonts, "family")
   const selectedFamily = selectedFont ? groupedFonts[selectedFont!.family] : []
