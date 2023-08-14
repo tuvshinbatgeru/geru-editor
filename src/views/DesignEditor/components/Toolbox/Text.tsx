@@ -256,7 +256,10 @@ export default function (props) {
               </Block>
             </Block> */}
 
-            <TextFontSize />
+            <Box>
+              <TextFontSize />
+            </Box>
+
             <Block display={"flex"} alignItems={"center"}>
               <Button onClick={() => setActiveSubMenu("TextFill")} size={SIZE.mini} kind={KIND.tertiary}>
                 <TextColor color={state.color} size={22} />

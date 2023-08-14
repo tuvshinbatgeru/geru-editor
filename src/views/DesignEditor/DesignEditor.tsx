@@ -26,18 +26,18 @@ function DesignEditor(props) {
       setStickerParams(stickerParams)
       setParams(params)
       
-      setFonts(fonts.map((font) => {
-        return {
-          id: font._id,
-          name: font.name,
-          family: font.family || font.name,
-          full_name: font.full_name || font.name,
-          postscript_name: font.postscript_name || font.name,
-          preview: font.preview || "https://ik.imagekit.io/scenify/fonts/previews/9idoq0LRDb67USctK3Z5iDnt.png",
-          url: font.url,
-          category: "handwriting",
-        }
-      }))
+      // setFonts(fonts.map((font) => {
+      //   return {
+      //     id: font._id,
+      //     name: font.name,
+      //     family: font.family || font.name,
+      //     full_name: font.full_name || font.name,
+      //     postscript_name: font.postscript_name || font.name,
+      //     preview: font.preview || "https://ik.imagekit.io/scenify/fonts/previews/9idoq0LRDb67USctK3Z5iDnt.png",
+      //     url: font.url,
+      //     category: "handwriting",
+      //   }
+      // }))
     }
   }, [editor, props.params])
 

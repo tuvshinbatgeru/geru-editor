@@ -19,37 +19,19 @@ import { FontItem } from "~/interfaces/common"
 import { colors } from 'geru-components/dist/utils'
 export default function () {
   const [query, setQuery] = React.useState("")
-  const { setActiveSubMenu } = useAppContext()
+  const { setActiveSubMenu, fonts } = useAppContext()
   const setIsSidebarOpen = useSetIsSidebarOpen()
 
   const [commonFonts, setCommonFonts] = React.useState<any[]>([])
   const [css] = useStyletron()
   const editor = useEditor()
   
-  const addObject = async () => {
+  const addObject = async (font) => {
     if (editor) {
-      const font: FontItem = {
-        name: "OpenSans-Regular",
-        url: "https://fonts.gstatic.com/s/opensans/v27/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0C4nY1M2xLER.ttf",
-      }
-
       await loadFonts([font])
-      
-      const options = {
-        id: nanoid(),
-        type: "StaticText",
-        width: 420,
-        text: "Add some text",
-        fontSize: 92,
-        fontFamily: font.name,
-        textAlign: "center",
-        fontStyle: "normal",
-        fontURL: font.url,
-        fill: "#333333",
-        metadata: {},
-      }
-      
-      editor.objects.add(options)
+      editor.objects.update({
+        fontFamily: font.name
+      })
     }
   }
   
@@ -73,32 +55,24 @@ export default function () {
             display: 'grid',
             gap: '0.5rem',
           }}>
-            {commonFonts.map(font => (
-              <TapArea key={font.name} tapStyle="compress" onTap={() => addObject()}>
+            {fonts.map(font => (
+              <TapArea key={font.name} tapStyle="compress" onTap={() => addObject(font)}>
                 <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
-                  <div
-                    style={{
+                  <Box padding={2} borderStyle="raisedTopShadow">
+                    <div style={{
                         display: 'flex',
-                        paddingLeft: '2rem',
+                        paddingLeft: '1rem',
                         paddingTop: '1rem',
                         paddingBottom: '1rem',
-                        fontSize: '50px',
+                        fontSize: '20px',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        background: "white",
                         cursor: 'pointer',
                         fontFamily: font.name
-                    }}
-                  >
-                     <img 
-                        src={font.preview} 
-                        className={css({
-                            objectFit: "contain",
-                            pointerEvents: "none",
-                            verticalAlign: "middle",
-                        })}/>
-                     
-                  </div>
+                    }}>
+                      <span style={{ color: "#fff" }}>{font.name}</span>
+                    </div>
+                  </Box>
                 </Box>
               </TapArea>
             ))}

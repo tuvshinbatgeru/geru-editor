@@ -89,6 +89,7 @@ const Loader = (props) => {
         }
 
         setFonts(fonts)
+
         editor.frame.setBackgroundColor(`#${bgColor}`)
         editor.frame.resize({
             width: parseInt(dimensions.width),
