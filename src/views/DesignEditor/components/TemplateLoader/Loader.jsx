@@ -8,7 +8,7 @@ import { Button } from 'gestalt'
 
 const Loader = (props) => {
     const { setCurrentScene, currentScene, currentDesign, setCurrentDesign } = useDesignEditorContext()
-    const { dimensions, backgroundColor } = useAppContext()
+    const { dimensions, backgroundColor, setFonts } = useAppContext()
     const editor = useEditor()
     
 
@@ -88,6 +88,7 @@ const Loader = (props) => {
             }
         }
 
+        setFonts(fonts)
         editor.frame.setBackgroundColor(`#${bgColor}`)
         editor.frame.resize({
             width: parseInt(dimensions.width),
