@@ -75,12 +75,12 @@ export default function () {
         case "jpg":
           return {
             type: "StaticImage",
-            src: item.url,
+            src: item.secure_url,
           }
         case "svg":
           return {
             type: "StaticVector",
-            src: item.url,
+            src: item.secure_url,
           }
         default:
           return {
