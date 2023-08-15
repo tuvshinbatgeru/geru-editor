@@ -88,7 +88,7 @@ export default function () {
     }
     return (
         <>
-            <Block $style={{ flex: 1, display: "flex", flexDirection: "column" , backgroundColor: colors.colorBlack}}>
+            <Block $style={{ flex: 1, display: "flex", flexDirection: "column"  }}>
                 <Scrollbars>
                         <Box paddingX={4}>
                           { fetching && <ListLoadingPlaceholder /> }
@@ -113,7 +113,7 @@ const Sticker = (props) => {
   return (
     <Column span={4} key={sticker.url}>
       <motion.div layout>
-        <Box padding={3} position='relative'>
+        <Box padding={3} position='relative' marginBottom={4}>
           <TapArea onTap={() => props.onTapSticker(sticker)}>
             <Card>
               <Mask>
@@ -122,9 +122,9 @@ const Sticker = (props) => {
                 />
               </Mask>
             </Card>
-            <div style={{ position: 'absolute', bottom: 7, display: 'flex', width: '100%', height: '40%' }}>
+            <div style={{ position: 'absolute', bottom: -12, display: 'flex', width: '100%', height: '40%' }}>
               <Box display='flex' width='100%'>
-                <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
+                <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
                   <Text color='light' align='center' size="200" weight='bold'>{sticker.price ? `${currencyFormat(sticker.price)}` : 'Free'}</Text>
                 </div>
               </Box>

@@ -1,10 +1,10 @@
 import Scrollbars from "@layerhub-io/react-custom-scrollbar"
 import React from "react"
-import { colors } from 'geru-components/dist/utils'
+// import { colors } from 'geru-components/dist/utils'
 
 export default function ({ children, autoHide }: { children: React.ReactNode; autoHide?: boolean }) {
   return (
-    <div style={{ flex: 1, position: "relative", background: colors.colorBlack }}>   
+    <div style={{ flex: 1, position: "relative" }}>   
       <div style={{ height: "100%", width: "100%", position: "absolute", overflow: "hidden" }}>
         <Scrollbars autoHide={autoHide}>{children}</Scrollbars>
       </div>

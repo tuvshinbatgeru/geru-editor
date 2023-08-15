@@ -15,8 +15,9 @@ import { colors } from 'geru-components/dist/utils'
 
 const Container = styled("div", (props) => ({
   width: "80px",
-  backgroundColor: props.$theme.colors.primary100,
+  backgroundColor: "#191919",
   display: "flex",
+  height: "100%"
 }))
 
 function PanelsList() {
@@ -149,6 +150,7 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
     return (
         <TapArea
           tapStyle="compress"
+          // fullHeight
           onTap={() => {
             // editor.deselect()
             setIsSidebarOpen(true)
@@ -157,29 +159,27 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
           }}
         >
             <div style={{
-                backgroundColor: selected ? '#fff' : colors.colorBlack,
+                backgroundColor: selected ? '#242424' : "#191919",
                 display: 'flex',
                 justifyContent: 'center'
             }}>
                 <Box 
                     display='flex'
                     minHeight={90} 
-                    minWidth={100}
+                    // minWidth={100}
                     // color="brand"
-                    maxHeight={120} 
-                    maxWidth={140}
+                    // maxHeight={120} 
+                    width={80}
                     // color="brand"
                     direction='column'
                     justifyContent='center'
                     alignItems='center'
                 >
-                <div style={{ height: 8 }} />
-
-                <Icon size={24} color={selected ? 'black' : 'white'} icon={icon} />
+                <Icon size={24} color={'white'} icon={icon} />
                 <div style={{ height: 4 }} />
                   {
                     String(label).split(" ").map((str) => (
-                      <Text size='200' key={str} color={selected ? 'dark' : 'light'}>
+                      <Text size='200' key={str} color={'light'}>
                           {String(str)}
                       </Text>
                     ))    

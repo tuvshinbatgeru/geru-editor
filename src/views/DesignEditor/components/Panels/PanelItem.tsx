@@ -7,7 +7,7 @@ import { styled } from 'baseui'
 import { useMediaQuery } from 'react-responsive'
 
 const Container = styled('div', props => ({
-    background: '#1B1927',
+    background: '#242424',
     width: '360px',
     flex: 'none',
     boxShadow: '1px 0px 1px rgba(0, 0, 0, 0.15)',
@@ -18,7 +18,7 @@ const Container = styled('div', props => ({
 }))
 
 const MobileContainer = styled('div', props => ({
-    background: '#1B1927',
+    background: '#242424',
     height: '100%',
     width: '100%',
     display: 'flex',
