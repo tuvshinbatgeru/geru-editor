@@ -5,12 +5,12 @@ import useAppContext from "~/hooks/useAppContext"
 
 const AssetLoading = () => {
     const { isAssetLoading } = useAppContext()
-    const zIndex = new FixedZIndex(2)
+    const zIndex = new FixedZIndex(9999)
 
     if(!isAssetLoading) return null
 
     return (
-        <Box 
+        <Box
             position="absolute" 
             left top height="100%" width="100%"
             zIndex={zIndex}

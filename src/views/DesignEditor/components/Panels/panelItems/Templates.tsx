@@ -5,6 +5,7 @@ import { loadFonts } from "~/utils/fonts"
 import Scrollable from "~/components/Scrollable"
 import { useStyletron } from "baseui"
 import { Box, Spinner, TapArea, Image } from 'gestalt'
+import useAppContext from "~/hooks/useAppContext"
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
 import useDesignEditorContext from "~/hooks/useDesignEditorContext"
 import InfiniteScroll from 'react-infinite-scroller'
@@ -21,6 +22,7 @@ export default function () {
   const [pages, setPages] = useState(1)
   const [templates, setTemplates] = useState([])
   // const currentScene = editor.scene.exportToJSON()
+  const { setIsShowMobileModal } = useAppContext()
 
   useEffect(() => {
       getTemplates()
@@ -76,6 +78,8 @@ export default function () {
         template.editor_json.frame.height = parseInt(tempHeight)
 
         setCurrentScene({ ...template.editor_json, id: currentScene?.id })
+
+        setIsShowMobileModal(false)
       }
     },
     [editor, currentScene]

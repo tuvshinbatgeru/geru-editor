@@ -93,6 +93,8 @@ export default function () {
       setIsAssetLoading(true)
       
       let options = await _getType(item)
+      const { height } = await getImageDimensions(item.secure_url)
+
       editor.objects.add(options)
 
       setIsShowMobileModal(false)
@@ -112,7 +114,7 @@ export default function () {
           <div style={{ display: 'flex', height: '100%', width: '100%', flexDirection: 'column' }}>
             <Box height='100%'>
               <Scrollbars>
-                <Box paddingX={6} paddingY={4}>
+                <Box paddingX={2} paddingY={4}>
                   { fetching && <ListLoadingPlaceholder /> }
                   <Box display="flex" wrap>
                     {objects.map((obj, index) => (
