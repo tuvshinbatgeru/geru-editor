@@ -140,10 +140,11 @@ export default function () {
                                 paddingLeft: '1rem',
                                 paddingTop: '1rem',
                                 paddingBottom: '1rem',
-                                fontSize: '20px',
+                                fontSize: '18px',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 cursor: 'pointer',
+                                textAlign: 'center',
                                 fontFamily: font.name
                             }}>
                               <span style={{ color: "#fff" }}>{font.name}</span>
@@ -162,10 +163,11 @@ export default function () {
                                 paddingLeft: '1rem',
                                 paddingTop: '1rem',
                                 paddingBottom: '1rem',
-                                fontSize: '20px',
+                                fontSize: '18px',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 cursor: 'pointer',
+                                textAlign: 'center',
                                 fontFamily: font.name
                             }}>
                               <span style={{ color: "#fff" }}>{font.name}</span>

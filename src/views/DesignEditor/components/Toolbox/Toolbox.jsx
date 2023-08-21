@@ -5,7 +5,7 @@ import { styled } from "baseui"
 import Items from "./Items"
 import useAppContext from "~/hooks/useAppContext"
 import Navbar from '~/views/DesignEditor/components/Navbar'
-import { Box, ScrollBoundaryContainer } from 'gestalt'
+import { Box, FixedZIndex, ScrollBoundaryContainer } from 'gestalt'
 import { useMediaQuery } from 'react-responsive'
 
 import Fill from "./Fill"
@@ -30,6 +30,7 @@ const Toolbox = (props) => {
   const activeObject = useActiveObject()
   const editor = useEditor()
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
+  const zIndex = new FixedZIndex(2)
 
   React.useEffect(() => {
     const selectionType = getSelectionType(activeObject)
@@ -72,14 +73,13 @@ const Toolbox = (props) => {
   const Component = Items[state.toolbox] ? Items[state.toolbox] : Items[DEFAULT_TOOLBOX]
 
   if(isTabletOrMobile) return (
-    <Container position="absolute" zIndex={2}>
+    <Box position="fixed" top left right height={50} zIndex={zIndex} display='flex'>
       <Box flex='grow' display="flex" alignItems="center" height={50} color='light'>
           <Fill />
       </Box>
       <Navbar onSaveTemplateCallback={props.onSaveTemplateCallback} />
-    </Container>
+    </Box>
   )
-
 
   return (
     <Container position="sticky" zIndex={0}>

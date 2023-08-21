@@ -34,7 +34,7 @@ function PanelsList() {
 
   if(isTabletOrMobile) {
     return (
-      <Box display='flex' zIndex={ZINDEX} position='relative'>
+      <Box display='flex' zIndex={ZINDEX} height={70} position="fixed" bottom>
         <div style={{
           position: 'absolute',
           bottom: 0,
@@ -59,7 +59,7 @@ function PanelsList() {
               onDismiss={() => setActiveSubMenu("")}
               // align='center'
             >
-                <Box position='fixed' display='flex' direction='column' bottom height="30%" width='100%' left>
+                <Box position='fixed' display='flex' direction='column' bottom height="50%" width='100%' left>
                   <div style={{ position: 'absolute', top: -50, left: 0, right: 0 }}>
                     <Box display="flex" justifyContent='center'>
                       <IconButton
@@ -101,7 +101,7 @@ function PanelsList() {
                     <Box flex="grow">
                       <PanelItem />
                     </Box>
-                    <Box direction='row' display='flex' justifyContent='center' overflow="scrollX">
+                    <Box direction='row' display='flex' overflow="scrollX">
                       {
                         PANEL_ITEMS.map((panelListItem, index) => (
                           <PanelListItem

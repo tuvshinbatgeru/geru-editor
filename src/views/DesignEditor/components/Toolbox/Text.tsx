@@ -230,11 +230,11 @@ export default function (props) {
   }, [editor, state])
   return (
     <Block
-      $style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: 'flex-end', padding: "0 12px" }}
+      $style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: 'flex-end' }}
     >
       {
         has_toolbox && (
-          <Box display={"flex"} alignItems={"center"} flex='grow' maxWidth={width - 60} overflow="scrollX" paddingY={2}>
+          <Box display={"flex"} rounding={4} paddingX={2} alignItems={"center"} flex='grow' maxWidth={width - 60} color="infoWeak" overflow="scrollX" paddingY={2}>
             {/* <Block
               onClick={() => setActiveSubMenu("FontSelector")}
               $style={{
@@ -256,7 +256,7 @@ export default function (props) {
               </Block>
             </Block> */}
 
-            <Box>
+            <Box color='light' borderStyle="shadow">
               <TextFontSize />
             </Box>
 

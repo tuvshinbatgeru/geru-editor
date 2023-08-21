@@ -9,7 +9,7 @@ import useAppContext from "~/hooks/useAppContext"
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
 import useDesignEditorContext from "~/hooks/useDesignEditorContext"
 import InfiniteScroll from 'react-infinite-scroller'
-
+import { PanelType } from "~/constants/app-options";
 import { fetchAllTemplates } from "../../../utils/services"
 import { motion } from "framer-motion";
 
@@ -22,7 +22,7 @@ export default function () {
   const [pages, setPages] = useState(1)
   const [templates, setTemplates] = useState([])
   // const currentScene = editor.scene.exportToJSON()
-  const { setIsShowMobileModal } = useAppContext()
+  const { setIsShowMobileModal, params, backgroundColor, dimensions, setActivePanel, setActiveSubMenu } = useAppContext()
 
   useEffect(() => {
       getTemplates()
@@ -32,6 +32,7 @@ export default function () {
       setFetching(true)
       fetchAllTemplates({
         page,
+        product: params.product
       })
       .then(res => {
           if(res.data.code == 0) {
@@ -40,6 +41,12 @@ export default function () {
               } else setTemplates(templates.concat(res.data.result.docs))
               
               setPages(res.data.result.pages)
+
+              if(res.data.result.total == 0) {
+                setIsSidebarOpen(true)
+                setActivePanel(PanelType.GRAPHICS)
+                setActiveSubMenu("")
+              }
           }
       })
       .then(() => setFetching(false))
@@ -56,7 +63,14 @@ export default function () {
     async (template: any) => {
       if (editor) {
         const fonts: any[] = []
+
         template.editor_json.layers.forEach((object: any) => {
+          if(object.type === "Background") {
+            object.fill = backgroundColor
+            object.width = parseInt(dimensions.width)
+            object.height = parseInt(dimensions.height)
+          }
+
           if (object.type === "StaticText" || object.type === "DynamicText") {
             fonts.push({
               name: object.fontFamily,
@@ -71,11 +85,11 @@ export default function () {
           await loadFonts(filteredFonts)
         }
 
-        let tempWidth = template.editor_json.frame.width
-        let tempHeight = template.editor_json.frame.height
+        // let tempWidth = template.editor_json.frame.width
+        // let tempHeight = template.editor_json.frame.height
 
-        template.editor_json.frame.width = parseInt(tempWidth)
-        template.editor_json.frame.height = parseInt(tempHeight)
+        template.editor_json.frame.width = parseInt(dimensions.width)
+        template.editor_json.frame.height = parseInt(dimensions.height)
 
         setCurrentScene({ ...template.editor_json, id: currentScene?.id })
 

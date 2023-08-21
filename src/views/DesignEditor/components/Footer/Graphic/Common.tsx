@@ -85,7 +85,7 @@ export default function () {
   }, [zoomRatio])
 
   if(isTabletOrMobile) return (
-    <Box display='flex' position="fixed" color='light' bottom height={70} direction='row' left right width="100%">
+    <Box display='flex' color='light' position="fixed" bottom height={70} direction='row' left right width="100%">
         <Box width={70} />
         <Box flex='grow' display='flex' alignItems="center">
           <Component has_common has_toolbox={false} />
