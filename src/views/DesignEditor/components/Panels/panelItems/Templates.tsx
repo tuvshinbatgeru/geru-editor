@@ -32,7 +32,7 @@ export default function () {
       setFetching(true)
       fetchAllTemplates({
         page,
-        product: params.product
+        product_title: params.product_title
       })
       .then(res => {
           if(res.data.code == 0) {
@@ -64,9 +64,11 @@ export default function () {
       if (editor) {
         const fonts: any[] = []
 
+        let backgroundColor = params.backgroundColor
+
         template.editor_json.layers.forEach((object: any) => {
           if(object.type === "Background") {
-            object.fill = params.backgroundColor
+            object.fill = backgroundColor.includes("#") ? backgroundColor : ("#" + backgroundColor) 
             object.width = parseInt(dimensions.width)
             object.height = parseInt(dimensions.height)
           }
