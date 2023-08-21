@@ -22,7 +22,7 @@ export default function () {
   const [pages, setPages] = useState(1)
   const [templates, setTemplates] = useState([])
   // const currentScene = editor.scene.exportToJSON()
-  const { setIsShowMobileModal, params, backgroundColor, dimensions, setActivePanel, setActiveSubMenu } = useAppContext()
+  const { setIsShowMobileModal, params, dimensions, setActivePanel, setActiveSubMenu } = useAppContext()
 
   useEffect(() => {
       getTemplates()
@@ -66,7 +66,7 @@ export default function () {
 
         template.editor_json.layers.forEach((object: any) => {
           if(object.type === "Background") {
-            object.fill = backgroundColor
+            object.fill = params.backgroundColor
             object.width = parseInt(dimensions.width)
             object.height = parseInt(dimensions.height)
           }

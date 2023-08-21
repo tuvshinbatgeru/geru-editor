@@ -83,7 +83,8 @@ export default function (props) {
                         color='light'
                     />
                     <Box width={8} />
-                    <HeaderText size='md' whiteSpace='nowrap' color='white'>{fetching ? "Saving ..." : "Save template"}</HeaderText>
+                    {/* <HeaderText size='md' whiteSpace='nowrap' color='white'>{fetching ? "Saving ..." : "Save template"}</HeaderText> */}
+                    <Text color='light' weight="bold" overflow="noWrap">{fetching ? "Уншиж байна ..." : "Загвар хадгалах"}</Text>
                 </Box>
             </TapArea>
             <Box width={8} />
@@ -96,7 +97,7 @@ export default function (props) {
                         color='light'
                     />
                     <Box width={8} />
-                    <HeaderText size='md' whiteSpace='nowrap' color='white'>Done</HeaderText>
+                    <Text color='light' weight="bold" overflow="noWrap">Хадгалах</Text>
                 </Box>
             </TapArea>
             
