@@ -22,7 +22,7 @@ export default function () {
   const [pages, setPages] = useState(1)
   const [templates, setTemplates] = useState([])
   // const currentScene = editor.scene.exportToJSON()
-  const { setIsShowMobileModal, params, dimensions, setActivePanel, setActiveSubMenu } = useAppContext()
+  const { setIsShowMobileModal, params = {}, dimensions, setActivePanel, setActiveSubMenu } = useAppContext()
 
   useEffect(() => {
       getTemplates()
@@ -64,7 +64,7 @@ export default function () {
       if (editor) {
         const fonts: any[] = []
 
-        let backgroundColor = params.backgroundColor
+        let backgroundColor = params.backgroundColor || ""
 
         template.editor_json.layers.forEach((object: any) => {
           if(object.type === "Background") {
@@ -94,7 +94,6 @@ export default function () {
         template.editor_json.frame.height = parseInt(dimensions.height)
 
         setCurrentScene({ ...template.editor_json, id: currentScene?.id })
-
         setIsShowMobileModal(false)
       }
     },
@@ -136,7 +135,7 @@ const TemplateItem = (props) => {
       <Box padding={1}>
           <TapArea tapStyle='compress' onTap={props.onClick}>
               <Box color='secondary' width={WrapperSize} height={WrapperSize} rounding={1} position='relative'>
-                  <Box width={WrapperSize} height={WrapperSize} display='flex' justifyContent='center' alignItems='center' overflow='hidden'>
+                  <Box width={WrapperSize} height={WrapperSize} display='flex' justifyContent='center' alignItems='center' overflow='hidden' alignContent="center" wrap>
                       <motion.div
                           whileHover={{ scale: 1.1 }}
                           whileTap={{

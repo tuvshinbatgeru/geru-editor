@@ -1,6 +1,6 @@
 import React, { useEffect, useState }  from 'react'
 import axios from 'axios'
-import { Box,  TapArea, Button, Text, Link,Card, Image} from 'gestalt'
+import { Box,  TapArea, Button, Text, Link, Image} from 'gestalt'
 import { HeaderText } from 'geru-components'
 import {resolveToWalletAddress, getParsedNftAccountsByOwner,} from "@nfteyez/sol-rayz";
 import InfiniteScroll from 'react-infinite-scroller'

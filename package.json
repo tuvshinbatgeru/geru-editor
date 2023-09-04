@@ -1,6 +1,6 @@
 {
   "name": "geru-editor",
-  "version": "0.0.76",
+  "version": "0.0.77",
   "main": "./dist/index.js",
   "scripts": {
     "start": "vite --port $PORT",
@@ -17,7 +17,7 @@
     "@layerhub-io/react-custom-scrollbar": "^0.0.1",
     "@nfteyez/sol-rayz": "^0.10.2",
     "@solana/web3.js": "^1.63.1",
-    "@types/gestalt": "^71.0.0",
+    "@types/gestalt": "^101.0.0",
     "@types/node": "^17.0.35",
     "alchemy-sdk": "^2.1.1",
     "are-passive-events-supported": "^1.1.1",
@@ -26,7 +26,7 @@
     "ethers": "^5.7.1",
     "framer-motion": "^10.15.2",
     "geru-components": "^0.0.21",
-    "gestalt": "^73.2.1",
+    "gestalt": "^122.4.1",
     "i18next": "^21.8.13",
     "js-cookie": "^3.0.1",
     "lodash": "^4.17.21",

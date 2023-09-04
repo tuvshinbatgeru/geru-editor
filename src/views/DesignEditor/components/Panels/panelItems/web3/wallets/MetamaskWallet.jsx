@@ -5,6 +5,7 @@ import { HeaderText } from "geru-components"
 import { Scrollbars } from 'react-custom-scrollbars'
 import Masonry from 'react-masonry-component'
 import { fetchNFTs } from '../ethNft'
+import { useEditor } from "@layerhub-io/react"
 
 const install_metamask_text = 'Please install metamask!';
 const connect_wallet_error_text = 'Not able to get accounts';
@@ -14,11 +15,14 @@ const connect_wallet_text = 'Connect metamask';
 const loading_nfts_text = 'Fetching NFTs...';
 const wallet_empty_text = 'No nfts to display'
 
+
 const MetamaskWallet = (props) => {
     const [wallet, setWallet] = useState("");
     const [nfts, setNFTs] = useState([])
     const [fetching, setFetching] = useState(false)
     const [connected, setConnected] = useState(false)
+    const editor = useEditor()
+
     
     const isMetaMaskInstalled = () => {
         const { ethereum } = window;
@@ -36,6 +40,30 @@ const MetamaskWallet = (props) => {
         .then(nfts => setNFTs(nfts))
         .then(() => setFetching(false))
     }
+
+    const addObject = React.useCallback(
+        (item) => {
+            const { media } = item
+
+            // console.log(media)
+
+            if(media.length > 0) {
+                const nft = media[0]
+
+                if (editor) {
+                    const options = {
+                        type: "StaticImage",
+                        src: nft.gateway,
+                        // src: nft.thumbnail
+                    }
+
+                    editor.objects.add(options)
+                }
+            }
+        },
+        [editor]
+    )
+
     const onClickConnect = () => {
         try {
             MetaMaskClientCheck();
@@ -108,7 +136,7 @@ const MetamaskWallet = (props) => {
                 )
             }
             
-                <Box padding={4}>
+                <Box>
                     <Box paddingY={4}>
                         {/*<Text size="sm" color='light'>{connected ? wallet : null}</Text>*/}
                         {
@@ -123,11 +151,11 @@ const MetamaskWallet = (props) => {
                                                 {
                                                 nfts.map((item, index) => (
                                                     <Box
-                                                    key={index}
-                                                    column={6}
-                                                    padding={2}
+                                                        key={index}
+                                                        column={6}
+                                                        padding={1}
                                                     >
-                                                    <TapArea onTap={() => addImageToCanvas(item)}>
+                                                    <TapArea onTap={() => addObject(item)}>
                                                         <Card>
                                                         <Image
                                                             alt={item.title}
@@ -148,9 +176,6 @@ const MetamaskWallet = (props) => {
                                 )
                             }
                     </Box>
-                    <Box >
-                    
-                   </Box>
                 </Box>
           
        </Box>

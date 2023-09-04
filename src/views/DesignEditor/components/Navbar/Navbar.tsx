@@ -73,7 +73,7 @@ export default function (props) {
         
     }
     return (
-        <Box display="flex" justifyContent="end" alignItems="center" paddingX={6} color='light'>
+        <Box display="flex" justifyContent="end" alignItems="center" paddingX={2} mdPaddingX={6} color='light' paddingY={2}>
             <TapArea tapStyle="compress" fullWidth={false} onTap={() => setTemplateModal(!templateModal)}>
                 <Box color='dark' paddingY={2} paddingX={4} justifyContent='center' alignItems='center'  display='flex'>
                     <Icon 

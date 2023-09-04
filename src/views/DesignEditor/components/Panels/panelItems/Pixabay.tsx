@@ -3,7 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { Block } from "baseui/block"
 import { useEffect, useState } from 'react'
 import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
-import { Text,Box, TapArea, Column, Mask, Card, Image, TextField } from "gestalt"
+import { Text,Box, TapArea, Column, Mask, Image, TextField } from "gestalt"
 import { HeaderText, TransformImage } from "geru-components"
 import { useMediaQuery } from 'react-responsive'
 import { useEditor, useActiveObject } from "@layerhub-io/react"
@@ -135,7 +135,6 @@ const Sticker = (props) => {
       <motion.div layout>
         <Box padding={3} position='relative'>
           <TapArea onTap={() => props.onTapSticker(item)}>
-            <Card>
               <Mask>
                 <Image 
                   src={item.previewURL}
@@ -145,7 +144,6 @@ const Sticker = (props) => {
                   naturalWidth={item.imageWidth}
                 />
               </Mask>
-            </Card>
           </TapArea>
         </Box>
       </motion.div>

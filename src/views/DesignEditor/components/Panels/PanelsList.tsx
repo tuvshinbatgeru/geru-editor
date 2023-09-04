@@ -8,7 +8,7 @@ import PanelItem from './PanelItem'
 
 import { styled } from "baseui"
 import { useTranslation } from "react-i18next"
-import { Box, IconButton, Layer, Text, Modal, TapArea, FixedZIndex } from "gestalt"
+import { Box, IconButton, Icon as GestaltIcon, Layer, Text, Modal, TapArea, FixedZIndex } from "gestalt"
 import { useMediaQuery } from 'react-responsive'
 import Icon from "geru-components/dist/Icon"
 import { colors } from 'geru-components/dist/utils'
@@ -43,13 +43,30 @@ function PanelsList() {
           paddingLeft: 8,
           paddingRight: 8,
         }}>
-          <IconButton 
+          <TapArea tapStyle="compress" onTap={() => setIsShowMobileModal(!isShowMobileModal)}>
+            <Box color="brand" height={40} width={40} rounding="circle" 
+              display="flex" 
+              justifyContent="center" 
+              wrap
+              alignItems="center" 
+              alignContent="center"
+              alignSelf="center"
+            >
+              <GestaltIcon 
+                icon="add"
+                color="light"
+                accessibilityLabel="Add"
+              />
+            </Box>
+          </TapArea>
+          {/* <IconButton 
             size="lg"
             icon='add'
             bgColor="red"
+            // bgC
             accessibilityLabel='Model button'
             onClick={() => setIsShowMobileModal(!isShowMobileModal)}
-          />
+          /> */}
         </div>
 
         {
@@ -57,19 +74,32 @@ function PanelsList() {
             <Modal
               accessibilityModalLabel='Modal'
               onDismiss={() => setActiveSubMenu("")}
+              padding="none"
               // align='center'
             >
                 <Box position='fixed' display='flex' direction='column' bottom height="50%" width='100%' left>
                   <div style={{ position: 'absolute', top: -50, left: 0, right: 0 }}>
-                    <Box display="flex" justifyContent='center'>
-                      <IconButton
-                        accessibilityLabel="close"
-                        icon="cancel"
-                        size='md'
-                        bgColor="transparentDarkGray"
-                        onClick={() => setActiveSubMenu("")}
-                      />
-                    </Box>
+                     <Box display="flex" justifyContent="center">
+                        <TapArea fullWidth={false} tapStyle="compress" onTap={() => setActiveSubMenu("")}>
+                          <Box 
+                            display="flex" 
+                            justifyContent='center' 
+                            alignContent="center"
+                            height={40}
+                            wrap
+                            width={40} 
+                            rounding="circle"
+                            color="transparentDarkGray"
+                          >
+                            <GestaltIcon 
+                              icon="cancel"
+                              accessibilityLabel="close"
+                              color="light"
+                            />
+                          </Box>
+                        </TapArea>
+                      </Box>
+                    
                   </div>
                   <Box flex="grow">
                     <PanelItem />
@@ -88,14 +118,25 @@ function PanelsList() {
               >
                   <Box position='fixed' display='flex' direction='column' bottom height="80%" width='100%' left>
                     <div style={{ position: 'absolute', top: -50, left: 0, right: 0, zIndex: 3, }}>
-                      <Box display="flex" justifyContent='center'>
-                        <IconButton
-                          accessibilityLabel="close"
-                          icon="cancel"
-                          size='md'
-                          bgColor="transparentDarkGray"
-                          onClick={() => setIsShowMobileModal(false)}
-                        />
+                      <Box display="flex" justifyContent="center">
+                        <TapArea fullWidth={false} tapStyle="compress" onTap={() => setIsShowMobileModal(false)}>
+                          <Box 
+                            display="flex" 
+                            justifyContent='center' 
+                            alignContent="center"
+                            height={40}
+                            wrap
+                            width={40} 
+                            rounding="circle"
+                            color="transparentDarkGray"
+                          >
+                            <GestaltIcon 
+                              icon="cancel"
+                              accessibilityLabel="close"
+                              color="light"
+                            />
+                          </Box>
+                        </TapArea>
                       </Box>
                     </div>
                     <Box flex="grow">
@@ -165,26 +206,22 @@ function PanelListItem({ label, icon, activePanel, name }: any) {
             }}>
                 <Box 
                     display='flex'
-                    minHeight={90} 
-                    // minWidth={100}
-                    // color="brand"
-                    // maxHeight={120} 
+                    minHeight={90}
                     width={80}
-                    // color="brand"
                     direction='column'
                     justifyContent='center'
-                    alignItems='center'
                 >
-                <Icon size={24} color={'white'} icon={icon} />
-                <div style={{ height: 4 }} />
-                  {
-                    String(label).split(" ").map((str) => (
-                      <Text size='200' key={str} color={'light'}>
-                          {String(str)}
-                      </Text>
-                    ))    
-                  }
-                    
+                  <Box display="flex" justifyContent="center">
+                    <Icon size={24} color={'white'} icon={icon} />
+                  </Box>
+                  <div style={{ height: 4 }} />
+                    {
+                      String(label).split(" ").map((str) => (
+                        <Text align="center" size='200' key={str} color={'light'}>
+                            {String(str)}
+                        </Text>
+                      ))    
+                    }
                 </Box>
             </div>
         

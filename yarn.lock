@@ -923,15 +923,16 @@
   dependencies:
     "@types/node" "*"
 
-"@types/gestalt@^41.0.0":
-  version "41.0.0"
-  resolved "https://registry.npmjs.org/@types/gestalt/-/gestalt-41.0.0.tgz"
+"@types/gestalt@^101.0.0":
+  version "101.0.0"
+  resolved "https://registry.yarnpkg.com/@types/gestalt/-/gestalt-101.0.0.tgz#88405e78e46aaf2d241dd8afcf66593a6f1ce71b"
+  integrity sha512-UaDYAJPRy9bw9w5Sux1BVcGt82X9m0/2a+k6wrmJXvMyfRfO1TutqH5JvUO2zddHLsXoDdJ/HbLD0hBli1rvEQ==
   dependencies:
     "@types/react" "*"
 
-"@types/gestalt@^71.0.0":
-  version "71.0.0"
-  resolved "https://registry.npmjs.org/@types/gestalt/-/gestalt-71.0.0.tgz"
+"@types/gestalt@^41.0.0":
+  version "41.0.0"
+  resolved "https://registry.npmjs.org/@types/gestalt/-/gestalt-41.0.0.tgz"
   dependencies:
     "@types/react" "*"
 
@@ -2381,16 +2382,17 @@ gestalt-design-tokens@>0.0.0:
   version "77.2.0"
   resolved "https://registry.npmjs.org/gestalt-design-tokens/-/gestalt-design-tokens-77.2.0.tgz"
 
-gestalt@^45.4.3:
-  version "45.11.3"
-  resolved "https://registry.npmjs.org/gestalt/-/gestalt-45.11.3.tgz"
+gestalt@^122.4.1:
+  version "122.4.1"
+  resolved "https://registry.yarnpkg.com/gestalt/-/gestalt-122.4.1.tgz#a574ed2fb36352f408655f05b6c528136248e165"
+  integrity sha512-NB1S3WCyo5n5xQcbVoyLfC6EwdC7AXeeFRvQw/fksir8TBGy/KJRBOHLfxbCUgY9ZohymTLULPuNiamceZdhZA==
   dependencies:
     classnames "^2.2.6"
     gestalt-design-tokens ">0.0.0"
 
-gestalt@^73.2.1:
-  version "73.3.0"
-  resolved "https://registry.npmjs.org/gestalt/-/gestalt-73.3.0.tgz"
+gestalt@^45.4.3:
+  version "45.11.3"
+  resolved "https://registry.npmjs.org/gestalt/-/gestalt-45.11.3.tgz"
   dependencies:
     classnames "^2.2.6"
     gestalt-design-tokens ">0.0.0"
