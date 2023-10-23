@@ -8,7 +8,7 @@ import Masonry from 'react-masonry-component'
 import { useEditor } from "@layerhub-io/react"
 import { nanoid } from "nanoid"
 import { useMediaQuery } from 'react-responsive'
-import { Box, Card, TapArea,Icon, Spinner ,Text,FixedZIndex, Image as GestaltImage, RadioButton, Sheet, Layer, Button,Heading, RadioGroup} from 'gestalt'
+import { Box, Card, TapArea,Icon, Spinner ,Text,FixedZIndex, Image as GestaltImage, RadioButton, Modal , Layer, Button,Heading, RadioGroup} from 'gestalt'
 import { TransformImage ,HeaderText} from 'geru-components'
 import { fetchUserUploads, fileUpload, fetchArtworks , fetchSuggestedTopics} from "~/views/DesignEditor/utils/services"
 import { getImageDimensions } from '../../../utils/helper'
@@ -335,7 +335,7 @@ export default function () {
         {
                 is_open_mobile_filter && (
                     <Layer zIndex={HEADER_ZINDEX}>
-                        <Sheet
+                        <Modal
                             accessibilityDismissButtonLabel="Dismiss"
                             accessibilitySheetLabel="Example sheet to demonstrate different sizes"
                             footer={
@@ -354,7 +354,7 @@ export default function () {
                             size="sm"
                         >
                             { renderMobileFilter() }
-                        </Sheet>
+                        </Modal>
                     </Layer>
                 )
             }

@@ -60,7 +60,7 @@ export const AppContext = createContext<IAppContext>({
     setUploads: () => {},
     shapes: [],
     setShapes: () => {},
-    activePanel: PanelType.GRAPHICS,
+    activePanel: PanelType.TEXT,
     setActivePanel: () => {},
     activeSubMenu: null,
     setActiveSubMenu: (value: string) => {},
@@ -82,7 +82,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [templates, setTemplates] = useState<Template[]>([]);
     const [uploads, setUploads] = useState<any[]>([]);
     const [shapes, setShapes] = useState<Template[]>([]);
-    const [activePanel, setActivePanel] = useState<PanelType>(PanelType.GRAPHICS);
+    const [activePanel, setActivePanel] = useState<PanelType>(PanelType.TEXT);
     const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
     const [currentTemplate, setCurrentTemplate] = useState(null);
     const [backgroundColor, setBackgroundColor] = useState("fff");

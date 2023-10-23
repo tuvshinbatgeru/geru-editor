@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useEditor } from "@layerhub-io/react"
 import { FontItem } from "~/interfaces/common"
 import { searchFont } from "~/views/DesignEditor/utils/services"
@@ -10,7 +10,7 @@ import { Block } from "baseui/block"
 import Scrollable from "~/components/Scrollable"
 import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
 
-import { TapArea, Box, Spinner } from "gestalt"
+import { TapArea, Box, Spinner, Text } from "gestalt"
 import useAppContext from "~/hooks/useAppContext"
 
 export default function () {
@@ -19,12 +19,31 @@ export default function () {
   const { setIsShowMobileModal, backgroundColor, setFonts } = useAppContext()
   const [local_fonts, setLocalFonts] = useState([])
   const [uploaded_fonts, setUploadedFonts] = useState([])
+  const [fontTypes, setFontTypes] = useState([{
+    title: "Крилл",
+    name: "cyrillic",
+    fonts: []
+  }, {
+    title: "Монгол Бичиг",
+    name: "mongol_script",
+    fonts: []
+  }, {
+    title: "Соёмбо үсэг",
+    name: "soyombo_script",
+    fonts: [],
+    link: "https://en.wikipedia.org/wiki/Soyombo_script"
+  }, {
+    title: "Латин",
+    name: "unicode",
+    fonts: []
+  }]) 
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchFonts()
+    // setFontTypes()
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFonts(local_fonts.concat(uploaded_fonts))
     _loadingFonts()
   }, [local_fonts])
@@ -42,20 +61,9 @@ export default function () {
     })
     .then(res => {
       if(res.data.code == 0) {
-        setLocalFonts(res.data.fonts.map((font) => {
-          return {
-            id: font._id,
-            name: font.name,
-            family: font.family || font.name,
-            full_name: font.full_name || font.name,
-            postscript_name: font.postscript_name || font.name,
-            preview: font.preview || "https://ik.imagekit.io/scenify/fonts/previews/9idoq0LRDb67USctK3Z5iDnt.png",
-            url: font.secure_url || font.url,
-            category: "handwriting",
-          }
-        }))
+        let newFontTypes = [...fontTypes]
 
-        setUploadedFonts(res.data.uploaded_fonts.map((font) => {
+        const local_fonts = res.data.fonts.map((font) => {
           return {
             id: font._id,
             name: font.name,
@@ -63,10 +71,42 @@ export default function () {
             full_name: font.full_name || font.name,
             postscript_name: font.postscript_name || font.name,
             preview: font.preview || "https://ik.imagekit.io/scenify/fonts/previews/9idoq0LRDb67USctK3Z5iDnt.png",
+            placeholder: font.placeholder || font.name,
             url: font.secure_url || font.url,
             category: "handwriting",
           }
-        }))
+        })
+
+        setLocalFonts(local_fonts)
+
+        let index = newFontTypes.findIndex((cur) => cur.name == "cyrillic")
+        newFontTypes[index].fonts = local_fonts
+
+        let uploaded_fonts = res.data.uploaded_fonts.map((font) => {
+          return {
+            id: font._id,
+            name: font.name,
+            family: font.family || font.name,
+            full_name: font.full_name || font.name,
+            postscript_name: font.postscript_name || font.name,
+            placeholder: font.placeholder || font.name,
+            preview: font.preview || "https://ik.imagekit.io/scenify/fonts/previews/9idoq0LRDb67USctK3Z5iDnt.png",
+            url: font.secure_url || font.url,
+            category: font.category || "handwriting",
+          }
+        })
+
+        let mongol_scriptIndex = newFontTypes.findIndex((cur) => cur.name == "mongol_script")
+        newFontTypes[mongol_scriptIndex].fonts = uploaded_fonts.filter((font) => font.category == "mongol_script")
+
+        let soyombo_scriptIndex = newFontTypes.findIndex((cur) => cur.name == "soyombo_script")
+        newFontTypes[soyombo_scriptIndex].fonts = uploaded_fonts.filter((font) => font.category == "soyombo_script")
+
+        let latin_index = newFontTypes.findIndex((cur) => cur.name == "unicode")
+        newFontTypes[latin_index].fonts = uploaded_fonts.filter((font) => font.name != "soyombo_script" && font.name != "mongol_script")
+
+        setUploadedFonts(uploaded_fonts)
+        setFontTypes(newFontTypes)
       }
     })
     .catch(err => {
@@ -88,13 +128,13 @@ export default function () {
       //   name: font.name,
       //   url: font.url,
       // }
-
+      // alert(font.placeholder)
       // await loadFonts([new_font])
       const options = {
         id: nanoid(),
         type: "StaticText",
         width: 420,
-        text: font.name,
+        text: font.placeholder || font.name,
         fontSize: 92,
         fontFamily: font.name,
         textAlign: "center",
@@ -131,54 +171,44 @@ export default function () {
                 </Box>
                 <ListLoadingPlaceholder />
               </Box> : <>
-                  {uploaded_fonts.map(font => (
-                      <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
-                        <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
-                          <Box padding={2} borderStyle="raisedTopShadow">
-                            <div style={{
-                                display: 'flex',
-                                paddingLeft: '1rem',
-                                paddingTop: '1rem',
-                                paddingBottom: '1rem',
-                                fontSize: '18px',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                cursor: 'pointer',
-                                textAlign: 'center',
-                                fontFamily: font.name
-                            }}>
-                              <span style={{ color: "#fff" }}>{font.name}</span>
-                            </div>
-                          </Box>
+                  {
+                    fontTypes.map((font, index) => (
+                      <Box key={index}>
+                        <Box paddingX={4} paddingY={6} display="flex" justifyContent="between">
+                          <Text color='light' weight="bold">{font.title}</Text>
+                          {
+                            font.fonts.length > 3 && <Text color='light' underline>илүү ихийг</Text>
+                          }
                         </Box>
-                      </TapArea>
-                    ))}
-
-                    {local_fonts.map(font => (
-                      <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
-                        <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
-                          <Box padding={2} borderStyle="raisedTopShadow">
-                            <div style={{
-                                display: 'flex',
-                                paddingLeft: '1rem',
-                                paddingTop: '1rem',
-                                paddingBottom: '1rem',
-                                fontSize: '18px',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                cursor: 'pointer',
-                                textAlign: 'center',
-                                fontFamily: font.name
-                            }}>
-                              <span style={{ color: "#fff" }}>{font.name}</span>
-                            </div>
-                          </Box>
+                        <Box>
+                          {font.fonts.slice(0, 3).map(font => (
+                            <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
+                              <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
+                                <Box padding={2} borderStyle="raisedTopShadow">
+                                  <div style={{
+                                      display: 'flex',
+                                      paddingLeft: '1rem',
+                                      paddingTop: '1rem',
+                                      paddingBottom: '1rem',
+                                      fontSize: '18px',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      cursor: 'pointer',
+                                      textAlign: 'center',
+                                      fontFamily: font.name
+                                  }}>
+                                    <span style={{ color: "#fff" }}>{font.name}</span>
+                                  </div>
+                                </Box>
+                              </Box>
+                            </TapArea>
+                          ))}
                         </Box>
-                      </TapArea>
-                    ))}
+                      </Box>
+                    ))
+                  }  
               </>
             }
-
           </div>
       </Scrollable>
     </Box>

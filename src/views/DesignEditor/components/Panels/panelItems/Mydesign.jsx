@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Block } from "baseui/block"
 import Scrollable from "~/components/Scrollable"
-import { IconButton, Text,Box, Flex,TapArea,Image,Card ,Column} from "gestalt"
+import { IconButton, Text,Box, Flex,TapArea,Image,Column} from "gestalt"
 import { useMediaQuery } from 'react-responsive'
 import {fetchTemplates, deleteTemplate } from "../../../utils/services"
 import {HeaderText} from "geru-components"
@@ -161,15 +161,13 @@ export default function () {
                                 <Box column={6} key={index} padding={2}>
                                     {/*<TapArea onTap={() => handleLoadTemplate(template.editor_json)}>*/}
                                     <TapArea onTap={() => handleLoadTemplate(template)}>
-                                    <Card>
-                                        <Image
-                                            alt="Template"
-                                            color='transparent'
-                                            naturalHeight={236 * (template.editor_json.frame.height / template.editor_json.frame.width)}
-                                            naturalWidth={236}
-                                            src={template.preview_url}
-                                        />
-                                    </Card>
+                                    <Image
+                                        alt="Template"
+                                        color='transparent'
+                                        naturalHeight={236 * (template.editor_json.frame.height / template.editor_json.frame.width)}
+                                        naturalWidth={236}
+                                        src={template.preview_url}
+                                    />
                                     <div style={{ position: 'absolute', bottom: 6, display: 'flex', width: '100%', height: '40%' }}>
                                         <Box display='flex' width='100%' >
                                         <div style={{ backgroundImage: "linear-gradient(to bottom, rgba(27, 25, 39, 0), rgba(27, 25, 39, 1))", width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>

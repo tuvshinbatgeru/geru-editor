@@ -26,7 +26,7 @@ export default function () {
 
   useEffect(() => {
       getTemplates()
-  }, [page])
+  }, [page, params.product_title])
 
   const getTemplates = () => {
       setFetching(true)

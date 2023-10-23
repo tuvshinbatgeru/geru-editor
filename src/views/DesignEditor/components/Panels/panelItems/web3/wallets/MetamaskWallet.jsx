@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box,  TapArea, Button, Text, Card, Image} from 'gestalt'
+import { Box,  TapArea, Button, Text, Image} from 'gestalt'
 import { utils } from 'ethers';
 import { HeaderText } from "geru-components"
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -156,7 +156,6 @@ const MetamaskWallet = (props) => {
                                                         padding={1}
                                                     >
                                                     <TapArea onTap={() => addObject(item)}>
-                                                        <Card>
                                                         <Image
                                                             alt={item.title}
                                                             naturalHeight={1000}
@@ -164,7 +163,6 @@ const MetamaskWallet = (props) => {
                                                             color="#fff"
                                                             src={item.media[0].gateway}
                                                         />
-                                                        </Card>
                                                     </TapArea>
                                                     </Box>
                                                 ))

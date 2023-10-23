@@ -1,7 +1,6 @@
 import { useContextMenuRequest, useEditor } from "@layerhub-io/react"
 import { useStyletron } from "baseui"
-import axios from 'axios'
-import { useEffect, useState } from 'react'
+
 import BringToFront from "~/components/Icons/BringToFront"
 import Delete from "~/components/Icons/Delete"
 import Duplicate from "~/components/Icons/Duplicate"
@@ -12,12 +11,14 @@ import Paste from "~/components/Icons/Paste"
 import SendToBack from "~/components/Icons/SendToBack"
 import Unlocked from "~/components/Icons/Unlocked"
 import useAppContext from "~/hooks/useAppContext"
+
 import { getBase64 } from "../../utils/helper"
 import { Box, Spinner, FixedZIndex } from 'gestalt'
 import { HeaderText } from 'geru-components'
 //import { backgroundRemove } from "../../utils/services"
+
 function ContextMenu() {
-  const { backgroundRemove , setBackgroundRemove} = useAppContext()
+  const { backgroundRemove, setBackgroundRemove } = useAppContext()
 
   const contextMenuRequest = useContextMenuRequest()
 //  const [isBackgroundRemove, setIsBackgroundRemove] = useState(false)
@@ -30,11 +31,11 @@ function ContextMenu() {
       }
     }
   }
-//  console.log("0. -- false",backgroundRemove);
+  
   const backgroundRemove1 = async () => {
     //setIsBackgroundRemove(true)
     setBackgroundRemove(true)
-    console.log("1. -- true",backgroundRemove)
+    // console.log("1. -- true",backgroundRemove)
     if (editor) {
         const component: any = await editor.scene.exportAsComponent()
         if (component) {
@@ -61,7 +62,7 @@ function ContextMenu() {
         //setIsBackgroundRemove(false)
         //setBackgroundRemove(true)
 
-        console.log("2. -- false",backgroundRemove)
+        // console.log("2. -- false",backgroundRemove)
     }
   }
   if (!contextMenuRequest || !contextMenuRequest.target) {
@@ -89,7 +90,6 @@ function ContextMenu() {
             disabled={true}
             onClick={() => {
               editor.objects.copy()
-              //editor.cancelContextMenu()
             }}
             icon="Duplicate"
             label="copy"
@@ -99,7 +99,6 @@ function ContextMenu() {
           <ContextMenuItem
             onClick={() => {
               editor.objects.paste()
-              //editor.cancelContextMenu()
             }}
             icon="Paste"
             label="paste"
@@ -110,7 +109,6 @@ function ContextMenu() {
             disabled={true}
             onClick={() => {
               editor.objects.remove()
-              //editor.cancelContextMenu()
             }}
             icon="Delete"
             label="delete"
@@ -208,7 +206,7 @@ function ContextMenu() {
                 // editor.cancelContextMenu()
             //  handleAsComponentHandler()
             ////  editor.cancelContextMenu()
-            alert("removing ... ")
+            // alert("removing ... ")
             }}
             icon="Templates"
             label="Background remove"

@@ -23,6 +23,27 @@ export function currencyFormat(price) {
 	return `${nFormatter(price)}₮`
 }
 
+export function AreaOfRectangle(rect, rect2) {
+	//var d0 = divs.eq(0).position()
+	//var d1 = divs.eq(1).position()
+	var d1x = rect.left
+	var d1y = rect.top
+
+	var d1xMax = rect.left + rect.width
+	var d1yMax = rect.top + rect.height
+
+	var d2x = rect2.left
+	var d2y = rect2.top
+
+	var d2xMax = rect2.left + rect2.width
+	var d2yMax = rect2.top + rect2.height
+
+	var x_overlap = Math.max(0, Math.min(d1xMax, d2xMax) - Math.max(d1x, d2x))
+	var y_overlap = Math.max(0, Math.min(d1yMax, d2yMax) - Math.max(d1y, d2y))
+
+	return x_overlap * y_overlap
+}
+
 export function resizeImage(base64Str, maxWidth = 400, maxHeight = 350) {
 	return new Promise((resolve) => {
 	  let img = new Image()

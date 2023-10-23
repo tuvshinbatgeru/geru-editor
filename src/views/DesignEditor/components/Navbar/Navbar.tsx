@@ -3,7 +3,7 @@ import { useEditor } from "@layerhub-io/react"
 import { Box, TapArea, Icon, Text, Spinner, FixedZIndex ,Modal, Layer , TextField} from 'gestalt'
 import { HeaderText } from 'geru-components'
 import useAppContext from "~/hooks/useAppContext"
-import { resizeImage } from '~/views/DesignEditor/utils/helper'
+import { resizeImage, AreaOfRectangle } from '~/views/DesignEditor/utils/helper'
 import {uploadTemporaryArtwork, saveTemplate} from "../../utils/services"
 import _isEmpty from 'lodash/isEmpty'
 import { toast } from 'react-toastify'
@@ -19,7 +19,109 @@ export default function (props) {
     const zIndex = new FixedZIndex(99)
 
     const makeDownloadTemplate = async () => {
-        setIsSaving(true)
+        //what is that
+        // alert("GET")
+        const template = editor.scene.exportToJSON()
+        const { layers } = template
+        const { width, height } = layers[0]
+        let total_area = width * height
+
+        console.log(layers)
+
+        let AFormatPriceTable = [{
+            label: 'A5',
+            value: 'A5',
+            percentage: 0
+        }, {
+            label: 'A4',
+            value: 'A4',
+            percentage: 26
+        }, {
+            label: 'A3',
+            value: 'A3',
+            percentage: 51
+        }]
+
+        //
+        let top = width
+        let left = height
+        let area_width = 0
+        let area_height = 0
+
+        layers.filter((layer) => layer.type != 'Background').forEach((layer) => {
+            if(layer.left < left) left = layer.left
+            if(layer.top < top) top = layer.top
+
+            const recX = layer.width * layer.scaleX + layer.left
+            const recY = layer.height * layer.scaleY + layer.top
+
+            if(recX > area_width) area_width = recX
+            if(recY > area_height) area_height = recY
+        })
+
+        // alert(area_width)
+
+        const total_artwork_area =  Math.ceil(AreaOfRectangle({
+            top,
+            left,
+            width: area_width,
+            height: area_height
+        }, {
+            top: 0,
+            left: 0,
+            width,
+            height
+        }))
+
+        let percentage = Math.ceil((100 * total_artwork_area) / total_area)
+
+        let formatRange = AFormatPriceTable.find((cur, index) => {
+            if(index == AFormatPriceTable.length - 1) {
+                return percentage >= cur.percentage
+            }
+            
+            return percentage >= cur.percentage && percentage < AFormatPriceTable[index + 1].percentage
+        })
+
+        if(formatRange) {
+            alert(formatRange.value)
+        }
+
+        
+
+        //
+
+        // setPrintableAreaSize(Math.ceil(AreaOfRectangle({
+        //     top: y,
+        //     left: x,
+        //     width: artwork_width,
+        //     height: artwork_height
+        // }, {
+        //     top: 0,
+        //     left: 0,
+        //     width: cutFrame.width,
+        //     height: cutFrame.height
+        // })))
+
+        //detecting largest rectangle on area
+
+
+        // let total_area = 
+        // let total_area =  Math.ceil(cutFrame.height * cutFrame.width)
+        // let percentage = Math.ceil((100 * printable_area_size) / total_area)
+
+        // if(true) {
+        //     let formatRange = AFormatPriceTable.find((cur, index) => {
+        //         if(index == AFormatPriceTable.length - 1) {
+        //             return percentage >= cur.percentage
+        //         }
+                
+        //         return percentage >= cur.percentage && percentage < AFormatPriceTable[index + 1].percentage
+        //     })
+    
+        //     if(formatRange) setPrintableFormat(formatRange.value)
+        // }
+        // setIsSaving(true)
     }
 
     const onSaveTemplate = async () => {

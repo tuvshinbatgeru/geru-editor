@@ -12,7 +12,7 @@ import Masonry from 'react-masonry-component'
 import { useEditor } from "@layerhub-io/react"
 import { nanoid } from "nanoid"
 import { useMediaQuery } from 'react-responsive'
-import { Box, Card, TapArea, Spinner ,Text,FixedZIndex} from 'gestalt'
+import { Box, TapArea, Spinner ,Text,FixedZIndex} from 'gestalt'
 import { TransformImage ,HeaderText} from 'geru-components'
 import { fetchUserUploads, fileUpload } from "~/views/DesignEditor/utils/services"
 
@@ -30,13 +30,11 @@ const Image = (props) => {
       
     >
       <TapArea onTap={() => addImageToCanvas(photo)}>
-        <Card >
-          <TransformImage
-              url={photo.url}
-              width={200}
-              height={Math.ceil(photo.height / photo.width) * 200}
-          />
-        </Card>
+        <TransformImage
+            url={photo.url}
+            width={200}
+            height={Math.ceil(photo.height / photo.width) * 200}
+        />
         <div style={{ position: 'absolute', bottom: 7, display: 'flex', width: '100%', height: '40%' }}>
         <Box display='flex' width='100%'>
             <div style={{ 

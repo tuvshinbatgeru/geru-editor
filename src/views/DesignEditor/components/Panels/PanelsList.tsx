@@ -44,7 +44,7 @@ function PanelsList() {
           paddingRight: 8,
         }}>
           <TapArea tapStyle="compress" onTap={() => setIsShowMobileModal(!isShowMobileModal)}>
-            <Box color="brand" height={40} width={40} rounding="circle" 
+            <Box color="brand" height={48} width={48} rounding="circle" 
               display="flex" 
               justifyContent="center" 
               wrap
@@ -85,9 +85,9 @@ function PanelsList() {
                             display="flex" 
                             justifyContent='center' 
                             alignContent="center"
-                            height={40}
+                            height={48}
                             wrap
-                            width={40} 
+                            width={48} 
                             rounding="circle"
                             color="transparentDarkGray"
                           >
@@ -117,16 +117,16 @@ function PanelsList() {
                 onDismiss={() => setIsShowMobileModal(!isShowMobileModal)}
               >
                   <Box position='fixed' display='flex' direction='column' bottom height="80%" width='100%' left>
-                    <div style={{ position: 'absolute', top: -50, left: 0, right: 0, zIndex: 3, }}>
+                    <div style={{ position: 'absolute', top: -54, left: 0, right: 0, zIndex: 3, }}>
                       <Box display="flex" justifyContent="center">
                         <TapArea fullWidth={false} tapStyle="compress" onTap={() => setIsShowMobileModal(false)}>
                           <Box 
                             display="flex" 
                             justifyContent='center' 
                             alignContent="center"
-                            height={40}
+                            height={48}
                             wrap
-                            width={40} 
+                            width={48} 
                             rounding="circle"
                             color="transparentDarkGray"
                           >

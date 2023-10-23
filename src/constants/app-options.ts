@@ -62,4 +62,5 @@ export enum PanelType {
   BACKGROUND = "Background",
   UPLOADS = "Uploads",
   ARTWORKS = "Artworks",
+  TEXT = "Text",
 }
