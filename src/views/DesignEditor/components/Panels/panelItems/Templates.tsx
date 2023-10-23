@@ -111,13 +111,11 @@ export default function () {
           useWindow={false}
         >
             <Box paddingY={4}>
-              <div style={{ padding: "0 1.5rem" }}>
-                <div style={{ display: "grid", gap: "0.5rem", gridTemplateColumns: "1fr 1fr" }}>
-                  {templates.map((item, index) => {
-                    return <TemplateItem onClick={() => loadTemplate(item)} key={index} template={item} preview={`${item.preview_url}`} />
-                  })}
-                </div>
-              </div>
+              <Box display="flex" wrap paddingX={2}>
+                {templates.map((item, index) => {
+                  return <TemplateItem onClick={() => loadTemplate(item)} key={index} template={item} preview={`${item.preview_url}`} />
+                })}
+              </Box>
             </Box>
         </InfiniteScroll>
         <Spinner show={fetching} accessibilityLabel="Loading" />
@@ -132,10 +130,10 @@ const TemplateItem = (props) => {
   const WrapperSize = 140
 
   return (
-      <Box padding={1}>
+      <Box padding={1} column={6}>
           <TapArea tapStyle='compress' onTap={props.onClick}>
-              <Box color='secondary' width={WrapperSize} height={WrapperSize} rounding={1} position='relative'>
-                  <Box width={WrapperSize} height={WrapperSize} display='flex' justifyContent='center' alignItems='center' overflow='hidden' alignContent="center" wrap>
+              <Box color='secondary' height={WrapperSize} rounding={1} position='relative'>
+                  <Box height={WrapperSize} display='flex' justifyContent='center' alignItems='center' overflow='hidden' alignContent="center" wrap>
                       <motion.div
                           whileHover={{ scale: 1.1 }}
                           whileTap={{

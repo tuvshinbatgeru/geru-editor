@@ -1,9 +1,9 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { Scrollbars } from 'react-custom-scrollbars'
 import { Block } from "baseui/block"
 import { useEffect, useState } from 'react'
 import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
-import { Text,Box, TapArea, Column, Mask, Image } from "gestalt"
+import { Text,Box, TapArea, Column, Mask, TextField, IconButton } from "gestalt"
 import { HeaderText, TransformImage } from "geru-components"
 import { useMediaQuery } from 'react-responsive'
 import { useEditor, useActiveObject } from "@layerhub-io/react"
@@ -18,19 +18,34 @@ import { motion, LayoutGroup } from 'framer-motion'
 import { loadFonts } from "~/utils/fonts"
 // import { Tabs } from 'gestalt'
 import Tabs from '~/components/Tabs'
+import _debounce from 'lodash/debounce'
 
 export default function () {
     const editor = useEditor()
     const [fetching, setFetching] = useState(false)
     const [objects, setObjects] = useState([])
+    const [groupedObjects, setGroupedObjects] = useState([])
     const [activeIndex, setActiveIndex] = useState(0)
     const { setIsShowMobileModal, dimensions, setIsAssetLoading } = useAppContext()
+    const [query, setQuery] = useState("")
+
+    const onQueryChange = useCallback(
+      _debounce(query => {
+        getStickers(query)
+      }, 400), 
+      []
+    )
 
     useEffect(() => {
-        getStickers()
+        getStickers(query)
     }, [activeIndex])
 
-    const getStickers = () => {
+    useEffect(() => {
+      onQueryChange(query)
+    }, [query])
+
+    // const get
+    const getStickers = (query) => {
         setObjects([])
         let exts = ['png', 'jpeg', 'jpg', 'svg']
 
@@ -45,6 +60,7 @@ export default function () {
         setFetching(true)
         fetchPacksWithParams({
           extensions: exts,
+          q: query
         })
         .then(res => {
             if(res.data.code == 0) {
@@ -105,6 +121,8 @@ export default function () {
 
     const addImateToCanvas = async (item) => {
       setIsAssetLoading(true)
+
+      // console.log(item)
       
       let options = await _getType(item)
       const { height } = await getImageDimensions(item.secure_url)
@@ -129,6 +147,29 @@ export default function () {
     return (
         <>
             <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+                <Box paddingX={4} mdPaddingX={5} display="flex" justifyContent="between" alignItems="center" marginTop={4}>
+                  <Box flex='grow'>
+                    <TextField
+                      id="query"
+                      // ful
+                      placeholder="Хайх"
+                      value={query}
+                      onChange={({ value }) => setQuery(value)}
+                    />
+                  </Box>
+                  {
+                    query.trim() && (
+                      <IconButton
+                        icon="cancel"
+                        accessibilityLabel="cancel"
+                        size='sm'
+                        iconColor="white"
+                        onClick={() => setQuery("")}
+                        // colo
+                      />
+                    )
+                  }
+                </Box>
                 <Box paddingY={2} mdPaddingX={2} display="flex" justifyContent="center">
                   <Tabs
                     activeTabIndex={activeIndex}
@@ -142,19 +183,23 @@ export default function () {
                     ]}
                   />
                 </Box>
-                <Scrollbars>
-                        <Box paddingX={4}>
-                          { fetching && <ListLoadingPlaceholder /> }
-                          <Box display="flex" wrap>
-                           {objects.map((obj, index) => (
-                            <Sticker
-                              sticker={obj}
-                              key={index}
-                              onTapSticker={addObject}
-                            />
-                           ))}
-                           </Box>
-                        </Box>
+                <Scrollbars
+                  renderView={props => (
+                    <div {...props} style={{ ...props.style, overflowX: 'hidden' }} />
+                  )}
+                >
+                  <Box paddingX={2}>
+                    { fetching && <ListLoadingPlaceholder /> }
+                    <Box display="flex" wrap>
+                      {objects.map((obj, index) => (
+                      <Sticker
+                        sticker={obj}
+                        key={index}
+                        onTapSticker={addObject}
+                      />
+                      ))}
+                      </Box>
+                  </Box>
                 </Scrollbars>
             </Block>
            
@@ -168,7 +213,7 @@ const Sticker = (props) => {
   return (
     <Column span={4} key={sticker.url}>
       <motion.div layout>
-        <Box padding={3} position='relative' marginBottom={6}>
+        <Box padding={1} position='relative' marginBottom={6}>
           <TapArea onTap={() => props.onTapSticker(sticker)}>
             <Mask>
               <TransformImage 
@@ -179,7 +224,7 @@ const Sticker = (props) => {
                 // height={Math.ceil(sticker.width / sticker.height) * 300} 
               />
             </Mask>
-            <div style={{ position: 'absolute', bottom: -12, display: 'flex', width: '100%', height: '40%' }}>
+            <div style={{ position: 'absolute', bottom: -18, display: 'flex', width: '100%', height: '40%' }}>
               <Box display='flex' width='100%'>
                 <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
                   <Text color='light' align='center' size="200" weight='bold'>{sticker.price ? `${currencyFormat(sticker.price)}` : 'Free'}</Text>
