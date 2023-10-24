@@ -16,7 +16,7 @@ export async function fetchPacks(params) {
 }
 
 export async function fetchPacksWithParams(params) { 
-	return await request().get('/api/element/all', {
+	return await request().get('/api/element/all-v1', {
 		params
 	})
 }
