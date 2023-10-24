@@ -219,7 +219,7 @@ export default function () {
               sourceBg: '#272428'
             }
           }} // ability to customise the style of the widget uploader
-          destroy={true} // will destroy the widget on completion
+          // destroy={true} // will destroy the widget on completion
           // 👇 FOR SIGNED UPLOADS ONLY 👇
           //generateSignatureUrl={'http://my_domain.com/api/v1/media/generate_signature'} // pass the api 
           // endpoint for generating a signature -> check cloudinary docs and SDK's for signing uploads

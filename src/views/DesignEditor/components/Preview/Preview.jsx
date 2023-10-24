@@ -1,9 +1,8 @@
 import React from "react"
-import { Box, Spinner, FixedZIndex } from 'gestalt'
-import { HeaderText } from 'geru-components'
+import { Text, Box, Spinner, FixedZIndex } from 'gestalt'
 import useAppContext from "~/hooks/useAppContext"
 import { useEditor } from "@layerhub-io/react"
-import { resizeImage } from '~/views/DesignEditor/utils/helper'
+import { resizeImage, AreaOfRectangle } from '~/views/DesignEditor/utils/helper'
 import _cloneDeep from 'lodash/cloneDeep'
 
 const Preview = (props) => {
@@ -15,6 +14,64 @@ const Preview = (props) => {
   const makePreview = React.useCallback(async () => {
     if (isSaving) {
         const template = editor.scene.exportToJSON()
+        const { layers } = template
+        const { width, height } = layers[0]
+        let total_area = width * height
+
+        let AFormatPriceTable = [{
+            label: 'A5',
+            value: 'A5',
+            percentage: 0
+        }, {
+            label: 'A4',
+            value: 'A4',
+            percentage: 26
+        }, {
+            label: 'A3',
+            value: 'A3',
+            percentage: 51
+        }]
+
+        //
+        let top = width
+        let left = height
+        let area_width = 0
+        let area_height = 0
+
+        
+        layers.filter((layer) => layer.type != 'Background').forEach((layer) => {
+            const layerLeft = layer.left >= 0 ? layer.left : 0
+            const layerTop = layer.top >= 0 ? layer.top : 0
+
+            if(layerLeft < left) left = layerLeft
+            if(layerTop < top) top = layerTop
+
+            area_width += (layer.width * layer.scaleX) + (layer.left >= 0 ? 0 : layer.left)
+            area_height += (layer.height * layer.scaleY) + (layer.top >= 0 ? 0 : layer.top)
+        })
+
+        const total_artwork_area =  Math.ceil(AreaOfRectangle({
+            top,
+            left,
+            width: area_width,
+            height: area_height
+        }, {
+            top: 0,
+            left: 0,
+            width,
+            height
+        }))
+
+        let percentage = Math.ceil((100 * total_artwork_area) / total_area)
+
+        let formatRange = AFormatPriceTable.find((cur, index) => {
+            if(index == AFormatPriceTable.length - 1) {
+                return percentage >= cur.percentage
+            }
+            
+            return percentage >= cur.percentage && percentage < AFormatPriceTable[index + 1].percentage
+        })
+        
         let rawTemplate = _cloneDeep(template)
 
         const is_different_background = template.layers.findIndex((layer) => {
@@ -31,6 +88,7 @@ const Preview = (props) => {
         onSuccessCallback({
             image: resized,
             json: rawTemplate,
+            formatRange
         })
 
         setIsSaving(false)
@@ -59,13 +117,6 @@ const Preview = (props) => {
               }
           }}
       >
-          <HeaderText color='white' align='center'>
-              Creating your work of art hold on a bit ...
-          </HeaderText>
-          <Box height={12} />
-          <Box color='light' rounding='circle' padding={1}> 
-              <Spinner accessibilityLabel='loading' show={true} />
-          </Box>
       </Box>
   )
 }

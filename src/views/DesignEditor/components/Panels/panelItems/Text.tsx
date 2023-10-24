@@ -1,17 +1,78 @@
 import React, { useState, useEffect } from "react"
 import { useEditor } from "@layerhub-io/react"
-import { FontItem } from "~/interfaces/common"
 import { searchFont } from "~/views/DesignEditor/utils/services"
 import { loadFonts } from "~/utils/fonts"
-import { IStaticText } from "@layerhub-io/types"
 import { nanoid } from "nanoid"
-import { Block } from "baseui/block"
 
 import Scrollable from "~/components/Scrollable"
 import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
 
 import { TapArea, Box, Spinner, Text } from "gestalt"
 import useAppContext from "~/hooks/useAppContext"
+
+const FontItem = (props) => {
+  const { font } = props
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadSingleFonts()
+  }, [])
+
+  const loadSingleFonts = async () => {
+    await loadFonts([font])
+    setLoading(false)
+  }
+
+  return (
+    <TapArea tapStyle="compress" onTap={() => props.onTap(font)}>
+      <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
+        <Box padding={2} borderStyle="raisedTopShadow">
+          <div style={{
+              display: 'flex',
+              paddingLeft: '1rem',
+              paddingTop: '1rem',
+              paddingBottom: '1rem',
+              fontSize: '18px',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              textAlign: 'center',
+              fontFamily: font.name
+          }}>
+            {
+              loading ? <Spinner size="sm" show={true} /> : <span style={{ color: "#fff" }}>{font.name}</span>
+            }
+          </div>
+        </Box>
+      </Box>
+    </TapArea>
+  )
+}
+
+const FontList = (props) => {
+  const { font } = props
+  const [isMore, setIsMore] = useState(false)
+
+  return (
+    <Box>
+      <Box paddingX={4} paddingY={6} display="flex" justifyContent="between">
+        <Text color='light' weight="bold">{font.title}</Text>
+        {
+          font.fonts.length > 3 && <TapArea fullWidth={false} onTap={() => setIsMore(!isMore)}><Text color='light' underline>илүү ихийг</Text></TapArea>
+        }
+      </Box>
+      <Box>
+        {font.fonts.slice(0, isMore ? font.fonts.length : 3).map((font, index) => (
+          <FontItem 
+              key={index}
+              font={font}
+              onTap={props.onTap}
+          />
+        ))}
+      </Box>
+    </Box>
+  )
+}
 
 export default function () {
   const editor = useEditor()
@@ -24,6 +85,10 @@ export default function () {
     name: "cyrillic",
     fonts: []
   }, {
+    title: "Латин",
+    name: "unicode",
+    fonts: []
+  }, {
     title: "Монгол Бичиг",
     name: "mongol_script",
     fonts: []
@@ -32,10 +97,6 @@ export default function () {
     name: "soyombo_script",
     fonts: [],
     link: "https://en.wikipedia.org/wiki/Soyombo_script"
-  }, {
-    title: "Латин",
-    name: "unicode",
-    fonts: []
   }]) 
 
   useEffect(() => {
@@ -45,7 +106,7 @@ export default function () {
 
   useEffect(() => {
     setFonts(local_fonts.concat(uploaded_fonts))
-    _loadingFonts()
+    // _loadingFonts()
   }, [local_fonts])
 
   const _loadingFonts = async () => {
@@ -111,9 +172,9 @@ export default function () {
     })
     .catch(err => {
       alert(err)
-      setFetching(false)
+      // setFetching(false)
     })
-    // .then(() => setFetching(false))
+    .then(() => setFetching(false))
 
     // if(fonts.length == 0) return
     // setFetching(true)
@@ -122,7 +183,7 @@ export default function () {
     // setFetching(false)
   } 
 
-  const AddNewFonts = async (font) => {
+  const AddNewFonts = async (font, script_name) => {
     if (editor) {
       // const new_font: FontItem = {
       //   name: font.name,
@@ -138,6 +199,7 @@ export default function () {
         fontSize: 92,
         fontFamily: font.name,
         textAlign: "center",
+        angle: script_name == "mongol_script" ? 90 : 0,
         // clipPath: "M0,50c6.27-6.5,12.54-13,25.08-13,25.07,0,25.07,26,50.15,26,12.33,0,18.6-6.29,24.77-12.68",
         // diameter: 360,
         // skewX: 30,
@@ -173,38 +235,11 @@ export default function () {
               </Box> : <>
                   {
                     fontTypes.map((font, index) => (
-                      <Box key={index}>
-                        <Box paddingX={4} paddingY={6} display="flex" justifyContent="between">
-                          <Text color='light' weight="bold">{font.title}</Text>
-                          {
-                            font.fonts.length > 3 && <Text color='light' underline>илүү ихийг</Text>
-                          }
-                        </Box>
-                        <Box>
-                          {font.fonts.slice(0, 3).map(font => (
-                            <TapArea key={font.name} tapStyle="compress" onTap={() => AddNewFonts(font)}>
-                              <Box paddingX={4} smPaddingX={4} mdPaddingX={4} lgPaddingX={4} >
-                                <Box padding={2} borderStyle="raisedTopShadow">
-                                  <div style={{
-                                      display: 'flex',
-                                      paddingLeft: '1rem',
-                                      paddingTop: '1rem',
-                                      paddingBottom: '1rem',
-                                      fontSize: '18px',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      cursor: 'pointer',
-                                      textAlign: 'center',
-                                      fontFamily: font.name
-                                  }}>
-                                    <span style={{ color: "#fff" }}>{font.name}</span>
-                                  </div>
-                                </Box>
-                              </Box>
-                            </TapArea>
-                          ))}
-                        </Box>
-                      </Box>
+                      <FontList 
+                        key={index}
+                        font={font}
+                        onTap={(current) => AddNewFonts(current, font.name)}
+                      />
                     ))
                   }  
               </>

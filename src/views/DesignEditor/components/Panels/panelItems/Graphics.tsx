@@ -1,22 +1,18 @@
-import React, { useCallback } from "react"
-import { Scrollbars } from 'react-custom-scrollbars'
+import React, { useRef, useCallback } from "react"
 import { Block } from "baseui/block"
 import { useEffect, useState } from 'react'
-import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
-import { Text,Box, TapArea, Column, Mask, TextField, IconButton } from "gestalt"
-import { HeaderText, TransformImage } from "geru-components"
-import { useMediaQuery } from 'react-responsive'
-import { useEditor, useActiveObject } from "@layerhub-io/react"
-import { colors } from 'geru-components/dist/utils'
+import Scrollable from "~/components/Scrollable"
+import { Text,Box, TapArea, Column, Mask, TextField, IconButton, Spinner } from "gestalt"
+import { TransformImage } from "geru-components"
+import { useEditor } from "@layerhub-io/react"
 import {fetchPacksWithParams} from "../../../utils/services"
 import { currencyFormat, getImageDimensions } from '../../../utils/helper'
 import useAppContext from '~/hooks/useAppContext'
+import InfiniteScroll from 'react-infinite-scroller'
 
-import { FontItem } from "~/interfaces/common"
 import { nanoid } from "nanoid"
-import { motion, LayoutGroup } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { loadFonts } from "~/utils/fonts"
-// import { Tabs } from 'gestalt'
 import Tabs from '~/components/Tabs'
 import _debounce from 'lodash/debounce'
 
@@ -28,16 +24,33 @@ export default function () {
     const [activeIndex, setActiveIndex] = useState(0)
     const { setIsShowMobileModal, dimensions, setIsAssetLoading } = useAppContext()
     const [query, setQuery] = useState("")
+    const [page, setPage] = useState(1)
+    const [pages, setPages] = useState(1)
+    const isMountingRef = useRef(false)
 
     const onQueryChange = useCallback(
       _debounce(query => {
-        getStickers(query)
+        if(isMountingRef.current) {
+          getStickers({
+            query,
+            page: 1
+          })
+        }
+
+        isMountingRef.current = true
       }, 400), 
       []
     )
 
     useEffect(() => {
-        getStickers(query)
+        getStickers({
+          query,
+          page,
+        })
+    }, [page, activeIndex])
+
+    useEffect(() => {
+      if(page == 1) setPage(1)
     }, [activeIndex])
 
     useEffect(() => {
@@ -45,8 +58,7 @@ export default function () {
     }, [query])
 
     // const get
-    const getStickers = (query) => {
-        setObjects([])
+    const getStickers = ({ query, page }) => {
         let exts = ['png', 'jpeg', 'jpg', 'svg']
 
         if(activeIndex == 1) {
@@ -60,11 +72,17 @@ export default function () {
         setFetching(true)
         fetchPacksWithParams({
           extensions: exts,
-          q: query
+          q: query,
+          page,
+          limit: 40
         })
         .then(res => {
             if(res.data.code == 0) {
-                setObjects(res.data.elements)
+                if(page == 1) {
+                  setObjects(res.data.result.docs)
+                } else setObjects(objects.concat(res.data.result.docs))
+              
+                setPages(res.data.result.pages)
             }
         })
         .catch(err => console.log(err))
@@ -119,20 +137,30 @@ export default function () {
       }
     }
 
+    const onLoadMore = () => {
+      let nextPage = page + 1
+      if(fetching || pages < nextPage) return
+      setFetching(true)
+      setPage(nextPage)
+    }
+
     const addImateToCanvas = async (item) => {
       setIsAssetLoading(true)
 
       // console.log(item)
-      
-      let options = await _getType(item)
-      const { height } = await getImageDimensions(item.secure_url)
+      let adjustScale = 1
 
-      editor.objects.add(options)
-      // editor.objects.add({
-      //   type: "StaticImage",
-      //   src: "https://res.cloudinary.com/urlan/image/upload/c_thumb,h_300,w_300/v1/elements/pvnmbcpjryyj3lluzw60?_a=ATO2BAA0"
-      // })
-      
+      const recommendedSize = Math.ceil(dimensions.width / 2)
+
+      let options = await _getType(item)
+      const { width } = await getImageDimensions(item.secure_url)
+
+      adjustScale = recommendedSize / width
+
+      editor.objects.add(Object.assign(options, {
+        scaleX: adjustScale,
+        scaleY: adjustScale
+      }))
 
       setIsShowMobileModal(false)
       setIsAssetLoading(false)
@@ -183,24 +211,28 @@ export default function () {
                     ]}
                   />
                 </Box>
-                <Scrollbars
-                  renderView={props => (
-                    <div {...props} style={{ ...props.style, overflowX: 'hidden' }} />
-                  )}
-                >
-                  <Box paddingX={2}>
-                    { fetching && <ListLoadingPlaceholder /> }
-                    <Box display="flex" wrap>
-                      {objects.map((obj, index) => (
-                      <Sticker
-                        sticker={obj}
-                        key={index}
-                        onTapSticker={addObject}
-                      />
-                      ))}
+                <Scrollable>
+                  <InfiniteScroll
+                    // loader={getLoaderElement()}
+                    loadMore={onLoadMore}
+                    hasMore={true}
+                    threshold={1000}
+                    useWindow={false}
+                  >
+                      <Box paddingX={2}>
+                        <Box display="flex" wrap>
+                          {objects.map((obj, index) => (
+                            <Sticker
+                              sticker={obj}
+                              key={index}
+                              onTapSticker={addObject}
+                            />
+                          ))}
+                          </Box>
                       </Box>
-                  </Box>
-                </Scrollbars>
+                  </InfiniteScroll>
+                  <Spinner show={fetching} accessibilityLabel="Loading" />
+                </Scrollable>
             </Block>
            
         </>
