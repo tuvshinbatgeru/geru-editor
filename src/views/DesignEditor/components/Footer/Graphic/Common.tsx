@@ -99,25 +99,14 @@ export default function () {
     setOptions({ ...options, zoomRatio: Math.round(zoomRatio * 100) })
   }, [zoomRatio])
 
-  if(isTabletOrMobile) return <>
+  if(isTabletOrMobile) return (
     <Box display='flex' color='light' position="fixed" bottom height={70} direction='row' left right width="100%">
         <Box width={70} />
         <Box flex='grow' display='flex' alignItems="center">
           <Component has_common has_toolbox={false} />
         </Box>
-    </Box>,
-    <Box display='flex' color='light' position="fixed" bottom height={70} direction='row' right>
-      <Box display="flex" justifyContent="end" alignItems="center">
-        <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomOut()}>
-          <Icons.RemoveCircleOutline size={28} />
-        </Button>
-        <Box width={1} height={30} color='dark' />
-        <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomIn()}>
-          <Icons.AddCircleOutline size={28} />
-        </Button>
-      </Box>
     </Box>
-  </>
+  )
 
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>

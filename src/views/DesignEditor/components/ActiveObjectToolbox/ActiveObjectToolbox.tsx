@@ -76,7 +76,7 @@ const Toolbox = () => {
 
   return (
     <Container>
-      <Box display="flex" alignItems="center" height={50} color='light' borderStyle="shadow" rounding={6}>
+      <Box display="flex" alignItems="center" height={50} color='light' borderStyle="sm" rounding={5}>
         <Component has_toolbox />
       </Box>
     </Container>

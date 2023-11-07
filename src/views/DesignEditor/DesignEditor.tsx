@@ -16,7 +16,7 @@ function DesignEditor(props) {
     if(editor) {
       const dimensions = params.dimensions || { width: 2000, height: 3000 }
       const fonts = params.fonts || defaultFonts
-      const backgroundColor = params.backgroundColor || "000"
+      const backgroundColor = params.backgroundColor || "fff"
       const ignoreAppOptions = params.ignoreAppOptions || []
       const stickerParams = params.stickerParams || {}
 

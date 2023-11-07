@@ -19,7 +19,7 @@ export default function () {
             },
             shadow: {
               blur: 4,
-              color: "#fcfcfc",
+              color: "#4f4f4f",
               offsetX: 0,
               offsetY: 0,
             },
