@@ -235,7 +235,7 @@ export default function (props) {
     >
       {
         has_toolbox && (
-          <Box display={"flex"} rounding={4} paddingX={2} alignItems={"center"} flex='grow' maxWidth={width - 60} color="light" overflow="scrollX" paddingY={2}>
+          <Box display={"flex"} rounding={5} borderStyle="sm" paddingX={2} alignItems={"center"} flex='grow' maxWidth={width - 60} color="light" overflow="scrollX" paddingY={2}>
             <Block
               onClick={() => setActiveSubMenu("FontSelector")}
               $style={{
@@ -245,10 +245,10 @@ export default function (props) {
                 cursor: "pointer",
                 fontFamily: state.family,
                 fontWeight: 500,
-                fontSize: "14px",
+                fontSize: "10px",
                 gap: "0.5rem",
               }}
-              // height={"24px"}
+              height={"24px"}
               display={"flex"}
               alignItems={"center"}
             >

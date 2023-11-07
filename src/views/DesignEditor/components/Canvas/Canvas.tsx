@@ -13,13 +13,13 @@ export default function () {
         <Canvas
           config={{
             guidelines: true,
-            background: "#f4f4f4",
+            background: "#f0f0f0",
             controlsPosition: {
               rotation: "BOTTOM",
             },
             shadow: {
               blur: 4,
-              color: "#4f4f4f",
+              color: "#828282",
               offsetX: 0,
               offsetY: 0,
             },

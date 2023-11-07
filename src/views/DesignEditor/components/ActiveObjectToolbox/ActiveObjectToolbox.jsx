@@ -4,8 +4,7 @@ import getSelectionType from "~/utils/get-selection-type"
 import { styled } from "baseui"
 import Items from "../Toolbox/Items"
 import useAppContext from "~/hooks/useAppContext"
-import Navbar from '~/views/DesignEditor/components/Navbar'
-import { Box, ScrollBoundaryContainer } from 'gestalt'
+import { Box } from 'gestalt'
 import { useMediaQuery } from 'react-responsive'
 
 const DEFAULT_TOOLBOX = "Canvas"
@@ -76,7 +75,7 @@ const Toolbox = () => {
 
   return (
     <Container>
-      <Box display="flex" alignItems="center" height={50} color='light' borderStyle="sm" rounding={5}>
+      <Box display="flex" alignItems="center" height={50} color='light' borderStyle={(activeObject && activeObject.type != "Frame") ? "sm" : "none"} rounding={5}>
         <Component has_toolbox />
       </Box>
     </Container>
