@@ -23,16 +23,21 @@ export default function () {
   const [templates, setTemplates] = useState([])
   // const currentScene = editor.scene.exportToJSON()
   const { setIsShowMobileModal, params = {}, dimensions, setActivePanel, setActiveSubMenu } = useAppContext()
+  const { product_title = "" } = params
 
   useEffect(() => {
-      getTemplates()
-  }, [page, params.product_title])
+    if(product_title) getTemplates()
+  }, [page, product_title])
+
+  useEffect(() => {
+    setPage(1)
+  }, [product_title])
 
   const getTemplates = () => {
       setFetching(true)
       fetchAllTemplates({
         page,
-        product_title: params.product_title
+        product_title: product_title
       })
       .then(res => {
           if(res.data.code == 0) {

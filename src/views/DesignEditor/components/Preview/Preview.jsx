@@ -38,6 +38,7 @@ const Preview = (props) => {
         let area_width = 0
         let area_height = 0
 
+        // debugger
         
         layers.filter((layer) => layer.type != 'Background').forEach((layer) => {
             const layerLeft = layer.left >= 0 ? layer.left : 0
@@ -49,6 +50,8 @@ const Preview = (props) => {
             area_width += (layer.width * layer.scaleX) + (layer.left >= 0 ? 0 : layer.left)
             area_height += (layer.height * layer.scaleY) + (layer.top >= 0 ? 0 : layer.top)
         })
+
+        
 
         const total_artwork_area =  Math.ceil(AreaOfRectangle({
             top,
@@ -84,6 +87,8 @@ const Preview = (props) => {
         
         const image = (await editor.renderer.render(template))
         const resized = await resizeImage(image, 1400, 1400)
+
+        // alert(JSON.stringify(formatRange))
 
         onSuccessCallback({
             image: resized,

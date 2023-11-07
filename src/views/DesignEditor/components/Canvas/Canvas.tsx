@@ -12,6 +12,7 @@ export default function () {
       <Box height="100%" width="100%" flex='grow' display="flex">
         <Canvas
           config={{
+            guidelines: true,
             background: "#f4f4f4",
             controlsPosition: {
               rotation: "BOTTOM",

@@ -10,7 +10,7 @@ import ListLoadingPlaceholder from '~/components/ListLoadingPlaceholder'
 import { TapArea, Box, Spinner, Text } from "gestalt"
 import useAppContext from "~/hooks/useAppContext"
 
-const FontItem = (props) => {
+export const FontItem = (props) => {
   const { font } = props
   const [loading, setLoading] = useState(true)
 

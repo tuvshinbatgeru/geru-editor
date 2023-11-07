@@ -109,9 +109,9 @@ export default function () {
                         templates.length == 0 && 
                             <Box paddingX={4} paddingY={6}>
                                     <Flex gap={12} direction='column'>
-                                    <HeaderText color='white' align='center'>You don't have any templates.</HeaderText>
+                                    <HeaderText color='white' align='center'>Одоогоор загвар үүсгээгүй байна</HeaderText>
                                     <Text color='light' align='center'>
-                                        To save templates, tap the button.
+                                    Таны загвараас худалдан авах бүрт 5% танд орлого болж орно
                                     </Text>
                                         {isTabletOrMobile ? 
                                             <Box color='dark' padding={2} justifyContent='center' alignItems='center'  >

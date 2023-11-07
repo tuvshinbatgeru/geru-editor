@@ -32,7 +32,7 @@ export default function () {
           <Block>
             <Box height={20} />
             <Box paddingY={4}>
-              <HeaderText color='white'>Preset colors</HeaderText>
+              <HeaderText color='white'>Санал болгож буй</HeaderText>
             </Box>
             <Block $style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr", gap: "0.25rem" }}>
               {PRESET_COLORS.map((color, index) => (

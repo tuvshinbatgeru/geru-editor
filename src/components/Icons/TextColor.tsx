@@ -7,7 +7,7 @@ function TextColor({ size, color = "#000000" }: { size: number; color: string })
           fill="currentColor"
         ></path>
       </svg>
-      <div style={{ height: "5px", width: "22px", background: color, display: "block", marginTop: "-3px" }}></div>
+      <div style={{ height: "5px", width: "22px", background: color, display: "block", marginTop: "-3px", border: "1px solid #4f4f4f"}}></div>
     </div>
   )
 }

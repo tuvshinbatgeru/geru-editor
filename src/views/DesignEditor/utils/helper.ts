@@ -44,7 +44,7 @@ export function AreaOfRectangle(rect, rect2) {
 	return x_overlap * y_overlap
 }
 
-export function resizeImage(base64Str, maxWidth = 400, maxHeight = 350) {
+export function resizeImage(base64Str, maxWidth = 760, maxHeight = 760) {
 	return new Promise((resolve) => {
 	  let img = new Image()
 	  img.src = base64Str

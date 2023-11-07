@@ -72,6 +72,7 @@ export default function (props) {
     if (activeObject && activeObject.type === "StaticText") {
       const textProperties = getTextProperties(activeObject, fonts)
       setState({ ...state, ...textProperties })
+      if(!isTabletOrMobile) setActiveSubMenu("FontSelector")
     }
   }, [activeObject])
 
@@ -234,29 +235,30 @@ export default function (props) {
     >
       {
         has_toolbox && (
-          <Box display={"flex"} rounding={4} paddingX={2} alignItems={"center"} flex='grow' maxWidth={width - 60} color="infoWeak" overflow="scrollX" paddingY={2}>
-            {/* <Block
+          <Box display={"flex"} rounding={4} paddingX={2} alignItems={"center"} flex='grow' maxWidth={width - 60} color="light" overflow="scrollX" paddingY={2}>
+            <Block
               onClick={() => setActiveSubMenu("FontSelector")}
               $style={{
                 border: "1px solid rgb(185,185,185)",
                 borderRadius: "4px",
                 padding: "0.2rem 0.45rem",
                 cursor: "pointer",
+                fontFamily: state.family,
                 fontWeight: 500,
                 fontSize: "14px",
                 gap: "0.5rem",
               }}
-              height={"24px"}
+              // height={"24px"}
               display={"flex"}
               alignItems={"center"}
             >
-              <Block>{state.family}</Block>
+              <span>{state.family}</span>
               <Block display={"flex"}>
                 <ChevronDown size={22} />
               </Block>
-            </Block> */}
+            </Block>
 
-            <Box color='light' borderStyle="shadow">
+            <Box color='light' borderStyle="shadow" marginStart={2}>
               <TextFontSize />
             </Box>
 
@@ -276,7 +278,7 @@ export default function (props) {
                   />
               }
 
-              <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Bold">
+              {/* <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"} content="Bold">
                 <Button
                   style={{ ...(!state.bold && { color: "rgb(169,169,169)" }) }}
                   disabled={!state.styleOptions.hasBold}
@@ -298,9 +300,9 @@ export default function (props) {
                 >
                   <Italic size={20} />
                 </Button>
-              </StatefulTooltip>
+              </StatefulTooltip> */}
 
-              <StatefulTooltip
+              {/* <StatefulTooltip
                 placement={PLACEMENT.bottom}
                 showArrow={true}
                 accessibilityType={"tooltip"}
@@ -314,7 +316,7 @@ export default function (props) {
                 >
                   <Underline size={24} />
                 </Button>
-              </StatefulTooltip>
+              </StatefulTooltip> */}
 
               <TextLetterCase />
 

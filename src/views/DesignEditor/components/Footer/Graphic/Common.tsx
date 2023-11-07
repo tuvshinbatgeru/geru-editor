@@ -10,6 +10,11 @@ import getSelectionType from "~/utils/get-selection-type"
 
 const DEFAULT_TOOLBOX = "Canvas"
 
+import { Button, KIND, SIZE } from "baseui/button"
+import { Slider } from "baseui/slider"
+import { Input } from "baseui/input"
+import Icons from "~/components/Icons"
+
 interface Options {
   zoomRatio: number
 }
@@ -20,13 +25,23 @@ export default function () {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
   const editor = useEditor()
   const [options, setOptions] = React.useState<Options>({
-    zoomRatio: 20,
+    zoomRatio: 10,
   })
 
   const [state, setState] = React.useState({ toolbox: "Text" })
   const activeObject = useActiveObject()
   const { setActiveSubMenu } = useAppContext()
   const zoomRatio: number = useZoomRatio()
+
+  React.useEffect(() => {
+    if(editor) {
+      if(isTabletOrMobile) {
+        setTimeout(() => {
+          editor.zoom.zoomIn()
+        }, 1000)
+      }
+    }
+  }, [editor])
 
   React.useEffect(() => {
     const selectionType = getSelectionType(activeObject)
@@ -84,14 +99,63 @@ export default function () {
     setOptions({ ...options, zoomRatio: Math.round(zoomRatio * 100) })
   }, [zoomRatio])
 
-  if(isTabletOrMobile) return (
+  if(isTabletOrMobile) return <>
     <Box display='flex' color='light' position="fixed" bottom height={70} direction='row' left right width="100%">
         <Box width={70} />
         <Box flex='grow' display='flex' alignItems="center">
           <Component has_common has_toolbox={false} />
         </Box>
+    </Box>,
+    <Box display='flex' color='light' position="fixed" bottom height={70} direction='row' right>
+      <Box display="flex" justifyContent="end" alignItems="center">
+        <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomOut()}>
+          <Icons.RemoveCircleOutline size={28} />
+        </Button>
+        <Box width={1} height={30} color='dark' />
+        <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomIn()}>
+          <Icons.AddCircleOutline size={28} />
+        </Button>
+      </Box>
     </Box>
-  )
+  </>
 
-  return null
+  return (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomOut()}>
+          <Icons.RemoveCircleOutline size={24} />
+        </Button>
+        <Slider
+          overrides={{
+            InnerThumb: () => null,
+            ThumbValue: () => null,
+            TickBar: () => null,
+            Root: {
+              style: { width: "140px" },
+            },
+            Thumb: {
+              style: {
+                height: "12px",
+                width: "12px",
+                paddingLeft: 0,
+              },
+            },
+            Track: {
+              style: {
+                paddingLeft: 0,
+                paddingRight: 0,
+              },
+            },
+          }}
+          value={[options.zoomRatio]}
+          onChange={({ value }) => {
+            handleChange("zoomRatio", value[0])
+          }}
+          min={zoomMin}
+          max={zoomMax}
+        />
+        <Button kind={KIND.tertiary} size={SIZE.compact} onClick={() => editor.zoom.zoomIn()}>
+          <Icons.AddCircleOutline size={24} />
+        </Button>
+      </div>
+  )
 }

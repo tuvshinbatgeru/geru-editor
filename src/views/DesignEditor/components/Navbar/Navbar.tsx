@@ -19,10 +19,6 @@ export default function (props) {
     const zIndex = new FixedZIndex(99)
 
     const makeDownloadTemplate = async () => {
-        //what is that
-        // alert("GET")
-        
-        
         setIsSaving(true)
     }
 
@@ -113,24 +109,24 @@ export default function (props) {
                             onDismiss={() => setTemplateModal(!templateModal)}
                         >
                             <Box padding={4} >
-                                <HeaderText align='center' weight='bold'>Save template as</HeaderText>
+                                <HeaderText align='center' weight='bold'>Загвар хадгалах</HeaderText>
                                 <Box height={20} />
                                 <TextField
                                     id="template input"
-                                    placeholder='template name'
+                                    placeholder='нэр оруулах'
                                     onChange={({value}) => setTemplateName(value)}
                                 />
 
                                 <Box direction='row' display='flex' paddingY={4}>
                                     <TapArea onTap={() => setTemplateModal(!templateModal)}>
                                         <Box color='dark' padding={4}>
-                                            <HeaderText align='center' size="md" color='white' weight='bold'>Cancel</HeaderText>
+                                            <HeaderText align='center' size="md" color='white' weight='bold'>Хаах</HeaderText>
                                         </Box>
                                     </TapArea>
                                     <Box width={30} />
                                     <TapArea onTap={onSaveTemplate}>
                                         <Box color='errorBase' padding={4}>
-                                            <HeaderText align='center' size="md"  color='white' weight='bold'>Save</HeaderText>
+                                            <HeaderText align='center' size="md"  color='white' weight='bold'>Хадгалах</HeaderText>
                                         </Box>
                                     </TapArea>
                                 </Box>
