@@ -34,16 +34,6 @@ export default function () {
   const zoomRatio: number = useZoomRatio()
 
   React.useEffect(() => {
-    if(editor) {
-      if(isTabletOrMobile) {
-        setTimeout(() => {
-          editor.zoom.zoomIn()
-        }, 1000)
-      }
-    }
-  }, [editor])
-
-  React.useEffect(() => {
     const selectionType = getSelectionType(activeObject)
     if (selectionType) {
       if (selectionType.length > 1) {
