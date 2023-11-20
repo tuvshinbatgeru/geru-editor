@@ -11,7 +11,7 @@ import { TapArea, Box, Spinner, Text } from "gestalt"
 import useAppContext from "~/hooks/useAppContext"
 
 export const FontItem = (props) => {
-  const { font } = props
+  const { font, text } = props
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export const FontItem = (props) => {
               fontFamily: font.name
           }}>
             {
-              loading ? <Spinner size="sm" show={true} /> : <span style={{ color: "#fff" }}>{font.name}</span>
+              loading ? <Spinner size="sm" show={true} /> : <span style={{ color: "#fff" }}>{text || font.name}</span>
             }
           </div>
         </Box>

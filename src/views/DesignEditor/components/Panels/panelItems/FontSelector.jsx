@@ -5,7 +5,7 @@ import { Input, SIZE } from "baseui/input"
 import useAppContext from "~/hooks/useAppContext"
 import { useStyletron } from "baseui"
 import { IStaticText } from "@layerhub-io/types"
-import { useEditor } from "@layerhub-io/react"
+import { useActiveObject, useEditor } from "@layerhub-io/react"
 import { loadFonts } from "~/utils/fonts"
 import { SAMPLE_FONTS } from "~/constants/editor"
 import { groupBy } from "lodash"
@@ -24,9 +24,10 @@ export default function () {
   const { setActiveSubMenu, fonts } = useAppContext()
   const setIsSidebarOpen = useSetIsSidebarOpen()
 
-  const [commonFonts, setCommonFonts] = React.useState<any[]>([])
+  const [commonFonts, setCommonFonts] = React.useState([])
   const [css] = useStyletron()
   const editor = useEditor()
+  const activeObject = useActiveObject()
 
   const [fetching, setFetching] = React.useState(false)
   const [local_fonts, setLocalFonts] = useState([])
@@ -129,8 +130,6 @@ export default function () {
       editor.objects.update({
         fontFamily: font.name
       })
-
-      setActiveSubMenu("")
     }
   }
 
@@ -145,6 +144,7 @@ export default function () {
               <FontItem 
                   key={index}
                   font={font}
+                  text={activeObject && activeObject.text}
                   onTap={() => addObject(font)}
               />
             ))}

@@ -1,6 +1,6 @@
 {
   "name": "geru-editor",
-  "version": "0.0.89",
+  "version": "0.0.90",
   "main": "./dist/index.js",
   "scripts": {
     "start": "vite --port $PORT",
@@ -33,6 +33,7 @@
     "nanoid": "^3.3.4",
     "react": "^18.2.0",
     "react-cloudinary-upload-widget": "^1.6.0",
+    "react-color": "^2.19.3",
     "react-colorful": "^5.5.1",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^18.2.0",

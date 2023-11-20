@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useRef, useState, useCallback, useEffect } from "react"
 import { useEditor } from "@layerhub-io/react"
 import { Block } from "baseui/block"
 import { loadFonts } from "~/utils/fonts"
 import Scrollable from "~/components/Scrollable"
 import { useStyletron } from "baseui"
-import { Box, Spinner, TapArea, Image } from 'gestalt'
+import { Box, Spinner, TapArea, Image, TextField, Text, Link, IconButton } from 'gestalt'
 import useAppContext from "~/hooks/useAppContext"
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
 import useDesignEditorContext from "~/hooks/useDesignEditorContext"
@@ -12,6 +12,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 import { PanelType } from "~/constants/app-options";
 import { fetchAllTemplates } from "../../../utils/services"
 import { motion } from "framer-motion";
+import _debounce from 'lodash/debounce'
 
 export default function () {
   const editor = useEditor()
@@ -21,22 +22,49 @@ export default function () {
   const [page, setPage] = useState(1)
   const [pages, setPages] = useState(1)
   const [templates, setTemplates] = useState([])
+  const [query, setQuery] = useState("")
   // const currentScene = editor.scene.exportToJSON()
   const { setIsShowMobileModal, params = {}, dimensions, setActivePanel, setActiveSubMenu } = useAppContext()
   const { product_title = "" } = params
+  const isMountingRef = useRef(false)
+
+  const onQueryChange = useCallback(
+    _debounce(query => {
+      if(isMountingRef.current) {
+        getTemplates({
+          query,
+          page: 1
+        })
+      }
+
+      isMountingRef.current = true
+    }, 400), 
+    []
+  )
 
   useEffect(() => {
-    if(product_title) getTemplates()
+    // if(product_title) getTemplates()
+
+    getTemplates({
+      query,
+      page,
+    })
   }, [page, product_title])
 
   useEffect(() => {
-    setPage(1)
+    if(page != 1) setPage(1)
   }, [product_title])
 
-  const getTemplates = () => {
+  useEffect(() => {
+    onQueryChange(query)
+  }, [query])
+
+  const getTemplates = ({ query, page }) => {
       setFetching(true)
       fetchAllTemplates({
+        q: query,
         page,
+        limit: 24,
         product_title: product_title
       })
       .then(res => {
@@ -47,11 +75,11 @@ export default function () {
               
               setPages(res.data.result.pages)
 
-              if(res.data.result.total == 0) {
-                setIsSidebarOpen(true)
-                setActivePanel(PanelType.GRAPHICS)
-                setActiveSubMenu("")
-              }
+              // if(res.data.result.total == 0) {
+              //   setIsSidebarOpen(true)
+              //   setActivePanel(PanelType.GRAPHICS)
+              //   setActiveSubMenu("")
+              // }
           }
       })
       .then(() => setFetching(false))
@@ -107,6 +135,29 @@ export default function () {
 
   return (
     <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+      <Box paddingX={2} mdPaddingX={3} display="flex" justifyContent="between" alignItems="center" marginTop={2} paddingY={2}>
+        <Box flex='grow'>
+          <TextField
+            id="query"
+            // ful
+            placeholder="Хайх"
+            value={query}
+            onChange={({ value }) => setQuery(value)}
+          />
+        </Box>
+        {
+          query.trim() && (
+            <IconButton
+              icon="cancel"
+              accessibilityLabel="cancel"
+              size='sm'
+              iconColor="white"
+              onClick={() => setQuery("")}
+              // colo
+            />
+          )
+        }
+      </Box>
       <Scrollable>
         <InfiniteScroll
           // loader={getLoaderElement()}
@@ -115,7 +166,7 @@ export default function () {
           threshold={1000}
           useWindow={false}
         >
-            <Box paddingY={4}>
+            <Box marginBottom={4}>
               <Box display="flex" wrap paddingX={2}>
                 {templates.map((item, index) => {
                   return <TemplateItem onClick={() => loadTemplate(item)} key={index} template={item} preview={`${item.preview_url}`} />
@@ -124,7 +175,33 @@ export default function () {
             </Box>
         </InfiniteScroll>
         <Spinner show={fetching} accessibilityLabel="Loading" />
+        {
+          !fetching && templates.length == 0 && (
+            <Box paddingX={4}>
+              <Text color='light' align="center">Одоогоор "{query}" хайлтанд таарах загвар алга байна</Text>
+            </Box>
+          )
+        }
       </Scrollable>
+      <Box display="flex" padding={3}>
+        <Link href="https://geru.mn/by-me/sell-on-geru" target="blank">
+          <Box color="dark" rounding={3} paddingX={3} paddingY={2}>
+            <Box display="flex" alignItems="center">
+              <Text color='light' weight="bold" size='400'>Sell on</Text>
+              <Box width={8} />
+              <Box height={28} width={28 * 2.58}>
+                <Image 
+                  src="https://res.cloudinary.com/urlan/image/upload/v1654234524/static/geru_v4_white_qd1seb.png"
+                  naturalHeight={50}
+                  naturalWidth={129}
+                  alt="geru"
+                />
+              </Box>
+            </Box>
+            <Text color='light' size='200'>Таны загвараас худалдан авах бүрт 5% танд орлого болж орно</Text>
+          </Box>
+        </Link>
+      </Box>
     </Block>
   )
 }

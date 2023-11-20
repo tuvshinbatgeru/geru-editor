@@ -7,6 +7,8 @@ export function request(headerOptions) {
     const BASE_URL = Cookies.get('BASE_URL') ? Cookies.get('BASE_URL') : 'https://geru-rest-api.herokuapp.com'
     // const BASE_URL = "http://localhost:3006"
 
+    // alert(token)
+
     let query = {
         // timeout: TIMEOUT,
         baseURL: BASE_URL + '/'

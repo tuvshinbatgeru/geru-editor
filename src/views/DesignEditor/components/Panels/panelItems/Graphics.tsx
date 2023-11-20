@@ -50,7 +50,7 @@ export default function () {
     }, [page, activeIndex])
 
     useEffect(() => {
-      if(page == 1) setPage(1)
+      if(page != 1) setPage(1)
     }, [activeIndex])
 
     useEffect(() => {
@@ -68,6 +68,8 @@ export default function () {
         if(activeIndex == 2) {
           exts = ['svg']
         }
+
+        // alert(JSON.stringify(exts))
 
         setFetching(true)
         fetchPacksWithParams({
@@ -147,13 +149,13 @@ export default function () {
     const addImateToCanvas = async (item) => {
       setIsAssetLoading(true)
 
-      // console.log(item)
       let adjustScale = 1
 
       const recommendedSize = Math.ceil(dimensions.width / 2)
 
       let options = await _getType(item)
-      const { width } = await getImageDimensions(item.secure_url)
+      await getImageDimensions(item.secure_url)
+      const { width } = item
 
       adjustScale = recommendedSize / width
 
@@ -206,7 +208,7 @@ export default function () {
                     }}
                     tabs={[
                       { href: 'https://pinterest.com', text: 'Бүгд' },
-                      { href: 'https://pinterest.com', text: 'Зураг' },
+                      { href: 'https://pinterest.com', text: 'Артворк' },
                       { href: 'https://pinterest.com', text: 'Элемент' }
                     ]}
                   />

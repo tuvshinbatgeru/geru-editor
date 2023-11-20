@@ -6,6 +6,10 @@ import { useActiveObject } from "@layerhub-io/react"
 import { groupBy } from "lodash"
 import { PLACEMENT, StatefulPopover } from "baseui/popover"
 import Flip from "./Shared/Flip"
+import { SketchPicker, CompactPicker, SwatchesPicker } from 'react-color'
+
+import { colors } from '~/constants/colors'
+const PRESET_COLORS = colors
 
 export default function (props) {
   const { has_common = false, has_toolbox = false } = props
@@ -59,18 +63,32 @@ export default function (props) {
                           style={{
                             padding: "1rem",
                             background: "#ffffff",
-                            width: "200px",
                             display: "flex",
                             flexDirection: "column",
                             gap: "1rem",
                             textAlign: "center",
                           }}
                         >
-                          <HexColorPicker
+                          <CompactPicker 
+                            color={c}
+                            colors={PRESET_COLORS}
+                            presetColors={PRESET_COLORS}
                             onChange={(color) => {
-                              changeBackgroundColor(c, color)
+                              changeBackgroundColor(c, color.hex)
                             }}
                           />
+                          <HexColorPicker 
+                            color={c}
+                            onChange={(color) => changeBackgroundColor(c, color)}
+                          />
+                          {/* <SketchPicker 
+                            color={c}
+                            disableAlpha
+                            presetColors={[]}
+                            onChange={(color) => {
+                              changeBackgroundColor(c, color.hex)
+                            }}
+                          /> */}
                         </div>
                       }
                       accessibilityType={"tooltip"}
