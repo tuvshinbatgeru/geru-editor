@@ -127,8 +127,10 @@ export default function () {
   const addObject = async (font) => {
     if (editor) {
       await loadFonts([font])
+      // debugger
       editor.objects.update({
-        fontFamily: font.name
+        fontFamily: font.name,
+        fontURL: font.url,
       })
     }
   }

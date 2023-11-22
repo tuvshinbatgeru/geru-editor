@@ -183,25 +183,6 @@ export default function () {
           )
         }
       </Scrollable>
-      <Box display="flex" padding={3}>
-        <Link href="https://geru.mn/by-me/sell-on-geru" target="blank">
-          <Box color="dark" rounding={3} paddingX={3} paddingY={2}>
-            <Box display="flex" alignItems="center">
-              <Text color='light' weight="bold" size='400'>Sell on</Text>
-              <Box width={8} />
-              <Box height={28} width={28 * 2.58}>
-                <Image 
-                  src="https://res.cloudinary.com/urlan/image/upload/v1654234524/static/geru_v4_white_qd1seb.png"
-                  naturalHeight={50}
-                  naturalWidth={129}
-                  alt="geru"
-                />
-              </Box>
-            </Box>
-            <Text color='light' size='200'>Таны загвараас худалдан авах бүрт 5% танд орлого болж орно</Text>
-          </Box>
-        </Link>
-      </Box>
     </Block>
   )
 }

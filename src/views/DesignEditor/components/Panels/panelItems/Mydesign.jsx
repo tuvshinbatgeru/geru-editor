@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Block } from "baseui/block"
 import Scrollable from "~/components/Scrollable"
-import { IconButton, Text,Box, Flex,TapArea,Image,Column} from "gestalt"
+import { IconButton, Text,Box, Flex,TapArea, Image, Link, Column} from "gestalt"
 import { useMediaQuery } from 'react-responsive'
 import {fetchTemplates, deleteTemplate } from "../../../utils/services"
 import {HeaderText} from "geru-components"
@@ -102,12 +102,12 @@ export default function () {
     
     return (
         <>
-            <Box height="100%" width="100%" display="flex">
+            <Box display='flex' height="100%" direction='column'>
                 <Scrollable>
                     <Box display='flex' alignItems='center' wrap paddingX={2} paddingY={2}>
                     {
                         templates.length == 0 && 
-                            <Box paddingX={4} paddingY={6}>
+                            <Box paddingX={2} paddingY={6}>
                                     <Flex gap={12} direction='column'>
                                     <HeaderText color='white' align='center'>Одоогоор загвар үүсгээгүй байна</HeaderText>
                                     <Text color='light' align='center'>
@@ -147,7 +147,7 @@ export default function () {
                         )
                     }
                     </Box>
-                    <Box paddingX={4}>
+                    <Box paddingX={2}>
                         <Masonry
                             transitionDuration={400}
                             className={'my-gallery-class'} // default ''
@@ -190,6 +190,25 @@ export default function () {
                         </Masonry>
                     </Box>
                 </Scrollable>
+                <Box display="flex" padding={3}>
+                    <Link href="https://geru.mn/by-me/sell-on-geru" target="blank">
+                        <Box color="dark" rounding={3} paddingX={3} paddingY={2}>
+                            <Box display="flex" alignItems="center">
+                                <Text color='light' weight="bold" size='400'>Sell on</Text>
+                                <Box width={8} />
+                                <Box height={28} width={28 * 2.58}>
+                                    <Image 
+                                    src="https://res.cloudinary.com/urlan/image/upload/v1654234524/static/geru_v4_white_qd1seb.png"
+                                    naturalHeight={50}
+                                    naturalWidth={129}
+                                    alt="geru"
+                                    />
+                                </Box>
+                            </Box>
+                            <Text color='light' size='200'>Таны загвараас худалдан авах бүрт 5% танд орлого болж орно</Text>
+                        </Box>
+                    </Link>
+                </Box>
             </Box>
         </>
     )
