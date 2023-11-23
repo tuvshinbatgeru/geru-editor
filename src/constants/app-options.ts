@@ -17,12 +17,12 @@ export const BASE_ITEMS = [
         label: "Элемент",
         icon: "Icon_Category",
     },
-    {
-        id: "stickers",
-        name: "Stickers",
-        label: "Стикер",
-        icon: "Icon_Sticker",
-    },
+    // {
+    //     id: "stickers",
+    //     name: "Stickers",
+    //     label: "Стикер",
+    //     icon: "Icon_Sticker",
+    // },
     // {
     //     id: "pixabay",
     //     name: "Pixabay",

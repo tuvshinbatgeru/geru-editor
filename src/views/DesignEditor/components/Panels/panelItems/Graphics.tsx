@@ -15,6 +15,7 @@ import { motion } from 'framer-motion'
 import { loadFonts } from "~/utils/fonts"
 import Tabs from '~/components/Tabs'
 import _debounce from 'lodash/debounce'
+import Collections from './Collections'
 
 export default function () {
     const editor = useEditor()
@@ -27,6 +28,10 @@ export default function () {
     const [page, setPage] = useState(1)
     const [pages, setPages] = useState(1)
     const isMountingRef = useRef(false)
+
+    const [grouped_tags, setGroupedTags] = useState([{
+      tags: ["цэцэг"]
+    }])
 
     const onQueryChange = useCallback(
       _debounce(query => {
@@ -173,15 +178,18 @@ export default function () {
         addImateToCanvas(item)
       }
     }
+
+    const onCollectionTap = (collection) => {
+      setQuery(String(collection.tags))
+    }
     
     return (
         <>
             <Block $style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-                <Box paddingX={4} mdPaddingX={5} display="flex" justifyContent="between" alignItems="center" marginTop={4}>
+                <Box paddingX={2} mdPaddingX={2} display="flex" justifyContent="between" alignItems="center" marginTop={2} paddingY={2}>
                   <Box flex='grow'>
                     <TextField
                       id="query"
-                      // ful
                       placeholder="Хайх"
                       value={query}
                       onChange={({ value }) => setQuery(value)}
@@ -200,7 +208,7 @@ export default function () {
                     )
                   }
                 </Box>
-                <Box paddingY={2} mdPaddingX={2} display="flex" justifyContent="center">
+                {/* <Box paddingY={2} mdPaddingX={2} display="flex" justifyContent="center">
                   <Tabs
                     activeTabIndex={activeIndex}
                     onChange={({ activeTabIndex, event }) => {
@@ -212,8 +220,9 @@ export default function () {
                       { href: 'https://pinterest.com', text: 'Элемент' }
                     ]}
                   />
-                </Box>
+                </Box> */}
                 <Scrollable>
+                  
                   <InfiniteScroll
                     // loader={getLoaderElement()}
                     loadMore={onLoadMore}
@@ -221,7 +230,11 @@ export default function () {
                     threshold={1000}
                     useWindow={false}
                   >
-                      <Box paddingX={2}>
+                      {
+                        !query && <Collections onCollectionTap={onCollectionTap} />
+                      }
+                      
+                      <Box paddingX={2} marginTop={4} mdMarginTop={6}>
                         <Box display="flex" wrap>
                           {objects.map((obj, index) => (
                             <Sticker
@@ -252,12 +265,15 @@ const Sticker = (props) => {
             <Mask>
               <TransformImage 
                 url={sticker.url}
-                // width={200}
-                // height={Math.ceil(sticker.height / sticker.width) * 200}
-                // width={300}
-                // height={Math.ceil(sticker.width / sticker.height) * 300} 
               />
             </Mask>
+            {/* <Box display="flex" wrap>
+              {
+                sticker.tags.map((tag,) => (
+                  <Text key={tag} color='light'>{tag}</Text>
+                ))
+              }
+            </Box> */}
             <div style={{ position: 'absolute', bottom: -18, display: 'flex', width: '100%', height: '40%' }}>
               <Box display='flex' width='100%'>
                 <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>

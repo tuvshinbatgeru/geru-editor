@@ -15,6 +15,12 @@ export async function fetchPacks(params) {
 	})
 }
 
+export async function fetchPopularElements(params) {
+	return await request().get('/api/element/popular-group', {
+		params
+	})	
+}
+
 export async function fetchPacksWithParams(params) { 
 	return await request().get('/api/element/all-v1', {
 		params
