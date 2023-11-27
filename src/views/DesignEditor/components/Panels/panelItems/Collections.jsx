@@ -40,12 +40,10 @@ const CollectionItem = (props) => {
         //   exts = ['svg']
         // }
 
-        // alert(JSON.stringify(exts))
-
         setFetching(true)
         fetchPacksWithParams({
           extensions: exts,
-          q: String(tags),
+          tags,
           page: 1,
           limit: 6
         })
@@ -93,16 +91,6 @@ const CollectionItem = (props) => {
 }
 
 const Collections = (props) => {
-    // const grouped = [{
-    //     tags: ["knit"]
-    // }, {
-    //     tags: ["cute"]
-    // }, {
-    //     tags: ["letter"]
-    // }, {
-    //     tags: ["цэцэг"]
-    // }]
-
     const [fetching, setFetching] = useState(false)
     const [grouped, setGrouped] = useState([])
 

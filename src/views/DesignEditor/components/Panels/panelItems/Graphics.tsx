@@ -74,12 +74,14 @@ export default function () {
           exts = ['svg']
         }
 
-        // alert(JSON.stringify(exts))
+        // alert(JSON.stringify(query))
+        // console.log(query)
 
         setFetching(true)
         fetchPacksWithParams({
           extensions: exts,
           q: query,
+          tags: query ? query.split(",") : "",
           page,
           limit: 40
         })
