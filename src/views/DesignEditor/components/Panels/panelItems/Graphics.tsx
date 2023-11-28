@@ -76,6 +76,9 @@ export default function () {
 
         // alert(JSON.stringify(query))
         // console.log(query)
+        if(page == 1) {
+          setObjects([])
+        }
 
         setFetching(true)
         fetchPacksWithParams({
@@ -89,6 +92,7 @@ export default function () {
             if(res.data.code == 0) {
                 if(page == 1) {
                   setObjects(res.data.result.docs)
+                  window.scrollTo(0, 0);
                 } else setObjects(objects.concat(res.data.result.docs))
               
                 setPages(res.data.result.pages)
