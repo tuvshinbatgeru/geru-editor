@@ -24,7 +24,7 @@ export default function () {
   const [templates, setTemplates] = useState([])
   const [query, setQuery] = useState("")
   // const currentScene = editor.scene.exportToJSON()
-  const { setIsShowMobileModal, params = {}, dimensions, setActivePanel, setActiveSubMenu } = useAppContext()
+  const { setIsShowMobileModal, params = {}, dimensions, setReferralTemplateId } = useAppContext()
   const { product_title = "" } = params
   const isMountingRef = useRef(false)
 
@@ -126,6 +126,7 @@ export default function () {
         template.editor_json.frame.width = parseInt(dimensions.width)
         template.editor_json.frame.height = parseInt(dimensions.height)
 
+        setReferralTemplateId(String(template._id))
         setCurrentScene({ ...template.editor_json, id: currentScene?.id })
         setIsShowMobileModal(false)
       }

@@ -16,7 +16,7 @@ export default function () {
     const [fetching, setFetching] = useState(false)
     const [templates, setTemplates] = useState([])
     const editor = useEditor()
-    const { dimensions, setDimensions } = useAppContext()
+    const { dimensions, setReferralTemplateId } = useAppContext()
     const { width, height } = dimensions
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 
@@ -60,6 +60,7 @@ export default function () {
         template.editor_json.frame.height = parseInt(tempHeight)
     
         //setIsShowMobileModal(!isShowMobileModal)
+        setReferralTemplateId(String(template._id))
         setCurrentScene({ ...template.editor_json, id: currentScene?.id })
         setIsShowMobileModal(false)
       }

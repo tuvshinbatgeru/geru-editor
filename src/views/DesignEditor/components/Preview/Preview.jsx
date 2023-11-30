@@ -8,7 +8,7 @@ import _cloneDeep from 'lodash/cloneDeep'
 const Preview = (props) => {
   const { onSuccessCallback = () => {} } = props
   const editor = useEditor()
-  const { isSaving, setIsSaving, backgroundColor } = useAppContext()
+  const { isSaving, setIsSaving, backgroundColor, referral_template_id } = useAppContext()
   if(!isSaving) return null
 
   const makePreview = React.useCallback(async () => {
@@ -90,10 +90,13 @@ const Preview = (props) => {
 
         // alert(JSON.stringify(formatRange))
 
+        // alert(referral_template_id)
+
         onSuccessCallback({
             image: resized,
             json: rawTemplate,
-            formatRange
+            formatRange,
+            referral_template_id
         })
 
         setIsSaving(false)

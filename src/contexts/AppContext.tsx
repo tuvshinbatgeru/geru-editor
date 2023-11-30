@@ -37,6 +37,8 @@ interface IAppContext {
     setStickerParams: (stickerParams: any) => void;
     params: any;
     setParams: (params: any) => void;
+    referral_template_id: any;
+    setReferralTemplateId: (referral_template_id: any) => void;
 }
 
 export const AppContext = createContext<IAppContext>({
@@ -73,7 +75,9 @@ export const AppContext = createContext<IAppContext>({
     stickerParams: {},
     setStickerParams: () => {},
     params: {},
-    setParams: () => {}
+    setParams: () => {},
+    referral_template_id: "",
+    setReferralTemplateId: () => {}
 });
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
@@ -82,7 +86,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [templates, setTemplates] = useState<Template[]>([]);
     const [uploads, setUploads] = useState<any[]>([]);
     const [shapes, setShapes] = useState<Template[]>([]);
-    const [activePanel, setActivePanel] = useState<PanelType>(PanelType.UPLOADS);
+    const [activePanel, setActivePanel] = useState<PanelType>(PanelType.TEMPLATES);
     const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
     const [currentTemplate, setCurrentTemplate] = useState(null);
     const [backgroundColor, setBackgroundColor] = useState("fff");
@@ -94,6 +98,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [ignoreAppOptions, setIgnoreAppOptions] = useState([])
     const [stickerParams, setStickerParams] = useState({})
     const [params, setParams] = useState({})
+    const [referral_template_id, setReferralTemplateId] = useState("")
 
     const context = {
         isMobile,
@@ -129,7 +134,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         stickerParams,
         setStickerParams,
         params,
-        setParams
+        setParams,
+        referral_template_id,
+        setReferralTemplateId
     };
     
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

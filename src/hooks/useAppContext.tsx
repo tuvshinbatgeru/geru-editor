@@ -36,7 +36,9 @@ function useAppContext() {
     stickerParams,
     setStickerParams,
     params,
-    setParams
+    setParams,
+    referral_template_id,
+    setReferralTemplateId
   } = useContext(AppContext)
 
   return {
@@ -73,7 +75,9 @@ function useAppContext() {
     stickerParams,
     setStickerParams,
     params,
-    setParams
+    setParams,
+    referral_template_id,
+    setReferralTemplateId
   }
 }
 
