@@ -39,6 +39,8 @@ interface IAppContext {
     setParams: (params: any) => void;
     referral_template_id: any;
     setReferralTemplateId: (referral_template_id: any) => void;
+    template_collaborations: any[];
+    setTemplateCollaborations: (template_collaborations: any[]) => void;
 }
 
 export const AppContext = createContext<IAppContext>({
@@ -77,7 +79,9 @@ export const AppContext = createContext<IAppContext>({
     params: {},
     setParams: () => {},
     referral_template_id: "",
-    setReferralTemplateId: () => {}
+    setReferralTemplateId: () => {},
+    template_collaborations: [],
+    setTemplateCollaborations: () => {},
 });
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
@@ -99,6 +103,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [stickerParams, setStickerParams] = useState({})
     const [params, setParams] = useState({})
     const [referral_template_id, setReferralTemplateId] = useState("")
+    const [template_collaborations, setTemplateCollaborations] = useState([])
 
     const context = {
         isMobile,
@@ -136,7 +141,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         params,
         setParams,
         referral_template_id,
-        setReferralTemplateId
+        setReferralTemplateId,
+        template_collaborations,
+        setTemplateCollaborations
     };
     
     return <AppContext.Provider value={context}>{children}</AppContext.Provider>;

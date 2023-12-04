@@ -38,7 +38,9 @@ function useAppContext() {
     params,
     setParams,
     referral_template_id,
-    setReferralTemplateId
+    setReferralTemplateId,
+    template_collaborations,
+    setTemplateCollaborations,
   } = useContext(AppContext)
 
   return {
@@ -77,7 +79,9 @@ function useAppContext() {
     params,
     setParams,
     referral_template_id,
-    setReferralTemplateId
+    setReferralTemplateId,
+    template_collaborations,
+    setTemplateCollaborations
   }
 }
 

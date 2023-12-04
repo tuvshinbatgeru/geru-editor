@@ -61,6 +61,7 @@ export default function () {
     
         //setIsShowMobileModal(!isShowMobileModal)
         setReferralTemplateId(String(template._id))
+        setTemplateCollaborations(template.collaborations)
         setCurrentScene({ ...template.editor_json, id: currentScene?.id })
         setIsShowMobileModal(false)
       }
