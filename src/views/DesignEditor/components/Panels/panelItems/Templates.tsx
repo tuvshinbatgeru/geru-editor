@@ -11,6 +11,7 @@ import useDesignEditorContext from "~/hooks/useDesignEditorContext"
 import InfiniteScroll from 'react-infinite-scroller'
 import { PanelType } from "~/constants/app-options";
 import { fetchAllTemplates } from "../../../utils/services"
+import { currencyFormat } from '../../../utils/helper'
 import { motion } from "framer-motion";
 import _debounce from 'lodash/debounce'
 
@@ -188,6 +189,29 @@ export default function () {
   )
 }
 
+const TemplatePricing = (props) => {
+  const { template } = props
+  const { price } = template
+
+  // let price = 0
+
+  // if(template.collaborations && template.collaborations.length > 0) {
+  //   template.collaborations.forEach((collab) => {
+  //     price += collab.creator_brand_value
+  //   })
+  // }
+
+  return (
+    <div style={{ position: 'absolute', bottom: -20, display: 'flex', width: '100%' }}>
+      <Box display='flex' width='100%'>
+        <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'end' }}>
+          <Text color='light' align='center' size="200" weight='bold'>{(price && price != 0) ? `${currencyFormat(price)}` : 'Free'}</Text>
+        </div>
+      </Box>
+    </div>
+  )
+}
+
 const TemplateItem = (props) => {
   const { template } = props
 
@@ -196,7 +220,7 @@ const TemplateItem = (props) => {
   return (
       <Box padding={1} column={6}>
           <TapArea tapStyle='compress' onTap={props.onClick}>
-              <Box color='secondary' height={WrapperSize} rounding={1} position='relative'>
+              <Box color='secondary' height={WrapperSize} rounding={1} position='relative' marginBottom={6}>
                   <Box height={WrapperSize} display='flex' justifyContent='center' alignItems='center' overflow='hidden' alignContent="center" wrap>
                       <motion.div
                           whileHover={{ scale: 1.1 }}
@@ -215,6 +239,7 @@ const TemplateItem = (props) => {
                               />
                           </Box>
                       </motion.div>
+                      <TemplatePricing template={template} />
                   </Box>
               </Box>
           </TapArea>
