@@ -90,7 +90,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const [templates, setTemplates] = useState<Template[]>([]);
     const [uploads, setUploads] = useState<any[]>([]);
     const [shapes, setShapes] = useState<Template[]>([]);
-    const [activePanel, setActivePanel] = useState<PanelType>(PanelType.UPLOADS);
+    const [activePanel, setActivePanel] = useState<PanelType>(PanelType.TEMPLATES);
     const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
     const [currentTemplate, setCurrentTemplate] = useState(null);
     const [backgroundColor, setBackgroundColor] = useState("fff");

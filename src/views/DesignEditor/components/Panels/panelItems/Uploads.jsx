@@ -149,6 +149,14 @@ export default function () {
       height: height,
       width: width
     }, ...uploads])
+
+    if(is_logged_in) fileUpload(user_id, {
+      url,
+      secure_url: url,
+      public_id: url,
+      height: height,
+      width: width
+    })
   }
 
   const successCallBack = (res) => {
@@ -174,11 +182,10 @@ export default function () {
   const zIndex = new FixedZIndex(2)
   return (
     <Box display="flex"  height="100%" direction="column" width="100%">
-      <Box paddingX={4} paddingY={4}>
+      <Box paddingX={4} paddingY={2} marginTop={2}>
         <Upload
 					onUploadDone={onUploadDone}
 					acceptedTypes='image/jpeg, image/png'
-					// hasPullsar={photos.length == 0}
 				/>
       </Box>
       {

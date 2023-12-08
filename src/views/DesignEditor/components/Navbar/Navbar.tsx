@@ -32,43 +32,48 @@ export default function (props) {
         const image = (await editor.renderer.render(template)) as string
 
         
-        const resized = await resizeImage(image) as File
+        const resized = await resizeImage(image) as URL
         const pId = `template_${Math.floor(Math.random() * 100)}_${Math.floor(Math.random() * 100000)}`
         setPublicId(pId)
         setFetching(true)
 
-        request({ dirName: "geru-by-me/template/preview" }).uploadFile(resized, pId)
-        .then(res => {
-            setFetching(true)
-            saveTemplate({
-                editor_json: template,
-                preview_url: cloudFront(res.location),
-                name: templateName,
-                customization: params.customization,
-                area_name: params.area_name,
-                selected_variation: params.selected_variation,
-                lookup_id: params.lookup_id,
-                product_title: params.product_title,
-                color: params.color
-            })
+        fetch(resized)
+        .then(res => res.blob())
+        .then(blob => {
+            const file = new File([blob], pId + ".png", { type: "image/png" })
+
+            request({ dirName: "geru-by-me/template/preview" }).uploadFile(file, pId)
             .then(res => {
-                if(res.data.code != 0) {
-                    alert(res.data.errors[0].msg)
-                }
-                if(res.data.code == 0) {
-                    toast.success('Амжилттай хадгаллаа')
-                    setTemplateModal(!templateModal)
-                }
+                setFetching(true)
+                saveTemplate({
+                    editor_json: template,
+                    preview_url: cloudFront(res.location),
+                    name: templateName,
+                    customization: params.customization,
+                    area_name: params.area_name,
+                    selected_variation: params.selected_variation,
+                    lookup_id: params.lookup_id,
+                    product_title: params.product_title,
+                    color: params.color
+                })
+                .then(res => {
+                    if(res.data.code != 0) {
+                        alert(res.data.errors[0].msg)
+                    }
+                    if(res.data.code == 0) {
+                        toast.success('Амжилттай хадгаллаа')
+                        setTemplateModal(!templateModal)
+                    }
+                })
+                .catch(err => alert(err))
+                .then(() => {
+                    setFetching(false) 
+                    setTemplateName("")
+                })
             })
             .catch(err => alert(err))
-            .then(() => {
-                setFetching(false) 
-                setTemplateName("")
-            })
+            .then(() => setFetching(false))
         })
-        .catch(err => alert(err))
-        .then(() => setFetching(false))
-        
     }
     return (
         <Box display="flex" justifyContent="end" alignItems="center" paddingX={2} mdPaddingX={6} color='light' paddingY={2}>
