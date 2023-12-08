@@ -16,7 +16,7 @@ export default function () {
     const [fetching, setFetching] = useState(false)
     const [templates, setTemplates] = useState([])
     const editor = useEditor()
-    const { dimensions, setReferralTemplateId } = useAppContext()
+    const { dimensions, setReferralTemplateId, setTemplateCollaborations } = useAppContext()
     const { width, height } = dimensions
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
 

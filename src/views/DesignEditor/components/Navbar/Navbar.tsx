@@ -29,6 +29,8 @@ export default function (props) {
             return true
         }
         const template = editor.scene.exportToJSON()
+        template.layers = template.layers.filter((layer) => layer.id != 'background')
+
         const image = (await editor.renderer.render(template)) as string
 
         
