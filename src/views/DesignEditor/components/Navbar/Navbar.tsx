@@ -5,6 +5,7 @@ import { HeaderText } from 'geru-components'
 import useAppContext from "~/hooks/useAppContext"
 import { resizeImage } from '~/views/DesignEditor/utils/helper'
 import {uploadTemporaryArtwork, saveTemplate} from "../../utils/services"
+import { request, cloudFront } from "~/services/S3"
 import _isEmpty from 'lodash/isEmpty'
 import { toast } from 'react-toastify'
 
@@ -31,22 +32,17 @@ export default function (props) {
         const image = (await editor.renderer.render(template)) as string
 
         
-        const resized = await resizeImage(image)
+        const resized = await resizeImage(image) as File
         const pId = `template_${Math.floor(Math.random() * 100)}_${Math.floor(Math.random() * 100000)}`
         setPublicId(pId)
         setFetching(true)
 
-        uploadTemporaryArtwork(resized, pId, function(err, result) {
-            if(err) {
-                setFetching(false)
-                alert(err)
-                return
-            }
-
+        request({ dirName: "geru-by-me/template/preview" }).uploadFile(resized, pId)
+        .then(res => {
             setFetching(true)
             saveTemplate({
                 editor_json: template,
-                preview_url: result.secure_url,
+                preview_url: cloudFront(res.location),
                 name: templateName,
                 customization: params.customization,
                 area_name: params.area_name,
@@ -70,6 +66,8 @@ export default function (props) {
                 setTemplateName("")
             })
         })
+        .catch(err => alert(err))
+        .then(() => setFetching(false))
         
     }
     return (

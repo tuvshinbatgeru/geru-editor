@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Block } from "baseui/block"
-import Scrollable from "~/components/Scrollable"
+import Upload from "~/components/Upload"
 import useAppContext from "~/hooks/useAppContext"
 
 import useSetIsSidebarOpen from "~/hooks/useSetIsSidebarOpen"
@@ -12,11 +12,16 @@ import Masonry from 'react-masonry-component'
 import { useEditor } from "@layerhub-io/react"
 import { nanoid } from "nanoid"
 import { useMediaQuery } from 'react-responsive'
-import { Box, TapArea, Spinner ,Text,FixedZIndex} from 'gestalt'
+import { Box, TapArea, Spinner ,Text,FixedZIndex, Image as GesaltImage } from 'gestalt'
 import { TransformImage ,HeaderText} from 'geru-components'
 import { fetchUserUploads, fileUpload } from "~/views/DesignEditor/utils/services"
 
 import { getImageDimensions } from '../../../utils/helper'
+
+// import 
+
+//https://d110hwq6svvzha.cloudfront.net
+//arn:aws:cloudfront::967296680226:distribution/E3MNSUI573QJA
 
 const Image = (props) => {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' })
@@ -30,10 +35,10 @@ const Image = (props) => {
       
     >
       <TapArea onTap={() => addImageToCanvas(photo)}>
-        <TransformImage
-            url={photo.url}
-            width={200}
-            height={Math.ceil(photo.height / photo.width) * 200}
+        <GesaltImage
+            src={photo.url}
+            naturalWidth={photo.width}
+            naturalHeight={photo.height}
         />
         <div style={{ position: 'absolute', bottom: 7, display: 'flex', width: '100%', height: '40%' }}>
         <Box display='flex' width='100%'>
@@ -134,6 +139,18 @@ export default function () {
     setIsAssetLoading(false)
   }
 
+  const onUploadDone = async ({ url }) => {
+    const { height, width } = await getImageDimensions(url)
+
+    setUploads(uploads => [{
+      user: "test",
+      url,
+      public_id: url,
+      height: height,
+      width: width
+    }, ...uploads])
+  }
+
   const successCallBack = (res) => {
     const { event, info } = res
 
@@ -158,78 +175,11 @@ export default function () {
   return (
     <Box display="flex"  height="100%" direction="column" width="100%">
       <Box paddingX={4} paddingY={4}>
-        <Widget
-          //sources={['local', 'dropbox', 'facebook']} // set the sources available for uploading -> by default
-          sources={['local']}
-          // all sources are available. More information on their use can be found at 
-          // https://cloudinary.com/documentation/upload_widget#the_sources_parameter
-          sourceKeys={{
-            dropboxAppKey: '1dsf42dl1i2', 
-            instagramClientId: 'd7aadf962m',
-            facebookAppId: "470771220120261"
-          }} // add source keys 
-          // and ID's as an object. More information on their use can be found at 
-          // https://cloudinary.com/documentation/upload_widget#the_sources_parameter
-          resourceType={'image'} // optionally set with 'auto', 'image', 'video' or 'raw' -> default = 'auto'
-          cloudName='urlan' // your cloudinary account cloud name. 
-          // Located on https://cloudinary.com/console/
-          uploadPreset={'tyt2eb9j'} // check that an upload preset exists and check mode is signed or unisgned
-          buttonText={'Зураг хуулах'} // default 'Upload Files'
-          // buttonText={"Upload Files"}
-          style={{
-            border: 'none',
-            fontSize: 16,
-            fontFamily: "proxima-nova",
-            color: "#fff",
-            width: '100%',
-            backgroundColor: '#CD1E3B',
-            borderRadius: '0px',
-            height: '40px'
-          }} // inline styling only or style id='cloudinary_upload_button'
-          folder={'geru-by-me'} // set cloudinary folder name to send file
-          cropping={false} // set ability to crop images -> default = true
-          // https://support.cloudinary.com/hc/en-us/articles/203062071-How-to-crop-images-via-the-Upload-Widget-#:~:text=Click%20on%20the%20%22Edit%22%20link,OK%22%20and%20Save%20the%20changes.
-          // more information here on cropping. Coordinates are returned or upload preset needs changing
-          multiple={true} // set to false as default. Allows multiple file uploading
-          // will only allow 1 file to be uploaded if cropping set to true
-          autoClose={true} // will close the widget after success. Default true 
-          onSuccess={successCallBack} // add success callback -> returns result
-          onFailure={failureCallBack} // add failure callback -> returns 'response.error' + 'response.result'
-          logging={false} // logs will be provided for success and failure messages, 
-          // set to false for production -> default = true
-          //customPublicId={'sample'} // set a specific custom public_id. 
-          // To use the file name as the public_id use 'use_filename={true}' parameter
-          //eager={'w_400,h_300,c_pad|w_260,h_200,c_crop'} // add eager transformations -> deafult = null
-          use_filename={false} // tell Cloudinary to use the original name of the uploaded 
-          // file as its public ID -> default = true,
-          widgetStyles={{
-            palette: {
-              window: '#272428',
-              windowBorder: '#fff',
-              tabIcon: '#FD3533',
-              menuIcons: '#D7D7D8',
-              textDark: '#DEDEDE',
-              textLight: '#FFFFFF',
-              link: '#00CDA5',
-              action: '#FD3533',
-              inactiveTabIcon: '#BDBDBD',
-              error: '#FD3533',
-              inProgress: '#00CDA5',
-              complete: '#00CDA5',
-              sourceBg: '#272428'
-            }
-          }} // ability to customise the style of the widget uploader
-          // destroy={true} // will destroy the widget on completion
-          // 👇 FOR SIGNED UPLOADS ONLY 👇
-          //generateSignatureUrl={'http://my_domain.com/api/v1/media/generate_signature'} // pass the api 
-          // endpoint for generating a signature -> check cloudinary docs and SDK's for signing uploads
-          apiKey={359513655322777} // cloudinary API key -> number format
-          //accepts={'application/json'} // for signed uploads only -> default = 'application/json'
-          //contentType={'application/json'} // for signed uploads only -> default = 'application/json'
-          withCredentials={true} // default = true -> check axios documentation for more information
-          unique_filename={true} // setting it to false, you can tell Cloudinary not to attempt to make 
-          // the Public ID unique, and just use the normalized file name -> default = true
-        />
+        <Upload
+					onUploadDone={onUploadDone}
+					acceptedTypes='image/jpeg, image/png'
+					// hasPullsar={photos.length == 0}
+				/>
       </Box>
       {
         backgroundRemove && (
