@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone'
 import { Box, Image, Icon, Text, Spinner } from 'gestalt'
 import { request, cloudFront } from '~/services/S3'
 import { nanoid } from 'nanoid'
+import useAppContext from '~/hooks/useAppContext'
 
 const UploadItem = (props) => {
   const { file } = props
@@ -11,6 +12,7 @@ const UploadItem = (props) => {
   const [width, setWidth] = useState(1)
   const [height, setHeight] = useState(1)
   const id = nanoid()
+  const { params } = useAppContext()
 
   useEffect(() => {
     getSize()
@@ -23,7 +25,11 @@ const UploadItem = (props) => {
   }
 
   const uploadFile = () => {
-    request({ dirName: "geru-by-me/uploads" }).uploadFile(file, (id + file.name).replace(/\.[^/.]+$/, ""))
+    request({ 
+      dirName: "geru-by-me/uploads",
+      accessKeyId: params.accessKeyId,
+      secretAccessKey: params.secretAccessKey,
+    }).uploadFile(file, (id + file.name).replace(/\.[^/.]+$/, ""))
     .then(res => {
       props.onUploadDone(file, {
         url: cloudFront(res.location),

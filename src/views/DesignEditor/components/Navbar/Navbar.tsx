@@ -44,7 +44,11 @@ export default function (props) {
         .then(blob => {
             const file = new File([blob], pId + ".png", { type: "image/png" })
 
-            request({ dirName: "geru-by-me/template/preview" }).uploadFile(file, pId)
+            request({ 
+                dirName: "geru-by-me/template/preview",
+                accessKeyId: params.accessKeyId,
+                secretAccessKey: params.secretAccessKey,
+            }).uploadFile(file, pId)
             .then(res => {
                 setFetching(true)
                 saveTemplate({
