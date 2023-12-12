@@ -10,7 +10,8 @@ const config = {
 /* This is optional */
 const S3_URL = 'geru-mn.s3-ap-southeast-1.amazonaws.com/'
 const S3_PREV_URL = 'geru-mn.s3-ap-southeast-1.amazonaws.com/'
-const S3_CLOUD_FRONT = 'https://d110hwq6svvzha.cloudfront.net/'
+export const S3_CLOUD_FRONT = 'https://d110hwq6svvzha.cloudfront.net/'
+export const S3_RESIZE_ENDPOINT = 'https://d2eij6jgzhr4c0.cloudfront.net/'
 
 export function cloudFront(url) {
 	if(!url || (typeof url) != 'string') return

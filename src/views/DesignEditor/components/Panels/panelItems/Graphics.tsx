@@ -2,6 +2,7 @@ import React, { useRef, useCallback } from "react"
 import { Block } from "baseui/block"
 import { useEffect, useState } from 'react'
 import Scrollable from "~/components/Scrollable"
+import ImageResize from "~/components/ImageResize"
 import { Text,Box, TapArea, Column, Mask, TextField, IconButton, Spinner } from "gestalt"
 import { TransformImage } from "geru-components"
 import { useEditor } from "@layerhub-io/react"
@@ -167,8 +168,8 @@ export default function () {
       let options = await _getType(item)
       await getImageDimensions(item.secure_url)
       const { width } = item
-
       adjustScale = recommendedSize / width
+
 
       editor.objects.add(Object.assign(options, {
         scaleX: adjustScale,
@@ -263,15 +264,21 @@ export default function () {
 const Sticker = (props) => {
   const { sticker } = props
 
+  const is_cloudinary = sticker.url.includes("cloudinary")
+
   return (
     <Column span={4} key={sticker.url}>
       <motion.div layout>
         <Box padding={1} position='relative' marginBottom={6}>
           <TapArea onTap={() => props.onTapSticker(sticker)}>
             <Mask>
-              <TransformImage 
-                url={sticker.url}
-              />
+              {
+                is_cloudinary ? (
+                  <TransformImage 
+                    url={sticker.url}
+                  />
+                ) : <ImageResize url={sticker.url} width={sticker.width} height={sticker.height} />
+              }
             </Mask>
             {/* <Box display="flex" wrap>
               {
