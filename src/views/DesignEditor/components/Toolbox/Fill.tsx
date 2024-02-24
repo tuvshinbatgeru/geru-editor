@@ -8,7 +8,8 @@ import { useEditor, useActiveObject } from "@layerhub-io/react"
 import { Box, Image, Mask, IconButton } from 'gestalt'
 
 export default function () {
-  const { setActiveSubMenu } = useAppContext()
+  const { setActiveSubMenu, params } = useAppContext()
+  const { hasColorPicker = false } = params
   const { open, close, isSupported } = useEyeDropper()
   const editor = useEditor()
   const activeObject = useActiveObject()
@@ -17,6 +18,7 @@ export default function () {
     open()
     .then(color => changeBackgroundColor(color.sRGBHex))
     .catch(e => {
+      alert(e)
     })
   }
 
@@ -26,9 +28,11 @@ export default function () {
     }
   }
 
+  if(!hasColorPicker) return null
+
   return (
     <Box display='flex' alignItems='center'>
-      {/* <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"}>
+      <StatefulTooltip placement={PLACEMENT.bottom} showArrow={true} accessibilityType={"tooltip"}>
         <Button
           onClick={() => setActiveSubMenu("Customize")}
           size={SIZE.mini}
@@ -44,7 +48,7 @@ export default function () {
             />
           </Mask>
         </Button>
-      </StatefulTooltip> */}
+      </StatefulTooltip>
       {
         !activeObject && (
           <Box>

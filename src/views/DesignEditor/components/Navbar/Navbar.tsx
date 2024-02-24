@@ -8,9 +8,12 @@ import {uploadTemporaryArtwork, saveTemplate} from "../../utils/services"
 import { request, cloudFront } from "~/services/S3"
 import _isEmpty from 'lodash/isEmpty'
 import { toast } from 'react-toastify'
+import useDesignEditorPages from "~/hooks/useDesignEditorScenes"
 
 export default function (props) {
+    const scenes = useDesignEditorPages()
     const { setIsSaving, params } = useAppContext()
+    const { has_save_template = true, hasMultiScenes = false } = params
     const editor = useEditor()
     const [templateName, setTemplateName] = React.useState("")
 
@@ -20,6 +23,12 @@ export default function (props) {
     const zIndex = new FixedZIndex(99)
 
     const makeDownloadTemplate = async () => {
+        if(hasMultiScenes) {
+            params.onSuccessCallback({
+                scenes
+            })
+            return
+        }
         setIsSaving(true)
     }
 
@@ -83,20 +92,25 @@ export default function (props) {
     }
     return (
         <Box display="flex" justifyContent="end" alignItems="center" paddingX={2} mdPaddingX={6} color='light' paddingY={2}>
-            <TapArea tapStyle="compress" fullWidth={false} onTap={() => setTemplateModal(!templateModal)}>
-                <Box color='dark' paddingY={2} paddingX={4} justifyContent='center' alignItems='center'  display='flex'>
-                    <Icon 
-                        icon="download"
-                        accessibilityLabel="save"
-                        size={16}
-                        color='light'
-                    />
+            {
+                has_save_template && <>
+                    <TapArea tapStyle="compress" fullWidth={false} onTap={() => setTemplateModal(!templateModal)}>
+                        <Box color='dark' paddingY={2} paddingX={4} justifyContent='center' alignItems='center'  display='flex'>
+                            <Icon 
+                                icon="download"
+                                accessibilityLabel="save"
+                                size={16}
+                                color='light'
+                            />
+                            <Box width={8} />
+                            {/* <HeaderText size='md' whiteSpace='nowrap' color='white'>{fetching ? "Saving ..." : "Save template"}</HeaderText> */}
+                            <Text color='light' weight="bold" overflow="noWrap">{fetching ? "Уншиж байна ..." : "Загвар хадгалах"}</Text>
+                        </Box>
+                    </TapArea>
                     <Box width={8} />
-                    {/* <HeaderText size='md' whiteSpace='nowrap' color='white'>{fetching ? "Saving ..." : "Save template"}</HeaderText> */}
-                    <Text color='light' weight="bold" overflow="noWrap">{fetching ? "Уншиж байна ..." : "Загвар хадгалах"}</Text>
-                </Box>
-            </TapArea>
-            <Box width={8} />
+                </>
+            }
+            
             <TapArea tapStyle="compress" fullWidth={false} onTap={makeDownloadTemplate}>
                 <Box color='primary' paddingY={2} paddingX={4} justifyContent='center' alignItems='center' display='flex'>
                     <Icon 

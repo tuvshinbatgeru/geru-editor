@@ -13,7 +13,7 @@ function GraphicEditor(props) {
     params = {}
   } = props
 
-  const { onHeaderComponent = () => {}, onSuccessCallback = () => {}, onSaveTemplateCallback = () => {}, } = params
+  const { onSuccessCallback = () => {} } = params
 
   return (
     <>
